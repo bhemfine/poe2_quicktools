@@ -11,6 +11,7 @@ import {
   type IpcMainInvokeEvent,
   type Tray,
 } from 'electron'
+import { toCheckReport } from '../shared/health'
 import type { LimiterStorage } from '../shared/ratelimit/limiter'
 import type { HotkeyAction } from '../shared/hotkeys/actions'
 import { isAllowedExternalUrl, type EventChannel, type EventMap } from '../shared/ipc'
@@ -23,11 +24,12 @@ import { registerIpc, send, type Handlers } from './ipc'
 import { Logger } from './logging/logger'
 import { DataService } from './net/data-service'
 import { DiskCache } from './net/disk-cache'
-import { ElectronHttpClient, USER_AGENT } from './net/http'
+import { ElectronHttpClient, USER_AGENT, type HttpClient } from './net/http'
+import { RemoteConfigService } from './net/remote-config'
 import { OverlayWindow } from './overlay/OverlayWindow'
 import { SettingsStore } from './settings/store'
 import { createTray, notify } from './tray'
-import { checkForUpdates } from './updater'
+import { Updater } from './updater'
 
 const GAME_NOT_FOUND_AFTER_MS = 15_000
 
@@ -41,6 +43,8 @@ export class QuickToolsApp {
   private tray?: Tray
   private lastItemText = ''
   private data!: DataService
+  private remoteConfig!: RemoteConfigService
+  private updater!: Updater
 
   private readonly rendererDevUrl = process.env['ELECTRON_RENDERER_URL']
   private readonly rendererFile = join(__dirname, '../renderer/index.html')
@@ -50,13 +54,45 @@ export class QuickToolsApp {
     this.logger.info('app', `${APP_NAME} ${app.getVersion()} starting (${process.platform})`)
     this.clipboard.restore = s.restoreClipboard
 
-    this.data = this.createDataService()
+    const http = this.createHttpClient()
+    // Not "cache": on Windows that is the same folder as Chromium's own "Cache".
+    const cache = new DiskCache(join(app.getPath('userData'), 'data-cache'))
+
+    this.remoteConfig = new RemoteConfigService(http, cache, this.logger)
+    this.data = this.createDataService(http, cache)
     this.data.on('status', (st) => this.broadcast('data-status', st))
     this.data.on('trade', (d) => this.broadcast('trade-data', d))
     this.data.on('ninja', (n) => this.broadcast('ninja-data', n))
     this.data.on('league', (l) => this.broadcast('league', l))
     this.data.on('ratelimit', (r) => this.broadcast('ratelimit', r))
+    this.data.on('updated', (message) => this.broadcast('notice', { level: 'info', message }))
+    this.data.on('health', (warning) => {
+      this.broadcast('notice', { level: 'warn', message: warning })
+      notify(this.tray, 'PoE 2 QuickTools may need an update', warning)
+    })
     void this.data.start()
+
+    let ninjaTypes = JSON.stringify(this.remoteConfig.get().ninjaTypes)
+    this.remoteConfig.on('change', (config) => {
+      this.broadcast('remote-config', config)
+      const next = JSON.stringify(config.ninjaTypes)
+      if (next !== ninjaTypes) this.data.onNinjaTypesChanged()
+      ninjaTypes = next
+    })
+    // In development the local config/ files are the ones being edited.
+    if (app.isPackaged) this.remoteConfig.start()
+
+    this.updater = new Updater(this.logger, http)
+    this.updater.on('status', (st) => {
+      this.broadcast('update-status', st)
+      if (st.state === 'ready') {
+        notify(
+          this.tray,
+          `Update ${st.version} downloaded`,
+          'It installs when you quit QuickTools, or use Settings → Restart now.',
+        )
+      }
+    })
 
     this.hotkeys = new HotkeyManager(s.hotkeys, this.logger)
     this.hotkeys.setConditions({ devTools: s.devTools })
@@ -87,6 +123,8 @@ export class QuickToolsApp {
       }
       if (next.devTools !== prev.devTools) this.hotkeys.setConditions({ devTools: next.devTools })
       if (next.league !== prev.league) this.data.onSavedLeagueChanged()
+      if (next.checkForUpdates !== prev.checkForUpdates)
+        this.updater.setEnabled(next.checkForUpdates)
       this.broadcast('settings-changed', next)
     })
 
@@ -98,20 +136,23 @@ export class QuickToolsApp {
     })
 
     setTimeout(() => void this.checkGameFound(), GAME_NOT_FOUND_AFTER_MS)
-    if (s.checkForUpdates) checkForUpdates(this.logger)
+    this.updater.setEnabled(s.checkForUpdates)
   }
 
   stop(): void {
     this.hotkeys?.unregisterAll()
     this.data?.stop()
+    this.remoteConfig?.stop()
   }
 
-  private createDataService(): DataService {
+  private createHttpClient(): HttpClient {
     const net = session.fromPartition('persist:poe2qt-net')
     net.setUserAgent(USER_AGENT)
-    const http = new ElectronHttpClient((url, init) => net.fetch(url, init))
-    const userData = app.getPath('userData')
-    const lockFile = join(userData, 'ratelimit-lockouts.json')
+    return new ElectronHttpClient((url, init) => net.fetch(url, init))
+  }
+
+  private createDataService(http: HttpClient, cache: DiskCache): DataService {
+    const lockFile = join(app.getPath('userData'), 'ratelimit-lockouts.json')
     const storage: LimiterStorage = {
       load: () => {
         try {
@@ -124,11 +165,11 @@ export class QuickToolsApp {
     }
     return new DataService(
       http,
-      // Not "cache": on Windows that is the same folder as Chromium's own "Cache".
-      new DiskCache(join(userData, 'data-cache')),
+      cache,
       storage,
       this.logger,
       () => this.settings.get().league,
+      () => this.remoteConfig.get().ninjaTypes,
     )
   }
 
@@ -293,6 +334,8 @@ export class QuickToolsApp {
       `${APP_NAME} ${app.getVersion()} · Electron ${process.versions.electron} · ${process.platform} ${process.getSystemVersion()}`,
       `Overlay: ${JSON.stringify(this.overlay.getState())}`,
       `Hotkeys: ${JSON.stringify(this.hotkeys.getStatus())}`,
+      `Data: ${JSON.stringify(this.data.getStatus())}`,
+      `Game lists: ${this.remoteConfig.get().source} · Update: ${JSON.stringify(this.updater.getStatus())}`,
       `Settings: ${JSON.stringify({ ...this.settings.get(), customGameBinds: undefined })}`,
       '--- recent log ---',
       ...this.logger.recentLines().slice(-200),
@@ -335,6 +378,14 @@ export class QuickToolsApp {
       'trade:search': (query, checkId) => this.data.search(query, checkId),
       'trade:fetch': (ids, queryId, checkId) => this.data.fetch(ids, queryId, checkId),
       'ratelimit:get': () => this.data.rateLimits(),
+      'health:report': (raw) => {
+        const report = toCheckReport(raw)
+        if (report) this.data.reportCheck(report)
+      },
+      'config:get': () => this.remoteConfig.get(),
+      'update:get-status': () => this.updater.getStatus(),
+      'update:check': () => this.updater.check(),
+      'update:install': () => this.updater.installNow(),
     }
   }
 }

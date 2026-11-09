@@ -30,5 +30,10 @@ describe('IPC allow-list', () => {
     expect(isAllowedExternalUrl('http://poe.ninja/')).toBe(false)
     expect(isAllowedExternalUrl('https://evil.example/poe.ninja')).toBe(false)
     expect(isAllowedExternalUrl('file:///C:/Windows')).toBe(false)
+    expect(
+      isAllowedExternalUrl('https://github.com/bhemfine/poe2_quicktools/releases/tag/v0.2.0'),
+    ).toBe(true)
+    expect(isAllowedExternalUrl('https://github.com/someone-else/repo')).toBe(false)
+    expect(isAllowedExternalUrl('https://github.com/bhemfine/poe2_quicktools-evil/x')).toBe(false)
   })
 })

@@ -137,7 +137,7 @@ With Developer tools on, hover each item from 0.5 and press **Price check** then
 | 6.2 | Whispers. | Only copied to clipboard; never sent. | |
 | 6.3 | User-Agent. | In a proxy (e.g. Fiddler) or from the log/diagnostics: every request to pathofexile.com and poe.ninja carries `PoE2QuickTools/<version> (contact: Bhemfinechua@gmail.com)`. | |
 | 6.4 | No 429 in any log after sections 3–4. | `findstr 429 %APPDATA%\PoE2QuickTools\logs\*.log` finds nothing. | |
-| 6.5 | No timers/screen triggers. | Nothing happens unless you press a hotkey (poe.ninja background refresh is network only). | |
+| 6.5 | No timers/screen triggers. | Nothing happens in game unless you press a hotkey (background refreshes — poe.ninja, trade data re-check, game lists, update check — are network only). | |
 
 ## 7. Packaging (M5 DoD)
 
@@ -147,7 +147,19 @@ With Developer tools on, hover each item from 0.5 and press **Price check** then
 | 7.2 | Clean **Windows 11** VM (no Node): install with the Setup exe; then run the portable exe. | Both start (SmartScreen "More info → Run anyway" because unsigned); tray icon; settings open. | |
 | 7.3 | Same on a clean **Windows 10** VM. | Same. | |
 | 7.4 | Re-run sections 1A (display matrix) and 4.1/4.5/4.9 on the **packaged** build. | Same results as dev. | |
-| 7.5 | Auto-update (needs the release channel decision, `docs/release.md`): publish 0.1.1, start 0.1.0 installed build. | Update downloads and offers install on quit. Portable build does not update. | |
+| 7.5 | Auto-update: install 0.1.0 with the Setup exe, then release 0.1.1 (`docs/release.md`) and publish the draft. Start the installed app. | Settings → Updates: "Downloading version 0.1.1" then "ready" + tray balloon. **Restart now** (or quitting) installs it; Settings → About shows 0.1.1 afterwards. | |
+| 7.6 | Same release, run the 0.1.0 **portable** exe. | Settings → Updates: "Version 0.1.1 is available" with a **Download** link to the GitHub release; nothing installs by itself. | |
+| 7.7 | Settings → untick "Update QuickTools automatically", restart. | Updates shows "Off (turned off)"; the log has no `[updater] Checking for update`. | |
+
+### 7B. Following a patch (no new release needed)
+
+| ID | Test | Expected | Pass? |
+|---|---|---|---|
+| 7B.1 | Packaged build, online: Settings → League & data. | "Game lists: online copy (updated …)". In `%APPDATA%\PoE2QuickTools\data-cache` there is `remote-config.json`. | |
+| 7B.2 | Edit `config/poe2-default-binds.json` on GitHub (add `{ "combo": "Ctrl + K", "action": "Test bind" }`), push, restart the packaged app. Then revert. | Recording Ctrl+K in Settings warns "Test bind". After the revert and a restart the warning is gone. | |
+| 7B.3 | A broken online file. Covered by the automated test `tests/unit/patch-updates.test.ts` (a bad file is ignored and the last good copy is kept); not worth breaking `main` to test by hand. | — | n/a |
+| 7B.4 | Patch detection: delete nothing; set the PC clock 2 h ahead (or wait), start the app. | ~10 s after start the log shows trade data being re-checked; if GGG changed anything: `trade data version … (startup check)` and an overlay notice "Game data updated". | |
+| 7B.5 | After a real patch, price-check items with new mods. | First unrecognised mod → log `unrecognised mod lines: [...]` and (if the data is >15 min old) a re-download. If many mods still fail: amber "⚠ … an app update is needed" on cards, in Settings, and a tray balloon once. | |
 
 ## 8. Things I assumed that need confirming
 
@@ -169,4 +181,4 @@ Tell me which of these turn out wrong; each is a small fix.
 
 ## 9. After PoE 2 1.0 (11 Dec 2026) — M6
 
-Re-run 1B (re-capture fixtures), 3.1 (`check:live`), 3.9, 4.1–4.9. Update `config/*.json` if poe.ninja types, tablet/waystone names, `map_filters` or leagues changed. Not built yet: the optional RePoE mod-tier extract (`scripts/extract-repoe.ts` in the plan) — tiers come from the advanced copy, so it is only needed if 1.0 removes tiers from item text.
+Re-run 1B (re-capture fixtures), 3.1 (`check:live`), 3.9, 4.1–4.9. Update `config/*.json` if poe.ninja types, tablet/waystone names, `map_filters` or leagues changed: pushing `ninja-types.json` or `poe2-default-binds.json` to `main` reaches installed apps within 6 h (or on restart) without a release; anything else needs a release (`docs/release.md`). Not built yet: the optional RePoE mod-tier extract (`scripts/extract-repoe.ts` in the plan) — tiers come from the advanced copy, so it is only needed if 1.0 removes tiers from item text.

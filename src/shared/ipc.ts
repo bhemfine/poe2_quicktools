@@ -4,10 +4,12 @@
  */
 import type { ApiResult } from './api-result'
 import type { Point } from './geometry'
+import type { CheckReport } from './health'
 import type { HotkeyAction } from './hotkeys/actions'
 import type { LeagueInfo } from './league'
 import type { NinjaSnapshot } from './pricing/ninja'
 import type { PolicySnapshot } from './ratelimit/limiter'
+import type { RemoteConfig } from './remote-config'
 import type { TradeFetchResult, TradeSearchResult } from './schemas'
 import type { Settings, SettingsPatch } from './settings'
 import type { TradeData } from './trade-data'
@@ -15,10 +17,24 @@ import type { TradeData } from './trade-data'
 export interface DataStatus {
   trade: 'loading' | 'ready' | 'error'
   tradeError?: string
+  /** When the trade data in use was downloaded from GGG. */
+  tradeFetchedAt?: number
   ninja: 'idle' | 'loading' | 'ready' | 'error'
   ninjaUpdatedAt?: number
   ninjaErrors: Record<string, string>
+  /** Set when recent price checks look like a patch broke something (see PatchHealth). */
+  health?: string
 }
+
+export type UpdateStatus =
+  | { state: 'disabled'; reason: string }
+  | { state: 'checking' }
+  | { state: 'up-to-date'; checkedAt: number }
+  | { state: 'downloading'; version: string; percent: number }
+  | { state: 'ready'; version: string }
+  /** Portable build: a newer version exists but must be downloaded by hand. */
+  | { state: 'available'; version: string; url: string }
+  | { state: 'error'; message: string }
 
 export interface AppInfo {
   name: string
@@ -81,6 +97,11 @@ export interface InvokeMap {
     result: ApiResult<TradeFetchResult>
   }
   'ratelimit:get': { args: []; result: PolicySnapshot[] }
+  'health:report': { args: [report: CheckReport]; result: void }
+  'config:get': { args: []; result: RemoteConfig }
+  'update:get-status': { args: []; result: UpdateStatus }
+  'update:check': { args: []; result: void }
+  'update:install': { args: []; result: void }
 }
 
 export interface EventMap {
@@ -96,6 +117,8 @@ export interface EventMap {
   'settings-changed': Settings
   'hotkeys-status': HotkeyStatus
   notice: NoticeEvent
+  'remote-config': RemoteConfig
+  'update-status': UpdateStatus
 }
 
 export type InvokeChannel = keyof InvokeMap
@@ -127,6 +150,11 @@ export const INVOKE_CHANNELS = [
   'trade:search',
   'trade:fetch',
   'ratelimit:get',
+  'health:report',
+  'config:get',
+  'update:get-status',
+  'update:check',
+  'update:install',
 ] as const satisfies readonly InvokeChannel[]
 
 export const EVENT_CHANNELS = [
@@ -142,6 +170,8 @@ export const EVENT_CHANNELS = [
   'settings-changed',
   'hotkeys-status',
   'notice',
+  'remote-config',
+  'update-status',
 ] as const satisfies readonly EventChannel[]
 
 export function isInvokeChannel(channel: unknown): channel is InvokeChannel {
@@ -155,10 +185,15 @@ export function isEventChannel(channel: unknown): channel is EventChannel {
 /** Only these hosts may be opened in the user's browser. */
 export const EXTERNAL_HOSTS = ['poe.ninja', 'www.pathofexile.com', 'pathofexile.com']
 
+/** The app's own GitHub pages (release downloads for the portable build). */
+export const REPO_URL = 'https://github.com/bhemfine/poe2_quicktools'
+
 export function isAllowedExternalUrl(url: string): boolean {
   try {
     const u = new URL(url)
-    return u.protocol === 'https:' && EXTERNAL_HOSTS.includes(u.hostname)
+    if (u.protocol !== 'https:') return false
+    if (u.hostname === 'github.com') return u.pathname.startsWith(`${new URL(REPO_URL).pathname}/`)
+    return EXTERNAL_HOSTS.includes(u.hostname)
   } catch {
     return false
   }

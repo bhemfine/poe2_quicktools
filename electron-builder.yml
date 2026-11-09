@@ -25,10 +25,10 @@ nsis:
   artifactName: ${productName}-Setup-${version}.${ext}
 portable:
   artifactName: ${productName}-Portable-${version}.${ext}
-# Release feed for electron-updater. The source repo is private, so releases go to a separate
-# public repo (decision pending, see docs/release.md). Change owner/repo here once it exists.
+# Release feed for electron-updater: GitHub Releases of this (public) repo. Releases are created
+# as drafts by .github/workflows/release.yml; installed apps only see them once published.
 publish:
   provider: github
   owner: bhemfine
-  repo: poe2_quicktools-releases
-  releaseType: release
+  repo: poe2_quicktools
+  releaseType: draft

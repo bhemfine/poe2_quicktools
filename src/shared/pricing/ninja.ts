@@ -10,6 +10,8 @@ export interface NinjaSnapshot {
   uniques: Record<string, NinjaItemOverview>
   /** type → error message for types that failed or returned no lines. */
   errors: Record<string, string>
+  /** type → poe.ninja URL segment, from the type list used for this snapshot. */
+  slugs?: Record<string, string>
 }
 
 export interface PricePoint {
@@ -43,6 +45,8 @@ export class PriceIndex {
 
   constructor(readonly snapshot: NinjaSnapshot) {
     const base = `https://poe.ninja/poe2/economy/${snapshot.leagueSlug}`
+    const slug = (type: string, bundled: Map<string, string>) =>
+      snapshot.slugs?.[type] ?? bundled.get(type) ?? type.toLowerCase()
     for (const [type, data] of Object.entries(snapshot.exchange)) {
       const lines = new Map(data.lines.map((l) => [l.id, l]))
       for (const item of data.items) {
@@ -58,7 +62,7 @@ export class PriceIndex {
           totalChange: line.sparkline?.totalChange ?? undefined,
           change24h: lastChange(spark),
           type,
-          url: `${base}/${EXCHANGE_SLUGS.get(type) ?? type.toLowerCase()}/${item.detailsId}`,
+          url: `${base}/${slug(type, EXCHANGE_SLUGS)}/${item.detailsId}`,
         })
       }
     }
@@ -75,7 +79,7 @@ export class PriceIndex {
           totalChange: line.sparkLine?.totalChange ?? undefined,
           change24h: lastChange(spark),
           type,
-          url: `${base}/${UNIQUE_SLUGS.get(type) ?? type.toLowerCase()}/${line.detailsId}`,
+          url: `${base}/${slug(type, UNIQUE_SLUGS)}/${line.detailsId}`,
         }
         const key = line.name.toLowerCase()
         this.uniques.set(key, [

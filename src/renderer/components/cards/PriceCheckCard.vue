@@ -2,6 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { parseItem } from '../../../shared/parser/parse'
 import { buildModel, type PriceCheckModel } from '../../../shared/query/model'
+import { api } from '../../bridge'
 import { useTradeSearch } from '../../composables/useTradeSearch'
 import { useEconomyStore } from '../../stores/economy'
 import { useOverlayStore } from '../../stores/overlay'
@@ -55,6 +56,19 @@ function runSearch(): void {
   if (model.value) void search.run(model.value)
 }
 
+// Tells main how well this item was understood, once, so it can spot a patch (see PatchHealth).
+let reported = false
+function reportHealth(): void {
+  if (reported || !model.value || !['waystone', 'tablet', 'gear', 'unique'].includes(item.kind))
+    return
+  reported = true
+  void api.invoke('health:report', {
+    modLines: matched.value.length,
+    unmatched: model.value.unmatched,
+    parserError: item.unparsed.some((u) => u.startsWith('(parser error')),
+  })
+}
+
 function showLiveListings(): void {
   showLive.value = true
   runSearch()
@@ -62,6 +76,7 @@ function showLiveListings(): void {
 
 onMounted(() => {
   rebuild()
+  reportHealth()
   // Auto-search once for items that only have a live price (one search + one fetch).
   if (searchable.value && economy.league?.league) runSearch()
 })
@@ -70,6 +85,7 @@ watch(
   (v, old) => {
     if (v && !old) {
       rebuild()
+      reportHealth()
       if (searchable.value && economy.league?.league) runSearch()
     }
   },
@@ -116,6 +132,9 @@ const fallbackMessage = computed(() => {
       </div>
       <div v-if="!item.advanced && searchable" class="text-[11px] text-amber-300">
         Copied without advanced descriptions — mod tiers are missing.
+      </div>
+      <div v-if="economy.status.health" class="text-[11px] text-amber-300">
+        ⚠ {{ economy.status.health }}
       </div>
     </header>
 

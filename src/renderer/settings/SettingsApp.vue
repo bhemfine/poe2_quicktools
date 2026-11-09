@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import gameBindsFile from '../../../config/poe2-default-binds.json'
 import { DEFAULT_HOTKEYS, HOTKEY_ACTIONS, type HotkeyAction } from '../../shared/hotkeys/actions'
 import type { GameBind } from '../../shared/hotkeys/conflicts'
 import { displayCombo, normalizeCombo } from '../../shared/hotkeys/keys'
-import type { HotkeyStatus } from '../../shared/ipc'
+import type { HotkeyStatus, UpdateStatus } from '../../shared/ipc'
 import { GGG_NOTICE } from '../../shared/notices'
 import { CURRENCY_LABEL } from '../../shared/pricing/ninja'
+import { BUNDLED_CONFIG, type RemoteConfig } from '../../shared/remote-config'
 import type { CurrencyId } from '../../shared/settings'
 import { api } from '../bridge'
 import AboutPanel from '../components/AboutPanel.vue'
@@ -19,13 +19,48 @@ const settingsStore = useSettingsStore()
 const economy = useEconomyStore()
 const s = computed(() => settingsStore.settings)
 const status = ref<HotkeyStatus>({})
+const remoteConfig = ref<RemoteConfig>(BUNDLED_CONFIG)
+const update = ref<UpdateStatus>({ state: 'disabled', reason: '' })
 
-const gameBinds = computed<GameBind[]>(() => [...gameBindsFile.binds, ...s.value.customGameBinds])
+const gameBinds = computed<GameBind[]>(() => [
+  ...remoteConfig.value.gameBinds,
+  ...s.value.customGameBinds,
+])
 
 onMounted(async () => {
-  await Promise.all([settingsStore.init(), economy.init()])
-  status.value = await api.invoke('hotkeys:get-status')
   api.on('hotkeys-status', (st) => (status.value = st))
+  api.on('remote-config', (c) => (remoteConfig.value = c))
+  api.on('update-status', (u) => (update.value = u))
+  await Promise.all([settingsStore.init(), economy.init()])
+  ;[status.value, remoteConfig.value, update.value] = await Promise.all([
+    api.invoke('hotkeys:get-status'),
+    api.invoke('config:get'),
+    api.invoke('update:get-status'),
+  ])
+})
+
+const timeOf = (ms?: number) =>
+  ms ? new Date(ms).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : ''
+
+const updateText = computed(() => {
+  const u = update.value
+  switch (u.state) {
+    case 'disabled':
+      return u.reason ? `Off (${u.reason.toLowerCase()})` : 'Off'
+    case 'checking':
+      return 'Checking…'
+    case 'up-to-date':
+      return `Up to date (checked ${timeOf(u.checkedAt)})`
+    case 'downloading':
+      return `Downloading version ${u.version}… ${u.percent}%`
+    case 'ready':
+      return `Version ${u.version} is ready. It installs when you quit QuickTools.`
+    case 'available':
+      return `Version ${u.version} is available.`
+    case 'error':
+      return `Could not check: ${u.message}`
+  }
+  return ''
 })
 
 function saveHotkey(action: HotkeyAction, combo: string): void {
@@ -104,7 +139,9 @@ const ninjaErrors = computed(() => Object.entries(economy.status.ninjaErrors))
       </div>
       <div class="text-neutral-400">
         Trade data: {{ economy.status.trade
-        }}<span v-if="economy.status.tradeError"> – {{ economy.status.tradeError }}</span> ·
+        }}<span v-if="economy.status.tradeFetchedAt">
+          (downloaded {{ timeOf(economy.status.tradeFetchedAt) }})</span
+        ><span v-if="economy.status.tradeError"> – {{ economy.status.tradeError }}</span> ·
         poe.ninja: {{ economy.status.ninja
         }}<span v-if="economy.ninjaUpdated"> (updated {{ economy.ninjaUpdated }})</span>
         <button
@@ -115,9 +152,63 @@ const ninjaErrors = computed(() => Object.entries(economy.status.ninjaErrors))
           Refresh now
         </button>
       </div>
+      <div class="text-xs text-neutral-500">
+        Game lists:
+        {{
+          remoteConfig.source === 'online'
+            ? `online copy (updated ${timeOf(remoteConfig.fetchedAt)})`
+            : 'built-in copy'
+        }}
+      </div>
+      <p
+        v-if="economy.status.health"
+        class="rounded border border-amber-700 bg-amber-950/40 p-2 text-amber-200"
+      >
+        ⚠ {{ economy.status.health }}
+      </p>
       <ul v-if="ninjaErrors.length" class="text-xs text-amber-300">
         <li v-for="[type, msg] in ninjaErrors" :key="type">{{ type }}: {{ msg }}</li>
       </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-medium">Updates</h2>
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          :checked="s.checkForUpdates"
+          @change="
+            settingsStore.update({ checkForUpdates: ($event.target as HTMLInputElement).checked })
+          "
+        />
+        Update QuickTools automatically
+      </label>
+      <div class="flex items-center gap-3 text-neutral-400">
+        <span>{{ updateText }}</span>
+        <button
+          v-if="update.state === 'ready'"
+          type="button"
+          class="rounded bg-sky-700 px-2 text-white"
+          @click="api.invoke('update:install')"
+        >
+          Restart now
+        </button>
+        <a
+          v-else-if="update.state === 'available'"
+          :href="update.url"
+          target="_blank"
+          class="text-sky-400 underline"
+          >Download</a
+        >
+        <button
+          v-else-if="update.state === 'up-to-date' || update.state === 'error'"
+          type="button"
+          class="text-sky-400 underline"
+          @click="api.invoke('update:check')"
+        >
+          Check now
+        </button>
+      </div>
     </section>
 
     <section>
@@ -327,16 +418,6 @@ const ninjaErrors = computed(() => Object.entries(economy.status.ninjaErrors))
 
     <section class="space-y-2">
       <h2 class="text-lg font-medium">Advanced</h2>
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          :checked="s.checkForUpdates"
-          @change="
-            settingsStore.update({ checkForUpdates: ($event.target as HTMLInputElement).checked })
-          "
-        />
-        Check for updates on start (installer version only)
-      </label>
       <label class="flex items-center gap-2">
         <input
           type="checkbox"

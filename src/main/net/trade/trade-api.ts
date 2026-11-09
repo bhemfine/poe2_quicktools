@@ -34,6 +34,8 @@ export class InvalidLeagueError extends Error {}
  */
 export class TradeApi {
   readonly limiter: RateLimiter
+  /** When the oldest part of the last loaded trade data was downloaded. */
+  dataFetchedAt = 0
   private searchCache = new Map<string, { at: number; value: TradeSearchResult }>()
   private fetchCache = new Map<
     string,
@@ -51,13 +53,17 @@ export class TradeApi {
 
   /** Loads leagues, stats, items, filters and static (disk cache first unless `force`). */
   async loadData(force = false): Promise<TradeData> {
+    let oldest = Date.now()
     const get = async <T>(
       name: string,
       schema: Parameters<typeof parseOrThrow<T>>[0],
     ): Promise<T> => {
       const key = `trade-${name}`
       const cached = force ? null : this.cache.get<T>(key, DATA_TTL)
-      if (cached) return cached.data
+      if (cached) {
+        oldest = Math.min(oldest, cached.fetchedAt)
+        return cached.data
+      }
       try {
         const res = await this.http.request<unknown>('GET', `${BASE}/data/${name}`)
         if (res.status !== 200)
@@ -67,8 +73,9 @@ export class TradeApi {
         return data
       } catch (e) {
         const stale = this.cache.getStale<T>(key)
-        if (stale) return stale.data
-        throw e
+        if (!stale) throw e
+        oldest = Math.min(oldest, stale.fetchedAt)
+        return stale.data
       }
     }
     const leagues = await get('leagues', tradeLeaguesSchema)
@@ -76,6 +83,7 @@ export class TradeApi {
     const items = await get('items', tradeItemsSchema)
     const filters = await get('filters', tradeFiltersSchema)
     const staticData = await get('static', tradeStaticSchema)
+    this.dataFetchedAt = oldest
     return {
       leagues,
       stats,

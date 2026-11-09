@@ -1,6 +1,6 @@
-import ninjaTypes from '../../../../config/ninja-types.json'
 import { ninjaLeagueSlug } from '../../../shared/league'
 import type { NinjaSnapshot } from '../../../shared/pricing/ninja'
+import { BUNDLED_CONFIG, type NinjaTypes } from '../../../shared/remote-config'
 import {
   ninjaExchangeSchema,
   ninjaIndexStateSchema,
@@ -23,6 +23,8 @@ export class NinjaApi {
   constructor(
     private http: HttpClient,
     private sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms)),
+    /** The type list may be updated online (see RemoteConfigService). */
+    private getTypes: () => NinjaTypes = () => BUNDLED_CONFIG.ninjaTypes,
   ) {}
 
   async loadIndex(): Promise<NinjaIndexState> {
@@ -42,6 +44,7 @@ export class NinjaApi {
         // The slug falls back to a derived value.
       }
     }
+    const ninjaTypes = this.getTypes()
     const snap: NinjaSnapshot = {
       league,
       leagueSlug: ninjaLeagueSlug(this.index, league),
@@ -49,6 +52,9 @@ export class NinjaApi {
       exchange: {},
       uniques: {},
       errors: {},
+      slugs: Object.fromEntries(
+        [...ninjaTypes.exchange, ...ninjaTypes.uniques].map((t) => [t.type, t.slug]),
+      ),
     }
     const q = (type: string) => `league=${encodeURIComponent(league)}&type=${type}`
 

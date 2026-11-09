@@ -28,6 +28,6 @@ If `npm run dev` says Electron failed to install, run `node node_modules/electro
 
 ## Layout
 
-`src/main` (Electron main: overlay, hotkeys, clipboard, network), `src/preload` (typed IPC bridge), `src/shared` (pure TypeScript: parser, stat matcher, query builder, rate limiter, pricing), `src/renderer` (Vue overlay and settings), `config/` (data that changes with the game), `tests/` (unit, component, live, fixtures).
+`src/main` (Electron main: overlay, hotkeys, clipboard, network), `src/preload` (typed IPC bridge), `src/shared` (pure TypeScript: parser, stat matcher, query builder, rate limiter, pricing), `src/renderer` (Vue overlay and settings), `config/` (data that changes with the game; installed apps re-read `ninja-types.json` and `poe2-default-binds.json` from `main`, see [`docs/release.md`](docs/release.md)), `tests/` (unit, component, live, fixtures).
 
 Code adapted from [Exiled Exchange 2](https://github.com/Kvan7/Exiled-Exchange-2) (MIT) is listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
