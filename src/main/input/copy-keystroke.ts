@@ -1,12 +1,6 @@
 // Adapted from Exiled-Exchange-2 main/src/shortcuts/Shortcuts.ts (pressKeysToCopyItemText) @ cca30662 (MIT). Modified.
-import { uIOhook, UiohookKey } from 'uiohook-napi'
 import { planCopyKeystroke } from '../../shared/hotkeys/copy-plan'
-
-type KeyName = keyof typeof UiohookKey
-
-function code(key: string): number | undefined {
-  return UiohookKey[key as KeyName]
-}
+import { sendKey } from './send-input'
 
 /**
  * Sends Ctrl + <advanced key> + C to the focused game window. This is the only synthetic input
@@ -14,20 +8,12 @@ function code(key: string): number | undefined {
  */
 export function pressCopyItemText(hotkey: string, advancedKey: string): void {
   const plan = planCopyKeystroke(hotkey, advancedKey)
-  for (const key of plan.release) {
-    const c = code(key)
-    if (c !== undefined) uIOhook.keyToggle(c, 'up')
-  }
-  const pressed: number[] = []
-  for (const key of plan.press) {
-    const c = code(key)
-    if (c === undefined) continue
-    uIOhook.keyToggle(c, 'down')
-    pressed.push(c)
-  }
-  uIOhook.keyTap(UiohookKey.C)
+  for (const key of plan.release) sendKey(key, 'up')
+  const pressed = plan.press.filter((key) => sendKey(key, 'down'))
+  sendKey('C', 'down')
+  sendKey('C', 'up')
   // The game sometimes drops key-up events sent immediately, so release a little later.
   setTimeout(() => {
-    for (const c of pressed.reverse()) uIOhook.keyToggle(c, 'up')
+    for (const key of pressed.reverse()) sendKey(key, 'up')
   }, 10)
 }

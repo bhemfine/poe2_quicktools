@@ -1,7 +1,7 @@
 /**
  * Canonical hotkey strings look like "Ctrl + Shift + D" (modifiers in Ctrl, Shift, Alt order,
  * then exactly one main key). The empty string means "unbound".
- * Key names match uiohook-napi's `UiohookKey` so the copy keystroke can reuse them.
+ * Key names map to Windows virtual-key codes in ./vk for the copy keystroke.
  */
 
 export const MODIFIERS = ['Ctrl', 'Shift', 'Alt'] as const

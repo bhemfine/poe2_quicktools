@@ -27,13 +27,13 @@
   "allowScripts": {
     "electron@45.2.3": true,
     "electron-overlay-window": false,
-    "uiohook-napi": false,
-    "electron-winstaller": false
+    "electron-winstaller": false,
+    "koffi": false
   },
   "dependencies": {
     "electron-overlay-window": "^4.1.0",
     "electron-updater": "^6.8.11",
-    "uiohook-napi": "^1.5.5"
+    "koffi": "3.3.7"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.5",

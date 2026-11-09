@@ -5,9 +5,11 @@ import { planCopyKeystroke } from '../../src/shared/hotkeys/copy-plan'
 import {
   comboFromKeyboardEvent,
   displayCombo,
+  MAIN_KEYS,
   normalizeCombo,
   toAccelerator,
 } from '../../src/shared/hotkeys/keys'
+import { isExtendedKey, virtualKeyCode } from '../../src/shared/hotkeys/vk'
 import gameBinds from '../../config/poe2-default-binds.json'
 
 const opts = { gameBinds: gameBinds.binds, wasdMode: false }
@@ -128,5 +130,26 @@ describe('copy keystroke plan (modifier merging)', () => {
   it('honours a rebound advanced-descriptions key', () => {
     expect(planCopyKeystroke('Ctrl + D', 'Shift')).toEqual({ release: ['D'], press: ['Shift'] })
     expect(planCopyKeystroke('Ctrl + D', 'Ctrl')).toEqual({ release: ['D'], press: [] })
+  })
+})
+
+describe('virtual-key codes for the copy keystroke', () => {
+  it('maps every hotkey main key and the modifiers', () => {
+    for (const k of [...MAIN_KEYS, 'Ctrl', 'Shift', 'Alt']) {
+      expect(virtualKeyCode(k), k).toBeTypeOf('number')
+    }
+  })
+
+  it('uses the documented Windows codes', () => {
+    expect(virtualKeyCode('C')).toBe(0x43)
+    expect(virtualKeyCode('7')).toBe(0x37)
+    expect(virtualKeyCode('F1')).toBe(0x70)
+    expect(virtualKeyCode('F24')).toBe(0x87)
+    expect(virtualKeyCode('Numpad5')).toBe(0x65)
+    expect(virtualKeyCode('Alt')).toBe(0xa4)
+    expect(virtualKeyCode('Backquote')).toBe(0xc0)
+    expect(virtualKeyCode('F25')).toBeUndefined()
+    expect(isExtendedKey('ArrowUp')).toBe(true)
+    expect(isExtendedKey('C')).toBe(false)
   })
 })

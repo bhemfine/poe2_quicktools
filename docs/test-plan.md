@@ -170,7 +170,7 @@ Tell me which of these turn out wrong; each is a small fix.
 | 8.1 | poe.ninja **unique** `primaryValue` is in Divine (the site shows Divine icons next to those numbers). | `src/shared/pricing/ninja.ts` |
 | 8.2 | poe.ninja URL slugs other than `unique-armours` (e.g. `uncut-gems`, `soul-cores`, `unique-relics`). | `config/ninja-types.json` |
 | 8.3 | `poe2_production_Config.ini` uses `[DISPLAY] fullscreen=` and `borderless_windowed_fullscreen=`. | `src/shared/game-config.ts` (test 1.3) |
-| 8.4 | uiohook can send the copy keystroke without starting its global keyboard hook (we never call `uIOhook.start()`). | `src/main/input/copy-keystroke.ts` (test 1.4) |
+| 8.4 | Windows `SendInput` (called through koffi; no keyboard-hook library) reaches PoE 2 like a real Ctrl+Alt+C. | `src/main/input/send-input.ts` (test 1.4) |
 | 8.5 | Electron 45 + electron-overlay-window 4.1 work on Windows 11 (EOW officially lists 7–10). | test 1.1 |
 | 8.6 | Item classes treated as commodities (Stackable Currency, Socketable, Omen, Map Fragments, splinters…). | `src/shared/parser/parse.ts` (test 4.2) |
 | 8.7 | Trade `map_filters` labels: "Monster Effectiveness" → `map_magic_monsters`, "Monster Rarity" → `map_rare_monsters` (taken from the API's own labels; "Magic Monsters"/"Rare Monsters" header lines have no filter). | `src/shared/query/model.ts` (test 4.5) |
