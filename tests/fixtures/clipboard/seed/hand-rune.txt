@@ -1,0 +1,10 @@
+Item Class: Socketable
+Rarity: Currency
+Greater Iron Rune
+--------
+Stack Size: 3/10
+--------
+Martial Weapons: 18% increased Physical Damage
+Armour: 18% increased Armour, Evasion and Energy Shield
+--------
+Place into an empty Augment Socket in a Martial Weapon or Armour to apply its effect. Once socketed it cannot be removed.

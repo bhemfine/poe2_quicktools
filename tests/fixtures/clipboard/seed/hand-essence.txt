@@ -1,0 +1,9 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Greater Essence of Ice
+--------
+Stack Size: 2/10
+--------
+Upgrades a Magic item to a Rare item with a new random modifier
+--------
+Right click this item then left click a Magic item to apply it.

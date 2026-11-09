@@ -1,0 +1,10 @@
+Item Class: Socketable
+Rarity: Currency
+Soul Core of Tacati
+--------
+Stack Size: 1/10
+--------
+Martial Weapons: 15% chance to Poison on Hit
+Armour: +11% to Chaos Resistance
+--------
+Place into an empty Augment Socket in a Martial Weapon or Armour to apply its effect.
