@@ -1,6 +1,6 @@
 # PoE 2 QuickTools — Architecture & Implementation Plan
 
-> **A high-performance, non-intrusive in-game overlay for Path of Exile 2.**  
+> **A high-performance, non-intrusive in-game overlay for Path of Exile 2.**
 > Combines the modifier filtering of **Exiled Exchange 2**, the speed and ergonomics of **Sidekick**, and the real-time economy & multi-currency arbitrage tracking of **poe.ninja**.
 
 ---
@@ -9,14 +9,18 @@
 
 1. **Strictly PoE 2 (Latest Active Challenge League):**
    - Dedicated exclusively to Path of Exile 2.
-   - Auto-detects the active challenge league (e.g. `Forbidden Rites`) on boot. Standard league is ignored.
+   - Auto-detects the active challenge league (e.g. `Forbidden Rites`) on boot using a two-source fallback:
+     1. **Primary:** `GET https://poe.ninja/poe2/api/economy/leagues` (no auth, simplest)
+     2. **Fallback:** `GET https://www.pathofexile.com/api/trade2/data/leagues` (no auth, authoritative)
+   - Filters out `Standard` — only the active challenge league is used.
 2. **100% Deterministic (Zero AI at Runtime):**
    - No external AI/LLM APIs, no token costs, and zero hallucinations.
-   - Uses pre-compiled stat definitions from `poe2db.tw`, fast regex parsing, and direct REST calls to official PoE 2 APIs.
-   - Instant response times (< 15 ms).
+   - Uses pre-compiled stat definitions from **RePoE PoE 2 fork** (`repoe-fork.github.io/poe2/` — provides `mods.json`, `stats.json`, `stat_translations.json`, `base_items.json`) and dynamically fetched trade stat IDs from the official `/api/trade2/data/stats` endpoint.
+   - Cache lookups < 15 ms; live trade API queries 200–800 ms with loading indicator.
 3. **Seamless Windows Click-Through Overlay:**
-   - Fullscreen borderless transparent Electron window.
+   - Uses `electron-overlay-window` (SnosMe/electron-overlay-window) to attach the Electron HWND directly to the PoE 2 game process for reliable z-ordering and rendering.
    - Mouse clicks pass directly through into PoE 2 when idle (`setIgnoreMouseEvents(true, { forward: true })`).
+   - Overlay is created with `focusable: false` and displayed via `showInactive()` to prevent stealing focus from the game.
    - Interactivity activates only when hovering an active overlay card or entering Pinned Mode (`P`).
 
 ---
@@ -24,62 +28,123 @@
 ## 2. Feature Specifications
 
 ### 2.1 Waystone Valuation & Live Market Calculation
+
 When you hover over any Waystone and trigger the hotkey (e.g. `Ctrl + D`):
-- **Deep Stat Parsing:** Extracts Map Tier (T1–T16), Rarity, Quality, and exact numeric rolls for:
-  - `+% Increased Quantity of Items Found` (Monster Quantity)
-  - `+% Increased Monster Effectiveness`
-  - `+% Increased Rarity of Items Found` (Drop Quality)
-  - `+% Increased Monster Pack Size`
-  - Explicit Modifiers (e.g. Area contains Breach, Extra packs, etc.)
-- **Direct Query to `pathofexile.com/trade2/search/poe2/[league]`:**
-  - Converts parsed values into official trade API filters (`map_tier`, `map_pack_size`, `map_iiq`, `explicit.stat_...` for Monster Effectiveness).
+
+- **Deep Stat Parsing (Dual-Format Support):**
+  - PoE 2 clipboard output differs based on the **"Advanced Mod Descriptions"** game setting. The parser handles both formats:
+    - **Advanced ON:** Shows tier names and roll ranges (e.g. `{ Prefix Modifier "Populated" } 33(29-35)% increased number of Monster Packs`)
+    - **Advanced OFF:** Shows flat text (e.g. `Monsters deal 16% increased Damage`)
+  - Extracts the **aggregated header values** (displayed as `(augmented)`) for user display:
+    - `Item Quantity: +48% (augmented)`
+    - `Item Rarity: +24% (augmented)`
+    - `Pack Size: +15% (augmented)`
+    - `Monster Effectiveness` (computed aggregate)
+  - Extracts the **individual explicit modifiers** (the actual affixes) for trade API queries:
+    - Prefixes (reward mods): `increased Magic Monsters`, `increased Rarity of Items found in this Area`, `increased number of Monster Packs`, `increased Item Quantity`, `Bonus Experience`
+    - Suffixes (challenge mods): `Extra Fire/Cold/Lightning damage`, `Monster speed buffs`, `Area hazards (Ignited Ground)`, `Cooldown recovery reduction`
+
+  > **Important:** Item Quantity, Item Rarity, Pack Size, and Monster Effectiveness are NOT standalone explicit modifiers — they are computed aggregates derived from the individual explicit mods. The trade API searches by individual explicit mod stat IDs, not by the aggregated header numbers.
+
+- **Direct Query to `pathofexile.com/api/trade2/search/poe2/[league]`:**
+  - Stat IDs are **dynamically resolved** on startup from `GET /api/trade2/data/stats` (never hardcoded, as numeric hashes change between game patches).
+  - Converts parsed explicit mod values into official trade API stat filters.
   - Fetches lowest active online listings to reflect what players are genuinely paying for those specific roll thresholds.
+
 - **Interactive Mod Toggles & Sliders (Exiled Exchange 2 Style):**
-  - Toggle any stat on/off with a single click.
-  - Adjust min/max roll range inputs to widen or narrow the search.
+  - Every explicit modifier displayed as a checkbox row with editable Min/Max inputs.
+  - Toggle any mod on/off with a single click to broaden or narrow the search.
+  - `[ + Add Custom Stat ]` button: searchable dropdown to add pseudo-stats not on the raw item text (e.g. `+#% Total Elemental Resistance`, `Item Level >= 82`, `Corrupted: No`).
+
+- **Monster Effectiveness Breakdown:**
+  - Calculates exact net multipliers from the confirmed formula (per `poe2db.tw` / `poe2way.com`):
+    - Per 1% Monster Effectiveness: `+1.0% More Monster Toughness (HP/Defenses)`, `+0.5% More XP Granted`, `+0.5% More Item Quantity Dropped`
+  - Displays as a clear breakdown card showing the trade-off between difficulty and rewards.
+
 - **Content Synergy Scoring:**
-  - Evaluates synergy scores (0–100) for **Breach**, **Abyss**, **Delirium**, and **Ritual** based on `poe2db.tw` scaling formulas.
-  - **Monster Effectiveness Breakdown:** Calculates exact net multipliers:
-    - `+0.5% More Drops` per 1% roll.
-    - `+0.5% More XP` per 1% roll.
-    - `+1.0% More Toughness (HP/Defenses)` per 1% roll.
+  - Evaluates weighted synergy scores (0–100) for **Breach**, **Abyss**, **Delirium**, and **Ritual**.
+  - **Scoring is labeled as "Community Estimate"** — no exact coefficients have been datamined for how Pack Size multiplies content spawns. Relative weightings are based on community testing consensus:
+    - **Ritual:** Pack Size is king (more monsters = more Tribute in the circle)
+    - **Breach:** Pack Size + Item Quantity scale splinter/catalyst drops
+    - **Delirium:** Pack Size + Monster Effectiveness maximize fog reward tiers
+    - **Abyss:** Rare Monster frequency prevents pits from closing early
+  - **Note:** Blight and Legion have FIXED spawns — Pack Size does NOT affect them.
+  - Weights are stored in a configurable `synergy-weights.json` so advanced users can tune coefficients.
 
 ### 2.2 Precursor Tablet In-Game Hover Check
-Hovering over any Precursor Tablet in your inventory or stash activates full valuation:
-- **Tablet Mechanics Supported:**
-  - `Breach Precursor Tablet`
-  - `Expedition Precursor Tablet`
-  - `Delirium Precursor Tablet`
-  - `Ritual Precursor Tablet`
-  - `Abyss Precursor Tablet`
-  - `Overseer's Tablet` & `Irradiated Tablet`
+
+Hovering over any Precursor Tablet in your inventory or stash and triggering the hotkey activates full valuation.
+
+- **Clipboard Detection:**
+  - Item Class in clipboard is `Tablets` (not `Precursor Tablets`).
+  - Base implicit line identifies the mechanic (e.g. `Adds an Otherworldly Breach to a Map`).
+  - `Uses remaining` appears as an implicit line (charges system).
+
+- **All 8 Tablet Types Supported:**
+  1. `Breach Precursor Tablet` — Otherworldly Breaches
+  2. `Expedition Precursor Tablet` — Kalguuran Expedition encounters
+  3. `Delirium Precursor Tablet` — Mirror of Delirium
+  4. `Ritual Precursor Tablet` — Ritual Altars
+  5. `Abyss Precursor Tablet` — Abysses / Abyss pits
+  6. `Temple Precursor Tablet` — Vaal Beacon / Incursion content
+  7. `Irradiated Tablet` — Increased area level, monster difficulty, item rarity, experience
+  8. `Overseer Tablet` — Empowers map bosses (extra mods, Azmeri Spirits)
+
 - **Market Valuation:**
-  - Parses explicit roll tiers (e.g. *+40% increased Clasped Hands*, *+35% Logbook Drops*) and charges remaining.
-  - Queries `pathofexile.com/trade2/search/poe2/[league]` for matching rolls.
+  - Parses explicit roll tiers and uses remaining.
+  - Queries `pathofexile.com/api/trade2/search/poe2/[league]` for matching tablet base type + explicit rolls.
+  - Filters by minimum `Uses Remaining` threshold to avoid depleted tablet scam listings.
   - Denominates price in **Chaos, Exalted, Vaal, and Divine**.
+
 - **Tower & Waystone Synergy Guidance:**
   - Displays Waystone mod slot requirements (1–2 mods = 1 slot, 3–5 mods = 2 slots, 6+ mods = 3 slots).
-  - Highlights optimal Waystone pairings (e.g. pair Breach Tablet with T15+ Waystone with >30% Pack Size).
+  - Highlights optimal Waystone pairings (e.g. pair Breach Tablet with T15+ Waystone with high Pack Size).
+  - Notes that filling all slots locks the map to only the chosen tablet types.
 
-### 2.3 Commodity Pricing & Multi-Currency Arbitrage
+- **"Jackpot" Modifier Highlights:**
+  - Identifies high-demand roll tiers (e.g. T1 `Breaches in Map have 2 additional Spawns`, T1 `Breach Monsters in Map have 15% increased Pack Size`).
+  - Displays premium above base tablet price.
+
+### 2.3 Rare & Unique Gear Valuation
+
+When you hover over weapons, armour, jewelry, or charms:
+
+- **Full Affix Parsing:** Extracts every prefix/suffix, tier, and numeric value.
+- **Interactive Overlay:** Checkboxes per mod, min/max roll sliders, `[ + Add Custom Stat ]` button.
+- **Live Trade Listings:** Queries official PoE 2 trade API with exact filters, shows top active listings with player online/AFK status.
+- **Unique Items:** Cross-references poe.ninja cache for instant pricing (no trade API needed).
+
+### 2.4 Commodity Pricing & Multi-Currency Display
+
 For all bulk items (Runes, Currencies, Essences, Uncut Gems, Soul Cores):
-- **Multi-Denomination:** Always displays prices in:
+
+- **Multi-Denomination (Always Shown):**
   - 🔸 **Chaos**
   - ⭐ **Exalted**
   - 🩸 **Vaal**
   - 💠 **Divine**
-- **Buy vs. Sell Spread:**
-  - Displays both **Buy Price** (instant purchase) and **Sell Price** (immediate liquidation) alongside the % arbitrage gap.
-- **24h & 7d Trend Sparkline:**
-  - Micro-chart embedded directly in the hover tooltip showing 7-day price trajectory.
-  - Trend indicators (`▲ +18.4%` / `▼ -12.1%`).
-- **One-Click poe.ninja Link:**
-  - Quick-button opens `https://poe.ninja/poe2/economy/[league]/[category]?name=[itemName]` in default browser.
 
-### 2.4 Dedicated Currency Conversion & Arbitrage Mini-HUD
-Summoned via dedicated hotkey (e.g. `Ctrl + W` or `F4`):
+- **Buy vs. Sell Spread:**
+  - Sourced from poe.ninja PoE 2 API `pay` and `receive` objects.
+  - Labeled as **"Exchange Buy Rate"** and **"Exchange Sell Rate"** (PoE 2 uses the automated in-game Currency Exchange, so spreads may be smaller than PoE 1 player-to-player trading).
+  - When spread is < 2%, displays a note: "Effectively single market rate."
+
+- **24h & 7d Trend Sparkline:**
+  - Micro SVG chart from poe.ninja's `sparkline.data` (7-element array of daily % changes) and `sparkline.totalChange`.
+  - Separate `paySparkLine` and `receiveSparkLine` for buy/sell trend divergence.
+  - Trend badges: `▲ +18.4%` (green) / `▼ -12.1%` (red).
+  - **Volume & Confidence:** Shows listing count so users can spot price fixers (3 listings vs. 1,000+ listings).
+
+- **One-Click poe.ninja Link:**
+  - Button opens `https://poe.ninja/poe2/economy/[league]/[category]?name=[itemName]` in default browser.
+
+### 2.5 Dedicated Currency Conversion & Arbitrage Mini-HUD
+
+Summoned via dedicated hotkey (e.g. `F4`):
+
 - **Real-Time Exchange Rates:**
-  - Displays instant Buy and Sell ratios + spread margin.
+  - Displays instant Buy and Sell ratios + spread margin from poe.ninja cache.
+
 - **Default Pairs:**
   - `Chaos ➔ Divine`
   - `Chaos ➔ Exalted`
@@ -87,93 +152,300 @@ Summoned via dedicated hotkey (e.g. `Ctrl + W` or `F4`):
   - `Exalted ➔ Divine`
   - `Vaal ➔ Exalted`
   - `Alchemy ➔ Exalted`
+
 - **Customizable Pair Manager:**
-  - Add any currency pair from dropdowns (`Regal`, `Gemcutter`, `Soul Cores`, `Runes`).
-  - Delete or reorder pairs. Saved locally to `config.json`.
-- **Arbitrage Flagger (`⚡`):** Highlights spreads exceeding 10% between instant buy and trade listings.
+  - `[ + Add Custom Currency Pair ]`: Choose any base + target currency from dropdowns.
+  - `🗑️` delete icon to remove pairs. Drag to reorder.
+  - Settings saved locally to config store.
+
+- **Arbitrage Flagger (`⚡`):** Highlights spreads exceeding 10%.
 
 ---
 
-## 3. System Architecture & Tech Stack
+## 3. Data Sources & API Integration
+
+### 3.1 poe.ninja PoE 2 Economy API (Primary Data Source)
+
+> **Handles ~70% of all price lookups with zero trade API cost.**
+
+- **Correct PoE 2 Endpoint (NOT the PoE 1 URL):**
+  ```
+  GET https://poe.ninja/poe2/api/economy/exchange/current/overview?league={league}&type={type}
+  ```
+  Types: `Currency`, `Fragments`, `Essences`, `Runes`, `Uncut Gems`, etc.
+
+- **Leagues Endpoint:**
+  ```
+  GET https://poe.ninja/poe2/api/economy/leagues
+  ```
+
+- **Response Structure:**
+  ```json
+  {
+    "lines": [{
+      "currencyTypeName": "...",
+      "chaosEquivalent": 42.5,
+      "pay": { "value": ..., "count": ... },
+      "receive": { "value": ..., "count": ... },
+      "paySparkLine": { "data": [0, -0.1, 0.2, 0.4], "totalChange": 0.4 },
+      "receiveSparkLine": { "data": [...], "totalChange": ... }
+    }]
+  }
+  ```
+
+- **Caching:** Data updates hourly on poe.ninja's side. App refreshes local cache every 10–15 minutes.
+- **No authentication required.** No rate limits beyond polite caching.
+
+### 3.2 Official PoE 2 Trade API (Secondary — For Rares, Waystones, Tablets)
+
+- **Search Endpoint:**
+  ```
+  POST https://www.pathofexile.com/api/trade2/search/poe2/{league}
+  ```
+
+- **Fetch Listings Endpoint:**
+  ```
+  GET https://www.pathofexile.com/api/trade2/fetch/{id1},{id2},...?query={search_id}
+  ```
+  Max 10 item IDs per fetch call (always batch to maximum).
+
+- **Supporting Data Endpoints (no auth required):**
+  - `GET /api/trade2/data/leagues` — active leagues
+  - `GET /api/trade2/data/stats` — all stat IDs with human-readable text (fetched on startup, cached)
+  - `GET /api/trade2/data/static` — base type definitions
+  - `GET /api/trade2/data/filters` — available filter categories
+
+- **Required Headers:**
+  ```
+  User-Agent: PoE2QuickTools/1.0 (contact@your-email.com)
+  Content-Type: application/json
+  Cookie: POESESSID=<optional>
+  ```
+  > **GGG blocks generic or missing User-Agent headers.**
+
+### 3.3 Rate Limiting Strategy
+
+GGG uses **dynamic multi-tier sliding window** rate limits. The app must handle these proactively:
+
+- **Response Headers to Parse:**
+  - `X-Rate-Limit-Ip`: Format `limit:interval:timeout` (e.g. `12:6:60` = max 12 requests per 6 seconds, 60-second penalty)
+  - `X-Rate-Limit-Ip-State`: Current usage counter (e.g. `3:6:0`)
+  - `X-Rate-Limit-Account` / `X-Rate-Limit-Account-State`: Same format, per-account (requires POESESSID)
+  - Multiple rules can be comma-separated (e.g. `12:6:60,45:60:120`)
+
+- **Rate Limit Manager (`rate-limiter.ts`):**
+  - Reads `X-Rate-Limit-*` headers from every response.
+  - Tracks all active sliding windows simultaneously.
+  - Proactively throttles requests before hitting any ceiling.
+  - On HTTP `429 Too Many Requests`: exponential backoff with jitter.
+  - Displays `RateLimitBanner.vue` in overlay when throttled ("Trade API throttled, retrying in Xs...").
+
+- **Throughput Maximization Strategies:**
+
+  | Strategy | Effect |
+  |---|---|
+  | **Use POESESSID** | Separate account-based rate bucket on top of IP bucket (effectively doubles headroom) |
+  | **poe.ninja as primary** | ~70% of lookups served from local cache (zero trade API cost) |
+  | **Batch fetch calls** | Always fetch 10 item IDs per `/fetch/` call (max allowed) |
+  | **Deduplicate searches** | Short-lived response cache prevents re-querying same item within 30s |
+  | **Dynamic header parsing** | Never hardcode limits — GGG adjusts them based on server load, especially during league launches |
+
+- **Realistic Usage:** During normal gameplay, a player cannot physically trigger more than 2–3 price checks per 6 seconds. Combined with poe.ninja caching, the rate limit is effectively never reached.
+
+### 3.4 POESESSID Configuration (Optional)
+
+**What it is:** A session cookie from the Path of Exile website that identifies your account to the trade API.
+
+**How to obtain it:**
+1. Log into [pathofexile.com](https://www.pathofexile.com) in your browser
+2. Press `F12` to open Developer Tools
+3. Go to **Application** tab (Chrome) or **Storage** tab (Firefox)
+4. Expand **Cookies** → click `https://www.pathofexile.com`
+5. Find the row named `POESESSID` and copy its **Value** (hex string like `3c17e9baf6e2a148f0e4f53c26751a28`)
+
+**Why it helps:**
+- Without POESESSID: IP-only rate bucket (shared with all tools on your network)
+- With POESESSID: Separate account-based rate bucket (higher effective throughput)
+
+**Security:**
+- Stored locally in `electron-store` (encrypted on disk)
+- Never transmitted anywhere except to `pathofexile.com` trade API requests
+- Displayed as masked dots (`●●●●●●`) in settings UI with toggle eye icon
+- Expires when you log out of the website or after ~30 days — just paste a new one
+
+**The app works fully without POESESSID.** This is purely an optional power-user setting for heavy traders.
+
+### 3.5 Static Game Data Source
+
+**RePoE PoE 2 Fork** (`repoe-fork.github.io/poe2/`):
+- `mods.json` — All modifier definitions, tiers, weights, tags
+- `stats.json` — Stat IDs and their properties
+- `stat_translations.json` — Human-readable stat text templates
+- `base_items.json` — All base item types
+
+These JSON files are datamined directly from PoE 2 game files (GGPK), regularly updated, and machine-readable. Bundled as static data in the app's `data/repoe/` directory, with periodic update checks.
+
+---
+
+## 4. System Architecture & Tech Stack
 
 ```
 poe2-quicktools/
 ├── electron/
-│   ├── main.ts                # Application lifecycle & transparent window creation
-│   ├── preload.ts             # Secure contextBridge exposing IPC API to renderer
-│   ├── overlay-manager.ts     # Screen clamping, click-through management, position logic
-│   ├── hotkey-service.ts      # Global input hook (uIOhook)
-│   ├── clipboard-service.ts   # Simulated Ctrl+C & raw item text extractor
+│   ├── main.ts                 # App lifecycle, electron-overlay-window setup
+│   ├── preload.ts              # Secure contextBridge (IPC API)
+│   ├── overlay-manager.ts      # electron-overlay-window integration, cursor anchoring
+│   ├── hotkey-service.ts       # uiohook-napi global hooks
+│   ├── clipboard-service.ts    # Ctrl+C simulation & clipboard reading
 │   ├── parsers/
-│   │   ├── item-parser.ts     # Regex parser for PoE 2 item blocks
-│   │   ├── waystone-parser.ts # Waystone tier, effectiveness, quant, rarity, pack size
-│   │   └── tablet-parser.ts   # Precursor Tablet base, explicit stats, charges
+│   │   ├── item-parser.ts      # Base parser (detects Item Class, dispatches to sub-parsers)
+│   │   ├── waystone-parser.ts  # Parses BOTH header aggregates AND individual explicit mods
+│   │   │                       # Handles Advanced Mod Descriptions ON and OFF formats
+│   │   ├── tablet-parser.ts    # Item Class: "Tablets", base mechanic, uses remaining, explicits
+│   │   ├── gear-parser.ts      # Rare/Unique equipment affixes
+│   │   └── commodity-parser.ts # Runes, Currencies, Essences, Gems
 │   ├── services/
-│   │   ├── trade-api.ts       # pathofexile.com/trade2/search API client
-│   │   ├── poe-ninja-api.ts   # poe.ninja PoE 2 economy client & background cache
-│   │   └── synergy-engine.ts  # poe2db.tw deterministic mechanics formulas
-│   └── config-store.ts        # User settings, shortcuts, custom currency pairs
+│   │   ├── trade-api.ts        # pathofexile.com/api/trade2/ client WITH rate limiter
+│   │   ├── trade-stats.ts      # Dynamic stat ID resolver (fetches /api/trade2/data/stats on startup)
+│   │   ├── poe-ninja-api.ts    # poe.ninja/poe2/api/economy/ client + background cache (10-15 min)
+│   │   ├── league-detector.ts  # Auto-detect active challenge league (poe.ninja + trade2 fallback)
+│   │   └── synergy-engine.ts   # Community-estimate weighted scoring (configurable weights)
+│   ├── rate-limiter.ts         # Sliding window rate limit manager (reads X-Rate-Limit-* headers)
+│   └── config-store.ts         # electron-store: shortcuts, POESESSID (encrypted), currency pairs
 │
-├── src/                       # Vue 3 Frontend (Vite + Tailwind CSS)
-│   ├── App.vue                # Overlay root container
+├── data/
+│   ├── repoe/                  # RePoE JSON snapshots (mods.json, stats.json, stat_translations.json)
+│   └── synergy-weights.json    # Configurable content synergy coefficients
+│
+├── src/                        # Vue 3 Frontend (Vite + Tailwind CSS)
+│   ├── App.vue                 # Overlay root container
 │   ├── components/
-│   │   ├── WaystoneCard.vue   # Waystone valuation, mod sliders, synergy scores
-│   │   ├── TabletCard.vue     # Precursor Tablet valuation & tower guidance
-│   │   ├── CommodityCard.vue  # Multi-currency prices (Chaos/Ex/Vaal/Div) & sparklines
-│   │   ├── GearPriceCard.vue  # Rare/Unique gear affix filter & live trade results
-│   │   ├── ConversionHUD.vue  # Currency arbitrage dashboard with Add/Remove
-│   │   └── SettingsModal.vue  # Custom shortcut manager & display configuration
-│   ├── stores/                # Pinia state stores
-│   └── assets/                # Dark PoE 2 theme stylesheets
+│   │   ├── WaystoneCard.vue    # Waystone valuation, mod sliders, synergy scores, effectiveness breakdown
+│   │   ├── TabletCard.vue      # Precursor Tablet valuation, tower guidance, jackpot highlights
+│   │   ├── CommodityCard.vue   # Multi-currency prices (Chaos/Ex/Vaal/Div) & sparklines
+│   │   ├── GearPriceCard.vue   # Rare/Unique gear affix filter & live trade results
+│   │   ├── ConversionHUD.vue   # Currency arbitrage dashboard with Add/Remove pairs
+│   │   ├── SettingsModal.vue   # Custom shortcuts, POESESSID input, display configuration
+│   │   └── RateLimitBanner.vue # Shows throttle status when trade API is rate-limited
+│   ├── stores/                 # Pinia state stores (currency rates, user pairs, cache)
+│   └── assets/                 # Dark PoE 2 theme stylesheets
 │
 ├── package.json
 ├── vite.config.ts
 └── tsconfig.json
 ```
 
+### Key Dependencies
+
+```json
+{
+  "dependencies": {
+    "electron-overlay-window": "^4.x",
+    "uiohook-napi": "^1.x",
+    "vue": "^3.x",
+    "pinia": "^2.x",
+    "electron-store": "^8.x"
+  },
+  "devDependencies": {
+    "electron": "^33.x",
+    "electron-builder": "^24.x",
+    "vite": "^5.x",
+    "@vitejs/plugin-vue": "^5.x",
+    "tailwindcss": "^3.x",
+    "typescript": "^5.x"
+  }
+}
+```
+
 ---
 
-## 4. In-Game Ergonomics & UI/UX
+## 5. In-Game Ergonomics & UI/UX
 
 1. **Smart Cursor Anchoring:**
    - Overlay spawns beside cursor, dynamically flipping if near screen edges to prevent off-screen rendering.
+
 2. **Two Interaction Modes:**
-   - **Quick-Peek Mode:** Spawns on hotkey (`Ctrl + D`), automatically dismisses when cursor moves away or `Esc` is tapped.
+   - **Quick-Peek Mode:** Spawns on hotkey, automatically dismisses when cursor moves away or `Esc` is tapped.
    - **Pinned Mode (`P` key):** Freezes overlay for editing mod checkboxes, dragging sliders, or copying trade whispers.
-3. **Custom Shortcut Management:**
+
+3. **Click-Through Management:**
+   - Default state: `win.setIgnoreMouseEvents(true, { forward: true })` — all clicks pass to PoE 2.
+   - When overlay card is active: `win.setIgnoreMouseEvents(false)` — enables interaction with checkboxes, sliders, buttons.
+   - Uses `focusable: false` and `win.showInactive()` to prevent stealing game focus.
+   - Hover detection via throttled `document.elementFromPoint()` + `mousemove` (avoids `mouseenter`/`mouseleave` desync during rapid mouse movement).
+
+4. **Custom Shortcut Management:**
    - `Price Check`: `Ctrl + D` (Default)
    - `Waystone / Tablet Check`: `Ctrl + X` (Default)
-   - `Currency Arbitrage HUD`: `Ctrl + W` (Default)
+   - `Currency Arbitrage HUD`: `F4` (Default)
    - `Direct poe.ninja Open`: `Ctrl + Alt + D` (Default)
+   - `Dismiss Overlay`: `Esc` (Default)
+   - All shortcuts fully rebindable in Settings.
+
+5. **Electron Overlay Window Configuration:**
+   ```javascript
+   // Main process — overlay window creation
+   const overlayWindow = new BrowserWindow({
+     transparent: true,
+     frame: false,
+     resizable: false,
+     skipTaskbar: true,
+     focusable: false,       // Critical: prevents stealing focus from PoE 2
+     webPreferences: {
+       preload: path.join(__dirname, 'preload.js'),
+       contextIsolation: true,
+     },
+   });
+   overlayWindow.setAlwaysOnTop(true, 'screen-saver');
+   // Use showInactive() instead of show() to avoid focus steal
+   overlayWindow.showInactive();
+   ```
+
+6. **Game Mode Requirement:** Path of Exile 2 must run in **Windowed Fullscreen (Borderless)**. Exclusive Fullscreen is not compatible with any overlay tool.
 
 ---
 
-## 5. Implementation Roadmap
+## 6. Implementation Roadmap
 
 ### Phase 1: Foundation & Overlay Window
 - Initialize Vite + Vue 3 + TypeScript + Tailwind CSS project with Electron.
-- Implement fullscreen transparent window with `alwaysOnTop: 'screen-saver'` and `win.setIgnoreMouseEvents(true, { forward: true })`.
-- Set up `uIOhook` for low-level global shortcut hooks.
+- Integrate `electron-overlay-window` for game process HWND attachment.
+- Implement `focusable: false` + `showInactive()` + `setIgnoreMouseEvents` click-through system.
+- Set up `uiohook-napi` for low-level global shortcut hooks.
+- Implement `config-store.ts` with `electron-store` for encrypted settings persistence.
 
-### Phase 2: PoE 2 Parsers & Local Database
-- Implement regex parsers for PoE 2 item formats:
-  - Currencies, Runes, Essences, Gems.
-  - Rare/Unique Equipment.
-  - Waystones (Pack Size, Quantity, Rarity, Monster Effectiveness).
-  - Precursor Tablets (Base mechanics, explicit rolls, charges).
-- Compile static lookup tables from `poe2db.tw` for mod IDs, tiers, and synergy formulas.
+### Phase 2: PoE 2 Parsers & Data Loading
+- Implement dual-format clipboard parsers (Advanced Mod Descriptions ON/OFF):
+  - `item-parser.ts` — Detect `Item Class` and dispatch to sub-parsers.
+  - `waystone-parser.ts` — Parse both aggregated header values AND individual explicit mods.
+  - `tablet-parser.ts` — Parse `Tablets` Item Class, base mechanic, uses remaining, explicits.
+  - `gear-parser.ts` — Rare/Unique equipment affixes with tier detection.
+  - `commodity-parser.ts` — Runes, Currencies, Essences, Gems.
+- Bundle RePoE JSON snapshots (`mods.json`, `stats.json`, `stat_translations.json`).
+- Implement dynamic stat ID resolver from `/api/trade2/data/stats` (cached on startup).
 
 ### Phase 3: Trade & Economy Integrations
-- Integrate `poe.ninja` PoE 2 Economy endpoints with background caching (multi-currency pricing across Chaos, Exalted, Vaal, Divine + 7-day sparkline).
-- Integrate official `pathofexile.com/trade2/search/poe2/[league]` query builder for Waystones, Tablets, and Rare items.
+- Implement poe.ninja PoE 2 API client (`/poe2/api/economy/exchange/current/overview`) with background caching (10–15 min refresh).
+- Implement official trade API client (`/api/trade2/search/poe2/[league]`) with:
+  - Rate limit manager (dynamic header parsing, sliding window tracking).
+  - Request queue with backpressure and exponential backoff on 429.
+  - Batch fetch (10 IDs per call).
+  - Short-lived response cache (30s deduplication).
+- Implement league auto-detection (poe.ninja primary, trade2 fallback).
+- Implement POESESSID optional configuration.
 
 ### Phase 4: UI Components & Ergonomics
-- Build `WaystoneCard.vue` with live market check and Breach/Abyss/Delirium/Ritual synergy ratings.
-- Build `TabletCard.vue` with tower advice and explicit roll valuation.
-- Build `CommodityCard.vue` with buy/sell arbitrage spread and sparklines.
-- Build `ConversionHUD.vue` with custom pair management.
-- Build `SettingsModal.vue` for user shortcut rebinding.
+- Build `WaystoneCard.vue` with live market check, mod toggles/sliders, Monster Effectiveness breakdown, and content synergy ratings.
+- Build `TabletCard.vue` with tower advice, uses remaining filter, jackpot roll highlights, and explicit roll valuation.
+- Build `CommodityCard.vue` with multi-currency buy/sell arbitrage spread, sparklines, volume/confidence indicators.
+- Build `GearPriceCard.vue` with affix checkboxes, min/max sliders, `+ Add Custom Stat`, and live trade listings.
+- Build `ConversionHUD.vue` with default pairs, custom pair management, and arbitrage flagging.
+- Build `SettingsModal.vue` with shortcut rebinding, POESESSID input (masked), and display configuration.
+- Build `RateLimitBanner.vue` for throttle status notification.
 
 ### Phase 5: Verification & Packaging
-- Test in-game on borderless fullscreen Path of Exile 2.
-- Package standalone Windows installer and portable `.exe` via electron-builder.
+- Test in-game on Borderless Windowed Path of Exile 2.
+- Verify click-through and focus behavior during alt-tab cycles.
+- Verify rate limiting under rapid price-check scenarios.
+- Verify clipboard parsing with both Advanced Mod Descriptions ON and OFF.
+- Package standalone Windows installer and portable `.exe` via `electron-builder`.
