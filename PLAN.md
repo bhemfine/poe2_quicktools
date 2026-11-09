@@ -405,47 +405,342 @@ poe2-quicktools/
 
 ---
 
-## 6. Implementation Roadmap
+## 6. Comprehensive Phased Implementation Roadmap
 
-### Phase 1: Foundation & Overlay Window
-- Initialize Vite + Vue 3 + TypeScript + Tailwind CSS project with Electron.
-- Integrate `electron-overlay-window` for game process HWND attachment.
-- Implement `focusable: false` + `showInactive()` + `setIgnoreMouseEvents` click-through system.
-- Set up `uiohook-napi` for low-level global shortcut hooks.
-- Implement `config-store.ts` with `electron-store` for encrypted settings persistence.
+> **Agent Resumption Protocol:**  
+> Any agent resuming work must:
+> 1. Check the **Phase Status Tracker** below to find the current active phase.
+> 2. Run the **Verification Command** of the prior phase to ensure the workspace is in a healthy, passing state.
+> 3. Implement the phase tasks strictly adhering to the file paths and interface contracts specified.
+> 4. Execute the phase's **Definition of Done (DoD) Verification Commands**.
+> 5. Update the Phase Status Tracker to `[x]` and commit with the provided conventional commit message.
 
-### Phase 2: PoE 2 Parsers & Data Loading
-- Implement dual-format clipboard parsers (Advanced Mod Descriptions ON/OFF):
-  - `item-parser.ts` — Detect `Item Class` and dispatch to sub-parsers.
-  - `waystone-parser.ts` — Parse both aggregated header values AND individual explicit mods.
-  - `tablet-parser.ts` — Parse `Tablets` Item Class, base mechanic, uses remaining, explicits.
-  - `gear-parser.ts` — Rare/Unique equipment affixes with tier detection.
-  - `commodity-parser.ts` — Runes, Currencies, Essences, Gems.
-- Bundle RePoE JSON snapshots (`mods.json`, `stats.json`, `stat_translations.json`).
-- Implement dynamic stat ID resolver from `/api/trade2/data/stats` (cached on startup).
+### Phase Status Tracker
 
-### Phase 3: Trade & Economy Integrations
-- Implement poe.ninja PoE 2 API client (`/poe2/api/economy/exchange/current/overview`) with background caching (10–15 min refresh).
-- Implement official trade API client (`/api/trade2/search/poe2/[league]`) with:
-  - Rate limit manager (dynamic header parsing, sliding window tracking).
-  - Request queue with backpressure and exponential backoff on 429.
-  - Batch fetch (10 IDs per call).
-  - Short-lived response cache (30s deduplication).
-- Implement league auto-detection (poe.ninja primary, trade2 fallback).
-- Implement POESESSID optional configuration.
+| Phase | Milestone Name | Status | Lead Artifact / Output |
+|---|---|---|---|
+| **Phase 0** | Project Scaffolding & Build Pipeline | `[ ] NOT STARTED` | Vite + Vue 3 + Electron + Vitest scaffold running |
+| **Phase 1** | Transparent Overlay & Global Input Hooks | `[ ] NOT STARTED` | Borderless click-through overlay with `uiohook-napi` |
+| **Phase 2** | Deterministic Parsers & Game Data | `[ ] NOT STARTED` | Dual-format Waystone, Tablet & Gear parsers + Vitest suite |
+| **Phase 3** | Network Services, Caching & Rate Limiting | `[ ] NOT STARTED` | poe.ninja PoE 2 client, trade2 rate-limiter & stat resolver |
+| **Phase 4** | In-Game Overlay UI Components | `[ ] NOT STARTED` | WaystoneCard, TabletCard, CommodityCard, ConversionHUD |
+| **Phase 5** | E2E In-Game Polish, Stress Testing & Packaging | `[ ] NOT STARTED` | Standalone portable `.exe` + verified in-game workflow |
 
-### Phase 4: UI Components & Ergonomics
-- Build `WaystoneCard.vue` with live market check, mod toggles/sliders, Monster Effectiveness breakdown, and content synergy ratings.
-- Build `TabletCard.vue` with tower advice, uses remaining filter, jackpot roll highlights, and explicit roll valuation.
-- Build `CommodityCard.vue` with multi-currency buy/sell arbitrage spread, sparklines, volume/confidence indicators.
-- Build `GearPriceCard.vue` with affix checkboxes, min/max sliders, `+ Add Custom Stat`, and live trade listings.
-- Build `ConversionHUD.vue` with default pairs, custom pair management, and arbitrage flagging.
-- Build `SettingsModal.vue` with shortcut rebinding, POESESSID input (masked), and display configuration.
-- Build `RateLimitBanner.vue` for throttle status notification.
+---
 
-### Phase 5: Verification & Packaging
-- Test in-game on Borderless Windowed Path of Exile 2.
-- Verify click-through and focus behavior during alt-tab cycles.
-- Verify rate limiting under rapid price-check scenarios.
-- Verify clipboard parsing with both Advanced Mod Descriptions ON and OFF.
-- Package standalone Windows installer and portable `.exe` via `electron-builder`.
+### Phase 0: Project Scaffolding & Build Pipeline
+
+#### 0.1 Objectives
+Create a rock-solid, type-safe development environment with Electron 33+, Vite 5+, Vue 3, TypeScript, Tailwind CSS, and Vitest. Ensure clean build, lint, and test scripts.
+
+#### 0.2 Target File Tree
+```
+poe2-quicktools/
+├── electron/
+│   ├── main.ts              # Minimal bootstrap
+│   └── preload.ts           # Basic IPC bridge
+├── src/
+│   ├── App.vue              # Base shell
+│   ├── main.ts              # Vue app entry
+│   └── assets/main.css      # Tailwind base styles
+├── tests/
+│   └── setup.ts             # Vitest test setup
+├── index.html
+├── package.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+├── tailwind.config.js
+└── postcss.config.js
+```
+
+#### 0.3 Detailed Tasks
+1. **Package Setup:** Initialize `package.json` with scripts:
+   - `"dev"`: Runs Vite dev server + launches Electron.
+   - `"build"`: Compiles TypeScript and packages renderer via Vite.
+   - `"test"`: Runs Vitest in watch/run mode.
+   - `"typecheck"`: Runs `vue-tsc --noEmit`.
+2. **TypeScript & Vite Config:**
+   - Configure path aliases (`@/` -> `src/`, `@electron/` -> `electron/`).
+   - Configure `vite-plugin-electron` or custom concurrent dev script for hot module replacement (HMR) in renderer.
+3. **Tailwind CSS Setup:**
+   - Configure dark PoE 2 color palette (slate backgrounds `#0f1115`, gold `#d4a373`, currency purple `#9b5de5`, health red `#e63946`).
+4. **Test Harness Setup:**
+   - Configure Vitest with JSDOM environment for unit testing parsers and components without running Electron.
+
+#### 0.4 Definition of Done (DoD) & Verification
+- [ ] `npm run typecheck` exits code `0` with zero TypeScript errors.
+- [ ] `npm run test` runs and passes basic sanity test.
+- [ ] `npm run build` generates clean outputs in `dist/` and `dist-electron/`.
+- **Commit:** `feat(setup): initialize vite electron vue3 typescript tailwind test pipeline`
+
+---
+
+### Phase 1: Transparent Overlay Architecture & Global Input Hooking
+
+#### 1.1 Objectives
+Implement the native Windows click-through transparent overlay window and global input interception that functions flawlessly while Path of Exile 2 is focused in Borderless Windowed mode.
+
+#### 1.2 Target File Tree
+```
+electron/
+├── overlay-manager.ts     # HWND attachment, sizing, screen-clamping, focusless display
+├── hotkey-service.ts      # uiohook-napi global listener & shortcut dispatcher
+├── clipboard-service.ts   # Robotic Ctrl+C trigger & clipboard text extractor
+└── main.ts                # App lifecycle wiring & IPC handlers
+```
+
+#### 1.3 Detailed Tasks
+1. **Window Creation & Properties:**
+   - Window flags: `transparent: true`, `frame: false`, `resizable: false`, `skipTaskbar: true`, `focusable: false`.
+   - Set `alwaysOnTop: 'screen-saver'` to sit above the game.
+   - Attach to PoE 2 window bounds dynamically (via `electron-overlay-window` or screen dimension detection).
+2. **Focusless Activation (`showInactive`):**
+   - Ensure the window is shown with `win.showInactive()` so PoE 2 does not lose operating system focus or trigger game pause.
+3. **Click-Through Toggling (`setIgnoreMouseEvents`):**
+   - Idle state: `win.setIgnoreMouseEvents(true, { forward: true })`. All clicks pass directly through to PoE 2.
+   - Interactive state (card active or pinned): `win.setIgnoreMouseEvents(false)`. Clicks engage with sliders and checkboxes.
+   - IPC endpoints: `overlay:set-interactive(boolean)`.
+4. **Global Input Interception (`uiohook-napi`):**
+   - Register global listeners for:
+     - `Ctrl + D` -> Trigger price check.
+     - `Ctrl + X` -> Trigger Waystone/Tablet check.
+     - `F4` -> Toggle Currency Conversion HUD.
+     - `Esc` -> Dismiss overlay.
+     - `P` -> Toggle Pinned Mode.
+5. **Simulated Clipboard Capture (`clipboard-service.ts`):**
+   - On price check hotkey: programmatically synthesize `Ctrl + C` (using `robotjs`, `nut-js`, or PowerShell/Windows API simulation), wait 30ms, and read `clipboard.readText()`.
+
+#### 1.4 Definition of Done (DoD) & Verification
+- [ ] Pressing `Ctrl + D` anywhere in Windows logs the captured clipboard text to Electron console.
+- [ ] Overlay window renders on top of a game or browser without stealing active window focus.
+- [ ] Mouse clicks fall through to underlying windows when idle, but register on overlay buttons when active.
+- **Commit:** `feat(overlay): implement transparent click-through window and uiohook global input`
+
+---
+
+### Phase 2: Deterministic Parsers & Game Data (Zero AI Engine)
+
+#### 2.1 Objectives
+Build high-performance, deterministic regular expression parsers for all PoE 2 item types, supporting both "Advanced Mod Descriptions" ON and OFF. Implement the Monster Effectiveness breakdown and content synergy calculation engine.
+
+#### 2.2 Target File Tree
+```
+electron/parsers/
+├── item-parser.ts         # Master dispatcher inspecting 'Item Class' and 'Rarity'
+├── waystone-parser.ts     # Dual-format parser: aggregated header + explicit affixes
+├── tablet-parser.ts       # Base type (Breach, Ritual, etc.), charges, explicit rolls
+├── gear-parser.ts         # Equipment affixes, roll brackets, implicit/explicit
+└── commodity-parser.ts    # Runes, Currencies, Essences, Uncut Gems
+electron/services/
+├── synergy-engine.ts      # Deterministic formulas for Breach, Ritual, Delirium, Abyss
+└── effectiveness-math.ts  # Monster Effectiveness toughness/XP/drop multipliers
+data/
+├── repoe/                 # Snapshot of RePoE PoE 2 JSON files
+└── synergy-weights.json   # Configurable weights for content scoring
+tests/parsers/
+├── waystone-parser.spec.ts
+├── tablet-parser.spec.ts
+└── commodity-parser.spec.ts
+```
+
+#### 2.3 Detailed Tasks
+1. **Master Item Parser Dispatcher (`item-parser.ts`):**
+   - Parse raw clipboard text delimited by `--------`.
+   - Read `Item Class: <Class>` and `Rarity: <Rarity>`.
+   - Dispatch to dedicated sub-parsers.
+2. **Waystone Parser (`waystone-parser.ts`):**
+   - Extract Tier (1-16), Area Level, Quality.
+   - Extract Aggregated Header values: `Item Quantity: +X% (augmented)`, `Item Rarity: +X% (augmented)`, `Pack Size: +X% (augmented)`, `Monster Effectiveness: +X%`.
+   - Extract Individual Explicit Mods:
+     - Handle Advanced ON: `{ Prefix Modifier "Name" } X(Min-Max)% <text>`.
+     - Handle Advanced OFF: `X% <text>`.
+3. **Precursor Tablet Parser (`tablet-parser.ts`):**
+   - Match `Item Class: Tablets`.
+   - Detect base mechanic from implicit line: `Adds an Otherworldly Breach to a Map`, `Adds a Kalguuran Expedition`, etc.
+   - Extract `X uses remaining`.
+   - Extract explicit modifier tiers and rolls.
+4. **Effectiveness Math & Synergy Engine:**
+   - Implement `calculateEffectiveness(effectivenessPercent)`:
+     - `toughnessMultiplier = 1 + (effectivenessPercent * 0.01)`
+     - `xpMultiplier = 1 + (effectivenessPercent * 0.005)`
+     - `quantityMultiplier = 1 + (effectivenessPercent * 0.005)`
+   - Implement `calculateSynergies(waystoneData, weights)`:
+     - Calculates 0-100 scores for Breach, Ritual, Delirium, Abyss based on Pack Size, Quantity, Rarity, and specific mechanics.
+5. **Comprehensive Vitest Suite:**
+   - Create real PoE 2 clipboard mock fixtures for:
+     - Rare T15 Waystone (Advanced ON & OFF)
+     - Breach Precursor Tablet with 10 uses remaining
+     - Rune of the Horde
+     - Rare Regicide Armour with multiple affixes
+
+#### 2.4 Definition of Done (DoD) & Verification
+- [ ] `npm run test` executes all parser test suites with 100% pass rate.
+- [ ] All edge cases (corrupted items, un-augmented waystones, 0 uses tablets) parsed without runtime throws.
+- **Commit:** `feat(parser): add dual-format waystone tablet and gear deterministic parsers with vitest suite`
+
+---
+
+### Phase 3: Network Services, Caching & Dynamic Rate Limiting
+
+#### 3.1 Objectives
+Build resilient network clients for poe.ninja PoE 2 Economy and the official PoE 2 Trade API. Implement dynamic sliding-window rate limiting, in-memory caching, and encrypted local config persistence.
+
+#### 3.2 Target File Tree
+```
+electron/services/
+├── league-detector.ts     # Dynamic active challenge league resolver
+├── poe-ninja-api.ts       # /poe2/api/economy/exchange/ client + 15m memory cache
+├── trade-stats.ts         # Dynamic trade stat ID resolver from /api/trade2/data/stats
+├── trade-api.ts           # Search & fetch client with batching (10 IDs)
+├── rate-limiter.ts        # X-Rate-Limit header sliding-window queue & backpressure
+└── config-store.ts        # electron-store for encrypted POESESSID and user preferences
+tests/services/
+├── rate-limiter.spec.ts
+└── poe-ninja.spec.ts
+```
+
+#### 3.3 Detailed Tasks
+1. **League Auto-Detection (`league-detector.ts`):**
+   - Query primary: `GET https://poe.ninja/poe2/api/economy/leagues`.
+   - Fallback query: `GET https://www.pathofexile.com/api/trade2/data/leagues`.
+   - Filter out `Standard` and cache active league ID (e.g. `Forbidden Rites`).
+2. **poe.ninja Client (`poe-ninja-api.ts`):**
+   - Implement `GET https://poe.ninja/poe2/api/economy/exchange/current/overview?league={league}&type={type}`.
+   - Cache results in memory with a 15-minute TTL.
+   - Compute multi-currency conversion table across Chaos, Exalted, Vaal, Divine.
+   - Extract 7-day sparklines (`paySparkLine`, `receiveSparkLine`, `sparkline.totalChange`).
+3. **Dynamic Trade Stat Resolver (`trade-stats.ts`):**
+   - Fetch `GET https://www.pathofexile.com/api/trade2/data/stats` on startup.
+   - Index by text pattern to map human-readable mods (e.g. `increased Monster Pack Size`) to current patch stat IDs.
+4. **Sliding-Window Rate Limiter (`rate-limiter.ts`):**
+   - Parse `X-Rate-Limit-Ip`, `X-Rate-Limit-Ip-State`, `X-Rate-Limit-Account`, `X-Rate-Limit-Account-State`.
+   - Maintain queue with delay throttling when usage exceeds 80% of window allowance.
+   - Handle HTTP 429 with exponential backoff and dispatch IPC event to show `RateLimitBanner`.
+5. **Official Trade Search & Batch Fetch (`trade-api.ts`):**
+   - Construct queries for Waystones, Tablets, and Rare items.
+   - Attach mandatory descriptive `User-Agent`.
+   - Attach optional `Cookie: POESESSID=...` from config store.
+   - Batch fetch: request 10 item IDs per `/fetch/` call.
+   - 30-second in-memory deduplication cache.
+6. **Encrypted Config Store (`config-store.ts`):**
+   - Store custom currency pairs, shortcut rebinds, and encrypted POESESSID via `electron-store`.
+
+#### 3.4 Definition of Done (DoD) & Verification
+- [ ] Vitest mocks rate limit headers (`12:6:60`) and proves the rate limiter throttles before exceeding limits.
+- [ ] poe.ninja client successfully parses multi-currency buy/sell rates and sparkline arrays.
+- [ ] Config store safely encrypts and retrieves sensitive keys.
+- **Commit:** `feat(api): add poe-ninja client sliding-window trade rate-limiter and league detector`
+
+---
+
+### Phase 4: In-Game Overlay UI Components & Ergonomics
+
+#### 4.1 Objectives
+Build high-contrast, non-intrusive Vue 3 components matching Path of Exile 2 aesthetics. Ensure snappy interactions, cursor anchoring, and keyboard accessibility.
+
+#### 4.2 Target File Tree
+```
+src/
+├── stores/
+│   ├── overlay.ts         # Coordinates, active card type, pinned state
+│   ├── economy.ts         # poe.ninja cached rates, conversion table
+│   └── settings.ts        # Shortcuts, POESESSID, user pairs
+├── components/
+│   ├── WaystoneCard.vue   # Aggregates, mod toggles/sliders, synergy ratings, effectiveness
+│   ├── TabletCard.vue     # Tablet base, explicit roll tiers, tower slot recommendations
+│   ├── CommodityCard.vue  # Multi-currency (Chaos/Ex/Vaal/Div), buy/sell spread, sparklines
+│   ├── GearPriceCard.vue  # Checkboxes, min/max inputs, "+ Add Stat", trade listings
+│   ├── ConversionHUD.vue  # Quick arbitrage dashboard, custom pair manager
+│   ├── SettingsModal.vue  # Rebindable shortcuts, masked POESESSID input
+│   └── RateLimitBanner.vue# Yellow/red warning banner when trade API is throttled
+├── App.vue                # Root view, cursor clamping, escape listener
+└── assets/main.css
+```
+
+#### 4.3 Detailed Tasks
+1. **Dynamic Cursor Positioning & Clamping:**
+   - Spawn overlay adjacent to cursor (`x + 20px`, `y + 20px`).
+   - Clamp to viewport: if `x + cardWidth > window.innerWidth`, flip to `x - cardWidth - 20px`. Same for `y`.
+2. **WaystoneCard.vue:**
+   - Render header aggregates (Pack Size, Quantity, Rarity, Effectiveness).
+   - Render expandable explicit mod list with checkboxes and Min/Max numeric inputs.
+   - Render Content Synergy scores (Breach, Ritual, Delirium, Abyss) with color badges (S-Tier Gold, A-Tier Purple, etc.).
+   - Render Monster Effectiveness breakdown (+X% Toughness vs +Y% Quant/XP).
+3. **TabletCard.vue:**
+   - Display Tablet mechanic base icon, uses remaining, and explicit roll tiers.
+   - Display Waystone synergy requirement (e.g. "Requires Waystone with 3-5 mods for 2 tablet slots").
+   - Display active market prices in Chaos, Exalted, Vaal, Divine.
+4. **CommodityCard.vue:**
+   - Display Buy vs Sell prices across Chaos, Exalted, Vaal, Divine.
+   - Display 24h & 7d % trend badges and mini SVG sparkline chart.
+   - Render "Open on poe.ninja" button with external browser launch.
+5. **ConversionHUD.vue:**
+   - Dedicated modal triggered by `F4`.
+   - Render default pairs (`Chaos ⇄ Div`, `Chaos ⇄ Ex`, `Ex ⇄ Div`, `Vaal ➔ Ex`, `Alc ➔ Ex`).
+   - Provide `[ + Add Custom Pair ]` dropdown dialog and `🗑️` delete action.
+   - Flag arbitrage opportunities (`⚡ Spread > 10%`).
+6. **SettingsModal.vue:**
+   - Keybind recorder to rebind shortcuts.
+   - Masked POESESSID input with show/hide toggle.
+   - Dark mode PoE 2 aesthetic.
+
+#### 4.4 Definition of Done (DoD) & Verification
+- [ ] All components render with zero console warnings in development mode.
+- [ ] Hovering over mock Waystone, Tablet, Commodity, and Gear renders respective cards cleanly.
+- [ ] Conversion HUD allows adding and deleting custom currency pairs with state persisted.
+- [ ] Pressing `Esc` or clicking outside dismisses unpinned overlay.
+- **Commit:** `feat(ui): implement poe2 themed waystone tablet commodity and conversion overlay components`
+
+---
+
+### Phase 5: E2E In-Game Polish, Stress Testing & Packaging
+
+#### 5.1 Objectives
+Perform end-to-end integration tests in real Path of Exile 2 gameplay (Borderless Windowed). Verify anti-flicker stability, rate-limit defense under rapid hotkey spam, and build standalone release executables.
+
+#### 5.2 Target File Tree
+```
+poe2-quicktools/
+├── electron-builder.yml   # Windows packaging configuration
+├── build/                 # App icons (icon.ico, 256x256 png)
+└── dist/                  # Packaged release binaries
+```
+
+#### 5.3 Detailed Tasks
+1. **In-Game Overlay Verification:**
+   - Test in PoE 2 (Windowed Fullscreen).
+   - Test alt-tabbing: verify overlay does not minimize or lose z-order above the game.
+   - Test interaction toggle: verify dragging sliders does not pass accidental clicks to the game character.
+2. **Rate Limit Stress Testing:**
+   - Rapidly press `Ctrl + D` on 20 items in 5 seconds.
+   - Verify `RateLimitBanner` displays throttling notice gracefully without triggering HTTP 429 lockout.
+3. **Dual Clipboard Compatibility Test:**
+   - Verify parsing with in-game setting "Advanced Mod Descriptions" toggled ON and OFF.
+4. **Standalone Packaging:**
+   - Configure `electron-builder` for Windows (`target: ['nsis', 'portable']`).
+   - Produce portable `.exe` in `dist/`.
+   - Verify portable executable runs on a clean Windows machine without Node.js installed.
+
+#### 5.4 Definition of Done (DoD) & Verification
+- [ ] Portable `.exe` launches, captures clipboard from PoE 2, displays overlay, and closes cleanly.
+- [ ] Rate limit manager successfully absorbs rapid querying without IP ban.
+- [ ] All tests in `npm run test` pass with 0 failures.
+- **Commit:** `chore(release): configure electron-builder packaging and finalize v1.0.0 release pipeline`
+
+---
+
+## 7. Next Immediate Action for Implementing Agent
+
+To begin implementation right away, start with **Phase 0**:
+```bash
+# Verify environment
+node -v
+npm -v
+git status
+
+# Execute Phase 0 setup:
+npm init -y
+# Install Vite, Electron, Vue 3, TypeScript, Tailwind, Vitest
+```
+
