@@ -36,6 +36,8 @@ export const settingsSchema = z.object({
   restoreClipboard: z.boolean().catch(true),
   league: z.string().nullable().catch(null),
   uiScale: z.number().min(75).max(150).catch(100),
+  /** New cards start pinned: they stay open until Esc, Close or the next price check. */
+  pinCards: z.boolean().catch(true),
   currencyOrder: z
     .array(z.enum(CURRENCIES))
     .length(4)

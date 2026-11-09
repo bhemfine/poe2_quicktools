@@ -28,14 +28,14 @@ export const useOverlayStore = defineStore('overlay', () => {
     hasAccess: true,
   })
 
-  function showItem(e: ItemTextEvent): void {
+  function showItem(e: ItemTextEvent, pinned = false): void {
     card.value = {
       id: nextId++,
       text: e.text,
       anchor: e.cursor,
       pressedAt: e.pressedAt,
       shownAt: performance.timeOrigin + performance.now(),
-      pinned: false,
+      pinned,
     }
   }
 

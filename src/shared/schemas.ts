@@ -104,17 +104,10 @@ export const tradeFetchSchema = z.object({
             lastCharacterName: z.string().optional(),
           }),
         }),
-        item: z
-          .object({
-            name: z.string().optional(),
-            typeLine: z.string().optional(),
-            baseType: z.string().optional(),
-            ilvl: z.number().optional(),
-            corrupted: z.boolean().optional(),
-            explicitMods: z.array(z.string()).optional(),
-            implicitMods: z.array(z.string()).optional(),
-          })
-          .passthrough(),
+        // Listing cards only use price, seller and whisper. The item itself is not validated:
+        // trade2 sends mods as objects, not strings, and checking unused fields only adds ways
+        // to break on a patch.
+        item: z.record(z.string(), z.unknown()),
       })
       .nullable(),
   ),

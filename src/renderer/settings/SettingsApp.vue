@@ -314,6 +314,14 @@ const ninjaErrors = computed(() => Object.entries(economy.status.ninjaErrors))
         />
         {{ s.uiScale }}%
       </label>
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          :checked="s.pinCards"
+          @change="settingsStore.update({ pinCards: ($event.target as HTMLInputElement).checked })"
+        />
+        Keep price cards open until I close them (otherwise they close when the mouse moves away)
+      </label>
       <div>
         Currency order
         <ol class="mt-1 flex gap-2">

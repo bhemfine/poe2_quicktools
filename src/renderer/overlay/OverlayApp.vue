@@ -44,7 +44,7 @@ onMounted(async () => {
   await Promise.all([settingsStore.init(), economy.init()])
   store.state = await api.invoke('overlay:get-state')
   unsubscribe.push(
-    api.on('item-text', (e) => store.showItem(e)),
+    api.on('item-text', (e) => store.showItem(e, settingsStore.settings.pinCards)),
     api.on('item-text-timeout', () =>
       store.showNotice({
         level: 'warn',

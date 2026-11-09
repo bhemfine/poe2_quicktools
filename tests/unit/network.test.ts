@@ -7,6 +7,7 @@ import {
   ninjaItemOverviewSchema,
   parseOrThrow,
   SchemaError,
+  tradeFetchSchema,
   tradeFiltersSchema,
   tradeItemsSchema,
   tradeLeaguesSchema,
@@ -51,6 +52,30 @@ describe('contract: schema drift fails loudly', () => {
     expect(() => parseOrThrow(ninjaExchangeSchema, drifted, 'poe.ninja Currency')).toThrow(
       /lines\.0\.primaryValue/,
     )
+  })
+
+  it('trade fetch with mods as objects (seen live in PoE 2, 9 Nov 2026)', () => {
+    const body = {
+      result: [
+        {
+          id: 'abc',
+          listing: {
+            whisper: '@seller hi',
+            price: { amount: 3, currency: 'exalted', type: '~price' },
+            account: { name: 'seller', online: { league: 'Runes of Aldur' } },
+          },
+          item: {
+            typeLine: 'Waystone (Tier 15)',
+            explicitMods: [{ name: '', tier: 'T1', magnitudes: [{ hash: 'x', min: 1, max: 2 }] }],
+          },
+        },
+        null,
+      ],
+    }
+    expect(() => parseOrThrow(tradeFetchSchema, body, 'fetch')).not.toThrow()
+    expect(() =>
+      parseOrThrow(tradeFetchSchema, { result: [{ id: 'a', item: {} }] }, 'fetch'),
+    ).toThrow(SchemaError)
   })
 
   it('trade stats without entries', () => {
