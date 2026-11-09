@@ -2,5 +2,19 @@
 
 html,
 body {
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+html.route-settings,
+html.route-settings body {
+  overflow: auto;
   @apply bg-neutral-900 text-neutral-100;
+}
+
+/* Overlay cards: dark, high contrast, legible at any DPI. */
+.qt-card {
+  @apply rounded-lg border border-neutral-600 bg-neutral-900/95 text-neutral-100 shadow-xl;
 }

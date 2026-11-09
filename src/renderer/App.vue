@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import AboutPanel from './components/AboutPanel.vue'
+import { defineAsyncComponent } from 'vue'
+
+const route = location.hash === '#overlay' ? 'overlay' : 'settings'
+document.documentElement.classList.add(`route-${route}`)
+
+const OverlayApp = defineAsyncComponent(() => import('./overlay/OverlayApp.vue'))
+const SettingsApp = defineAsyncComponent(() => import('./settings/SettingsApp.vue'))
 </script>
 
 <template>
-  <main class="mx-auto max-w-2xl p-6">
-    <h1 class="text-2xl font-semibold">PoE 2 QuickTools</h1>
-    <p class="mt-1 text-sm text-neutral-400">
-      Scaffold build (M0). The in-game overlay arrives in M1.
-    </p>
-    <AboutPanel class="mt-6" />
-  </main>
+  <OverlayApp v-if="route === 'overlay'" />
+  <SettingsApp v-else />
 </template>

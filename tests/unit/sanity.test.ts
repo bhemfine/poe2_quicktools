@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { version } from '../../package.json'
 import { buildUserAgent, USER_AGENT } from '../../src/main/net/http'
-import { INVOKE_CHANNELS, isInvokeChannel } from '../../src/shared/ipc'
+import { INVOKE_CHANNELS, isAllowedExternalUrl, isInvokeChannel } from '../../src/shared/ipc'
 
 describe('User-Agent', () => {
   it('matches the format agreed in BUILD_PLAN', () => {
@@ -22,5 +22,13 @@ describe('IPC allow-list', () => {
     expect(isInvokeChannel('app:quit')).toBe(false)
     expect(isInvokeChannel(42)).toBe(false)
     expect(isInvokeChannel(undefined)).toBe(false)
+  })
+
+  it('only opens https links to poe.ninja and pathofexile.com', () => {
+    expect(isAllowedExternalUrl('https://poe.ninja/poe2/economy/x')).toBe(true)
+    expect(isAllowedExternalUrl('https://www.pathofexile.com/trade2/search/poe2/x')).toBe(true)
+    expect(isAllowedExternalUrl('http://poe.ninja/')).toBe(false)
+    expect(isAllowedExternalUrl('https://evil.example/poe.ninja')).toBe(false)
+    expect(isAllowedExternalUrl('file:///C:/Windows')).toBe(false)
   })
 })

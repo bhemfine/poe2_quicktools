@@ -1,0 +1,1742 @@
+{
+  "economyLeagues": [
+    {
+      "name": "Forbidden Rites",
+      "url": "forbiddenrites",
+      "displayName": "Forbidden Rites",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Runes of Aldur",
+      "url": "runesofaldur",
+      "displayName": "Runes of Aldur",
+      "hardcore": false,
+      "indexed": true
+    },
+    {
+      "name": "HC Forbidden Rites",
+      "url": "forbiddenriteshc",
+      "displayName": "HC Forbidden Rites",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "HC Runes of Aldur",
+      "url": "runesofaldurhc",
+      "displayName": "HC Runes of Aldur",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "Standard",
+      "url": "standard",
+      "displayName": "Standard",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Hardcore",
+      "url": "hardcore",
+      "displayName": "Hardcore",
+      "hardcore": true,
+      "indexed": false
+    }
+  ],
+  "oldEconomyLeagues": [],
+  "snapshotVersions": [
+    {
+      "url": "forbiddenrites",
+      "name": "Forbidden Rites",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-9"
+      ],
+      "version": "0433-20261109-41098",
+      "snapshotName": "forbidden-rites",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "runesofaldur",
+      "name": "Runes of Aldur",
+      "timeMachineLabels": [
+        "week-14",
+        "hour-6",
+        "week-18",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-21",
+        "week-4",
+        "week-7",
+        "week-1",
+        "week-13",
+        "day-6",
+        "hour-3",
+        "week-15",
+        "week-19",
+        "week-5",
+        "day-4",
+        "week-23",
+        "week-10",
+        "hour-12",
+        "week-16",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-12",
+        "week-20",
+        "week-22",
+        "week-17",
+        "week-11",
+        "week-9"
+      ],
+      "version": "0541-20261109-31157",
+      "snapshotName": "runes-of-aldur",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "forbiddenriteshc",
+      "name": "HC Forbidden Rites",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-9"
+      ],
+      "version": "0441-20261109-54958",
+      "snapshotName": "hc-forbidden-rites",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "runesofaldurhc",
+      "name": "HC Runes of Aldur",
+      "timeMachineLabels": [
+        "week-14",
+        "hour-6",
+        "week-18",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-21",
+        "week-4",
+        "week-7",
+        "week-1",
+        "week-13",
+        "day-6",
+        "hour-3",
+        "week-15",
+        "week-19",
+        "week-5",
+        "day-4",
+        "week-23",
+        "week-10",
+        "hour-12",
+        "week-16",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-12",
+        "week-20",
+        "week-22",
+        "week-17",
+        "week-11",
+        "week-9"
+      ],
+      "version": "0442-20261109-17300",
+      "snapshotName": "hc-runes-of-aldur",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "forbiddenritesssf",
+      "name": "SSF Forbidden Rites",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-9"
+      ],
+      "version": "0443-20261109-02514",
+      "snapshotName": "ssf-forbidden-rites",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "runesofaldurssf",
+      "name": "SSF Runes of Aldur",
+      "timeMachineLabels": [
+        "week-14",
+        "hour-6",
+        "week-18",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-21",
+        "week-4",
+        "week-7",
+        "week-1",
+        "week-13",
+        "day-6",
+        "hour-3",
+        "week-15",
+        "week-19",
+        "week-5",
+        "day-4",
+        "week-23",
+        "week-10",
+        "hour-12",
+        "week-16",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-12",
+        "week-20",
+        "week-22",
+        "week-17",
+        "week-11",
+        "week-9"
+      ],
+      "version": "0443-20261109-26266",
+      "snapshotName": "ssf-runes-of-aldur",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "forbiddenriteshcssf",
+      "name": "HC SSF Forbidden Rites",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-9"
+      ],
+      "version": "0444-20261109-46068",
+      "snapshotName": "hc-ssf-forbidden-rites",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "runesofaldurhcssf",
+      "name": "HC SSF Runes of Aldur",
+      "timeMachineLabels": [
+        "week-14",
+        "hour-6",
+        "week-18",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-21",
+        "week-4",
+        "week-7",
+        "week-1",
+        "week-13",
+        "day-6",
+        "hour-3",
+        "week-15",
+        "week-19",
+        "week-5",
+        "day-4",
+        "week-23",
+        "week-10",
+        "hour-12",
+        "week-16",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-12",
+        "week-20",
+        "week-22",
+        "week-17",
+        "week-11",
+        "week-9"
+      ],
+      "version": "0445-20261109-11797",
+      "snapshotName": "hc-ssf-runes-of-aldur",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "standard",
+      "name": "Standard",
+      "timeMachineLabels": [],
+      "version": "0447-20261109-16288",
+      "snapshotName": "standard",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87409",
+      "name": "Epic family time im gonna goon (PL87409)",
+      "timeMachineLabels": ["day-1"],
+      "version": "0618-20261109-15010",
+      "snapshotName": "epic-family-time-im-gonna-goon-(pl87409)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87386",
+      "name": "The Harbingers (PL87386)",
+      "timeMachineLabels": ["day-4", "day-2", "day-3"],
+      "version": "0621-20261109-15615",
+      "snapshotName": "the-harbingers-(pl87386)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87362",
+      "name": "TTV StillSaneSami (PL87362)",
+      "timeMachineLabels": ["day-6", "day-4", "day-2", "day-5", "day-3"],
+      "version": "0624-20261109-07334",
+      "snapshotName": "ttv-stillsanesami-(pl87362)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87338",
+      "name": "NeonLeaguee (PL87338)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-1",
+        "day-6",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "0547-20261109-53587",
+      "snapshotName": "neonleaguee-(pl87338)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87141",
+      "name": "Chiba league (PL87141)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "day-4",
+        "day-5",
+        "day-3"
+      ],
+      "version": "0547-20261109-55513",
+      "snapshotName": "chiba-league-(pl87141)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87091",
+      "name": "Fortnite Gang (PL87091)",
+      "timeMachineLabels": ["week-4", "week-5"],
+      "version": "0548-20261109-00448",
+      "snapshotName": "fortnite-gang-(pl87091)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87366",
+      "name": "merde a la fin (PL87366)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "day-6",
+        "hour-3",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "0624-20261109-08078",
+      "snapshotName": "merde-a-la-fin-(pl87366)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86909",
+      "name": "Ritual dos Macacos (PL86909)",
+      "timeMachineLabels": ["week-3", "week-2", "week-6", "week-4", "week-7", "week-1", "week-5"],
+      "version": "0450-20261109-25634",
+      "snapshotName": "ritual-dos-macacos-(pl86909)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87206",
+      "name": "KoumAckeyHCPL (PL87206)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "0548-20261109-06750",
+      "snapshotName": "koumackeyhcpl-(pl87206)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87198",
+      "name": "RiverBank Ⅳ (PL87198)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-1",
+        "day-6",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3"
+      ],
+      "version": "0548-20261109-20399",
+      "snapshotName": "riverbank-ⅳ-(pl87198)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86433",
+      "name": "THC IV Forbidden Rites (PL86433)",
+      "timeMachineLabels": [
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-1",
+        "day-6",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-1"
+      ],
+      "version": "0450-20261109-27561",
+      "snapshotName": "thc-iv-forbidden-rites-(pl86433)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86662",
+      "name": "trying our best (PL86662)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "week-5",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-9"
+      ],
+      "version": "0450-20261109-40328",
+      "snapshotName": "trying-our-best-(pl86662)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86573",
+      "name": "GPL Forbidden Rites (PL86573)",
+      "timeMachineLabels": ["week-3", "week-6", "week-4", "week-7", "week-5", "week-8", "week-9"],
+      "version": "0450-20261109-47555",
+      "snapshotName": "gpl-forbidden-rites-(pl86573)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl81612",
+      "name": "Die Doppelten EinundDreißiger (PL81612)",
+      "timeMachineLabels": [
+        "week-14",
+        "hour-6",
+        "week-18",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-21",
+        "week-4",
+        "week-7",
+        "week-1",
+        "week-13",
+        "day-6",
+        "hour-3",
+        "week-15",
+        "week-19",
+        "week-5",
+        "day-4",
+        "week-23",
+        "week-10",
+        "hour-12",
+        "week-16",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-12",
+        "week-20",
+        "week-22",
+        "week-17",
+        "week-11",
+        "week-9"
+      ],
+      "version": "0450-20261109-48631",
+      "snapshotName": "die-doppelten-einunddreißiger-(pl81612)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87365",
+      "name": "mina me lâche pas (PL87365)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "day-6",
+        "hour-3",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "0628-20261109-02615",
+      "snapshotName": "mina-me-lâche-pas-(pl87365)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "exilecon2026poe2qualifier4ssf",
+      "name": "Exilecon 2026 PoE2 Qualifier #4",
+      "timeMachineLabels": ["hour-6", "hour-3"],
+      "version": "0451-20260828-42551",
+      "snapshotName": "exilecon-2026-poe2-qualifier-#4",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "exilecon2026poe2qualifier3ssf",
+      "name": "Exilecon 2026 PoE2 Qualifier #3",
+      "timeMachineLabels": ["hour-6", "hour-3"],
+      "version": "0433-20260821-45727",
+      "snapshotName": "exilecon-2026-poe2-qualifier-#3",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "exilecon2026poe2qualifier2ssf",
+      "name": "Exilecon 2026 PoE2 Qualifier #2",
+      "timeMachineLabels": ["hour-6", "hour-3"],
+      "version": "0432-20260814-49000",
+      "snapshotName": "exilecon-2026-poe2-qualifier-#2",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "exilecon2026poe2qualifier1ssf",
+      "name": "Exilecon 2026 PoE2 Qualifier #1",
+      "timeMachineLabels": ["hour-6", "hour-3"],
+      "version": "0448-20260807-15493",
+      "snapshotName": "exilecon-2026-poe2-qualifier-#1",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87227",
+      "name": "Revolution of the Ancients (PL87227)",
+      "timeMachineLabels": ["week-2", "week-1", "day-6", "day-5"],
+      "version": "1558-20261105-37002",
+      "snapshotName": "revolution-of-the-ancients-(pl87227)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87216",
+      "name": "LIGA VIITERO (PL87216)",
+      "timeMachineLabels": [
+        "week-2",
+        "week-1",
+        "day-6",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "0938-20261105-37996",
+      "snapshotName": "liga-viitero-(pl87216)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87085",
+      "name": "The Unchosen Ones suikunlerguell (PL87085)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3"
+      ],
+      "version": "1142-20261108-06465",
+      "snapshotName": "the-unchosen-ones-suikunlerguell-(pl87085)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87148",
+      "name": "Beekeepers (PL87148)",
+      "timeMachineLabels": ["week-2", "week-1", "day-6", "day-4", "day-5", "day-3"],
+      "version": "0601-20261029-21745",
+      "snapshotName": "beekeepers-(pl87148)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87103",
+      "name": "Paszowce (PL87103)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "1311-20261103-09166",
+      "snapshotName": "paszowce-(pl87103)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87051",
+      "name": "The Unchosen Ones suikunlergue (PL87051)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "1042-20261101-46261",
+      "snapshotName": "the-unchosen-ones-suikunlergue-(pl87051)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86814",
+      "name": "The Dyck Bois (PL86814)",
+      "timeMachineLabels": ["week-3", "week-2", "week-4", "week-5"],
+      "version": "1624-20261020-11591",
+      "snapshotName": "the-dyck-bois-(pl86814)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87055",
+      "name": "Qazxsw (PL87055)",
+      "timeMachineLabels": ["week-2", "week-1"],
+      "version": "1044-20261019-24255",
+      "snapshotName": "qazxsw-(pl87055)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86974",
+      "name": "Zielsko Biala (PL86974)",
+      "timeMachineLabels": ["week-1", "day-6", "day-4", "day-5", "day-3"],
+      "version": "1519-20261005-37406",
+      "snapshotName": "zielsko-biala-(pl86974)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86944",
+      "name": "Delirious Deliriums (PL86944)",
+      "timeMachineLabels": ["week-1", "day-6", "day-4", "day-5"],
+      "version": "1509-20261001-22819",
+      "snapshotName": "delirious-deliriums-(pl86944)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86937",
+      "name": "A New Blap (PL86937)",
+      "timeMachineLabels": [],
+      "version": "unknown",
+      "snapshotName": "a-new-blap-(pl86937)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86917",
+      "name": "ZERO RNG (PL86917)",
+      "timeMachineLabels": ["week-3", "week-2", "week-4", "week-1"],
+      "version": "1749-20261018-42083",
+      "snapshotName": "zero-rng-(pl86917)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86688",
+      "name": "SSnF Part One (PL86688)",
+      "timeMachineLabels": ["week-4", "week-5"],
+      "version": "1833-20261014-27792",
+      "snapshotName": "ssnf-part-one-(pl86688)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86443",
+      "name": "Jonathans Toes (PL86443)",
+      "timeMachineLabels": ["week-3", "week-4"],
+      "version": "1922-20261004-19249",
+      "snapshotName": "jonathans-toes-(pl86443)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86619",
+      "name": "The Forbidden Rites of Conflux (PL86619)",
+      "timeMachineLabels": ["week-3", "week-2", "week-4", "week-1"],
+      "version": "2007-20261004-24036",
+      "snapshotName": "the-forbidden-rites-of-conflux-(pl86619)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86656",
+      "name": "Eldrehjemmet (PL86656)",
+      "timeMachineLabels": ["week-3", "week-4", "week-5"],
+      "version": "1833-20261014-32358",
+      "snapshotName": "eldrehjemmet-(pl86656)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86429",
+      "name": "CITADEL RUN (PL86429)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3"
+      ],
+      "version": "2007-20261004-25865",
+      "snapshotName": "citadel-run-(pl86429)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86418",
+      "name": "Snail moo moo (PL86418)",
+      "timeMachineLabels": ["week-3", "week-4", "week-5"],
+      "version": "1833-20261014-45373",
+      "snapshotName": "snail-moo-moo-(pl86418)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl83142",
+      "name": "JeetTTV PL Runes of Aldur (PL83142)",
+      "timeMachineLabels": [],
+      "version": "unknown",
+      "snapshotName": "jeetttv-pl-runes-of-aldur-(pl83142)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl85817",
+      "name": "Wheel of Wraeclast (PL85817)",
+      "timeMachineLabels": ["week-2", "week-1", "day-6", "day-4", "day-5"],
+      "version": "1154-20260905-13563",
+      "snapshotName": "wheel-of-wraeclast-(pl85817)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl85477",
+      "name": "Skladic Rune Recipe League (PL85477)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "1225-20260923-35268",
+      "snapshotName": "skladic-rune-recipe-league-(pl85477)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl83280",
+      "name": "Take It All suikun league (PL83280)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "1154-20260905-18156",
+      "snapshotName": "take-it-all-suikun-league-(pl83280)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl83006",
+      "name": "TAWERNA Runes of Aldur (PL83006)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "week-5",
+        "week-8"
+      ],
+      "version": "1603-20260901-39008",
+      "snapshotName": "tawerna-runes-of-aldur-(pl83006)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl81742",
+      "name": "Poppas Loot Goobers II (PL81742)",
+      "timeMachineLabels": ["week-4", "week-5"],
+      "version": "1920-20260708-46537",
+      "snapshotName": "poppas-loot-goobers-ii-(pl81742)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl81609",
+      "name": "Loot Goblin League Two (PL81609)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-5",
+        "week-10",
+        "week-8",
+        "week-9"
+      ],
+      "version": "2104-20260807-27268",
+      "snapshotName": "loot-goblin-league-two-(pl81609)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl82175",
+      "name": "Ethically Sourced Brain Damage (PL82175)",
+      "timeMachineLabels": ["week-2", "week-1"],
+      "version": "1858-20260618-17604",
+      "snapshotName": "ethically-sourced-brain-damage-(pl82175)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl81544",
+      "name": "Verisium RotA (PL81544)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "week-5",
+        "week-8"
+      ],
+      "version": "1931-20260728-49462",
+      "snapshotName": "verisium-rota-(pl81544)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl81834",
+      "name": "Suttarne (PL81834)",
+      "timeMachineLabels": ["week-2", "week-1"],
+      "version": "1858-20260618-19111",
+      "snapshotName": "suttarne-(pl81834)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl81655",
+      "name": "Jagodki Nadina (PL81655)",
+      "timeMachineLabels": [
+        "hour-6",
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "hour-3",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8"
+      ],
+      "version": "1931-20260728-49887",
+      "snapshotName": "jagodki-nadina-(pl81655)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86503",
+      "name": "HC FRites League by Cardiff (PL86503)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3"
+      ],
+      "version": "2009-20261004-07159",
+      "snapshotName": "hc-frites-league-by-cardiff-(pl86503)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl85428",
+      "name": "A chorus of the damned suileague (PL85428)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "week-5",
+        "day-4",
+        "day-5",
+        "day-3"
+      ],
+      "version": "1042-20260918-42399",
+      "snapshotName": "a-chorus-of-the-damned-suileague-(pl85428)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl83388",
+      "name": "THC League IV (PL83388)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "week-5",
+        "day-4",
+        "week-10",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1",
+        "week-8",
+        "week-9"
+      ],
+      "version": "1645-20261009-42537",
+      "snapshotName": "thc-league-iv-(pl83388)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl83181",
+      "name": "River of the Ancients (PL83181)",
+      "timeMachineLabels": [
+        "hour-18",
+        "week-3",
+        "week-2",
+        "week-4",
+        "week-1",
+        "day-6",
+        "week-5",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "1712-20260819-26320",
+      "snapshotName": "river-of-the-ancients-(pl83181)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl83123",
+      "name": "KG Return of the Ancients HC (PL83123)",
+      "timeMachineLabels": ["week-1", "day-6", "day-4", "day-2", "day-5", "day-3", "day-1"],
+      "version": "1358-20260713-14612",
+      "snapshotName": "kg-return-of-the-ancients-hc-(pl83123)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl82906",
+      "name": "AwTysm (PL82906)",
+      "timeMachineLabels": ["week-2", "week-1", "day-6", "day-4", "day-5"],
+      "version": "1406-20260709-56076",
+      "snapshotName": "awtysm-(pl82906)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl82824",
+      "name": "HAN NAM HC (PL82824)",
+      "timeMachineLabels": [
+        "hour-18",
+        "week-2",
+        "week-1",
+        "day-6",
+        "day-4",
+        "hour-12",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "2022-20260709-18021",
+      "snapshotName": "han-nam-hc-(pl82824)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl81683",
+      "name": "Requiem HC V (PL81683)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-5",
+        "week-10",
+        "week-8",
+        "week-9"
+      ],
+      "version": "2104-20260807-35276",
+      "snapshotName": "requiem-hc-v-(pl81683)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87136",
+      "name": "chibatest (PL87136)",
+      "timeMachineLabels": ["week-2", "week-1", "day-6", "day-4", "day-5"],
+      "version": "0352-20261028-58175",
+      "snapshotName": "chibatest-(pl87136)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl87061",
+      "name": "YunWarriorsVI (PL87061)",
+      "timeMachineLabels": ["week-1", "day-6", "day-4", "day-2", "day-5", "day-3"],
+      "version": "0326-20261010-18329",
+      "snapshotName": "yunwarriorsvi-(pl87061)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl86886",
+      "name": "DDO League S II (PL86886)",
+      "timeMachineLabels": [
+        "hour-18",
+        "week-1",
+        "day-6",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3",
+        "day-1"
+      ],
+      "version": "0949-20260928-04596",
+      "snapshotName": "ddo-league-s-ii-(pl86886)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "pl82677",
+      "name": "Not For All League (PL82677)",
+      "timeMachineLabels": [
+        "week-3",
+        "week-2",
+        "week-6",
+        "week-4",
+        "week-7",
+        "week-1",
+        "day-6",
+        "week-5",
+        "day-4",
+        "day-2",
+        "day-5",
+        "day-3",
+        "week-8"
+      ],
+      "version": "1742-20260811-12126",
+      "snapshotName": "not-for-all-league-(pl82677)",
+      "overviewType": 0,
+      "passiveTree": "PassiveTree-0.5"
+    },
+    {
+      "url": "streamers",
+      "name": "Streamers",
+      "timeMachineLabels": [],
+      "version": "0633-20261109-14445",
+      "snapshotName": "streamers",
+      "overviewType": 1,
+      "passiveTree": "PassiveTree-0.5"
+    }
+  ],
+  "buildLeagues": [
+    {
+      "name": "Forbidden Rites",
+      "url": "forbiddenrites",
+      "displayName": "Forbidden Rites",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Runes of Aldur",
+      "url": "runesofaldur",
+      "displayName": "Runes of Aldur",
+      "hardcore": false,
+      "indexed": true
+    },
+    {
+      "name": "HC Forbidden Rites",
+      "url": "forbiddenriteshc",
+      "displayName": "HC Forbidden Rites",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "HC Runes of Aldur",
+      "url": "runesofaldurhc",
+      "displayName": "HC Runes of Aldur",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "SSF Forbidden Rites",
+      "url": "forbiddenritesssf",
+      "displayName": "SSF Forbidden Rites",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "SSF Runes of Aldur",
+      "url": "runesofaldurssf",
+      "displayName": "SSF Runes of Aldur",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "HC SSF Forbidden Rites",
+      "url": "forbiddenriteshcssf",
+      "displayName": "HC SSF Forbidden Rites",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "HC SSF Runes of Aldur",
+      "url": "runesofaldurhcssf",
+      "displayName": "HC SSF Runes of Aldur",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "Standard",
+      "url": "standard",
+      "displayName": "Standard",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Epic family time im gonna goon (PL87409)",
+      "url": "pl87409",
+      "displayName": "Epic family time im gonna goon",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "The Harbingers (PL87386)",
+      "url": "pl87386",
+      "displayName": "The Harbingers",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "TTV StillSaneSami (PL87362)",
+      "url": "pl87362",
+      "displayName": "TTV StillSaneSami",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "NeonLeaguee (PL87338)",
+      "url": "pl87338",
+      "displayName": "NeonLeaguee",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Chiba league (PL87141)",
+      "url": "pl87141",
+      "displayName": "Chiba league",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Fortnite Gang (PL87091)",
+      "url": "pl87091",
+      "displayName": "Fortnite Gang",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "merde a la fin (PL87366)",
+      "url": "pl87366",
+      "displayName": "merde a la fin",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "Ritual dos Macacos (PL86909)",
+      "url": "pl86909",
+      "displayName": "Ritual dos Macacos",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "KoumAckeyHCPL (PL87206)",
+      "url": "pl87206",
+      "displayName": "KoumAckeyHCPL",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "RiverBank Ⅳ (PL87198)",
+      "url": "pl87198",
+      "displayName": "RiverBank Ⅳ",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "THC IV Forbidden Rites (PL86433)",
+      "url": "pl86433",
+      "displayName": "THC IV Forbidden Rites",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "trying our best (PL86662)",
+      "url": "pl86662",
+      "displayName": "trying our best",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "GPL Forbidden Rites (PL86573)",
+      "url": "pl86573",
+      "displayName": "GPL Forbidden Rites",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "Die Doppelten EinundDreißiger (PL81612)",
+      "url": "pl81612",
+      "displayName": "Die Doppelten EinundDreißiger",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "mina me lâche pas (PL87365)",
+      "url": "pl87365",
+      "displayName": "mina me lâche pas",
+      "hardcore": true,
+      "indexed": false
+    }
+  ],
+  "oldBuildLeagues": [
+    {
+      "name": "Exilecon 2026 PoE2 Qualifier #4",
+      "url": "exilecon2026poe2qualifier4ssf",
+      "displayName": "Exilecon 2026 PoE2 Qualifier #4",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Exilecon 2026 PoE2 Qualifier #3",
+      "url": "exilecon2026poe2qualifier3ssf",
+      "displayName": "Exilecon 2026 PoE2 Qualifier #3",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Exilecon 2026 PoE2 Qualifier #2",
+      "url": "exilecon2026poe2qualifier2ssf",
+      "displayName": "Exilecon 2026 PoE2 Qualifier #2",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Exilecon 2026 PoE2 Qualifier #1",
+      "url": "exilecon2026poe2qualifier1ssf",
+      "displayName": "Exilecon 2026 PoE2 Qualifier #1",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Revolution of the Ancients (PL87227)",
+      "url": "pl87227",
+      "displayName": "Revolution of the Ancients",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "LIGA VIITERO (PL87216)",
+      "url": "pl87216",
+      "displayName": "LIGA VIITERO",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "The Unchosen Ones suikunlerguell (PL87085)",
+      "url": "pl87085",
+      "displayName": "The Unchosen Ones suikunlerguell",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Beekeepers (PL87148)",
+      "url": "pl87148",
+      "displayName": "Beekeepers",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Paszowce (PL87103)",
+      "url": "pl87103",
+      "displayName": "Paszowce",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "The Unchosen Ones suikunlergue (PL87051)",
+      "url": "pl87051",
+      "displayName": "The Unchosen Ones suikunlergue",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "The Dyck Bois (PL86814)",
+      "url": "pl86814",
+      "displayName": "The Dyck Bois",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Qazxsw (PL87055)",
+      "url": "pl87055",
+      "displayName": "Qazxsw",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Zielsko Biala (PL86974)",
+      "url": "pl86974",
+      "displayName": "Zielsko Biala",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Delirious Deliriums (PL86944)",
+      "url": "pl86944",
+      "displayName": "Delirious Deliriums",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "A New Blap (PL86937)",
+      "url": "pl86937",
+      "displayName": "A New Blap",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "ZERO RNG (PL86917)",
+      "url": "pl86917",
+      "displayName": "ZERO RNG",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "SSnF Part One (PL86688)",
+      "url": "pl86688",
+      "displayName": "SSnF Part One",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Jonathans Toes (PL86443)",
+      "url": "pl86443",
+      "displayName": "Jonathans Toes",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "The Forbidden Rites of Conflux (PL86619)",
+      "url": "pl86619",
+      "displayName": "The Forbidden Rites of Conflux",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Eldrehjemmet (PL86656)",
+      "url": "pl86656",
+      "displayName": "Eldrehjemmet",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "CITADEL RUN (PL86429)",
+      "url": "pl86429",
+      "displayName": "CITADEL RUN",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Snail moo moo (PL86418)",
+      "url": "pl86418",
+      "displayName": "Snail moo moo",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "JeetTTV PL Runes of Aldur (PL83142)",
+      "url": "pl83142",
+      "displayName": "JeetTTV PL Runes of Aldur",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Wheel of Wraeclast (PL85817)",
+      "url": "pl85817",
+      "displayName": "Wheel of Wraeclast",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Skladic Rune Recipe League (PL85477)",
+      "url": "pl85477",
+      "displayName": "Skladic Rune Recipe League",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Take It All suikun league (PL83280)",
+      "url": "pl83280",
+      "displayName": "Take It All suikun league",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "TAWERNA Runes of Aldur (PL83006)",
+      "url": "pl83006",
+      "displayName": "TAWERNA Runes of Aldur",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Poppas Loot Goobers II (PL81742)",
+      "url": "pl81742",
+      "displayName": "Poppas Loot Goobers II",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Loot Goblin League Two (PL81609)",
+      "url": "pl81609",
+      "displayName": "Loot Goblin League Two",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Ethically Sourced Brain Damage (PL82175)",
+      "url": "pl82175",
+      "displayName": "Ethically Sourced Brain Damage",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Verisium RotA (PL81544)",
+      "url": "pl81544",
+      "displayName": "Verisium RotA",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Suttarne (PL81834)",
+      "url": "pl81834",
+      "displayName": "Suttarne",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "Jagodki Nadina (PL81655)",
+      "url": "pl81655",
+      "displayName": "Jagodki Nadina",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "HC FRites League by Cardiff (PL86503)",
+      "url": "pl86503",
+      "displayName": "HC FRites League by Cardiff",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "A chorus of the damned suileague (PL85428)",
+      "url": "pl85428",
+      "displayName": "A chorus of the damned suileague",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "THC League IV (PL83388)",
+      "url": "pl83388",
+      "displayName": "THC League IV",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "River of the Ancients (PL83181)",
+      "url": "pl83181",
+      "displayName": "River of the Ancients",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "KG Return of the Ancients HC (PL83123)",
+      "url": "pl83123",
+      "displayName": "KG Return of the Ancients HC",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "AwTysm (PL82906)",
+      "url": "pl82906",
+      "displayName": "AwTysm",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "HAN NAM HC (PL82824)",
+      "url": "pl82824",
+      "displayName": "HAN NAM HC",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "Requiem HC V (PL81683)",
+      "url": "pl81683",
+      "displayName": "Requiem HC V",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "chibatest (PL87136)",
+      "url": "pl87136",
+      "displayName": "chibatest",
+      "hardcore": false,
+      "indexed": false
+    },
+    {
+      "name": "YunWarriorsVI (PL87061)",
+      "url": "pl87061",
+      "displayName": "YunWarriorsVI",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "DDO League S II (PL86886)",
+      "url": "pl86886",
+      "displayName": "DDO League S II",
+      "hardcore": true,
+      "indexed": false
+    },
+    {
+      "name": "Not For All League (PL82677)",
+      "url": "pl82677",
+      "displayName": "Not For All League",
+      "hardcore": true,
+      "indexed": false
+    }
+  ]
+}

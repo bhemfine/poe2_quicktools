@@ -19,27 +19,45 @@
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check:live": "node scripts/check-live.mjs",
+    "extract:repoe": "node scripts/extract-repoe.mjs",
+    "dist": "npm run build && electron-builder --win nsis portable --publish never",
+    "release": "npm run build && electron-builder --win nsis portable --publish always"
+  },
+  "allowScripts": {
+    "electron@45.2.3": true,
+    "electron-overlay-window": false,
+    "uiohook-napi": false,
+    "electron-winstaller": false
   },
   "dependencies": {
-    "pinia": "^4.1.0",
-    "vue": "^3.5.45"
+    "electron-overlay-window": "^4.1.0",
+    "electron-updater": "^6.8.11",
+    "uiohook-napi": "^1.5.5"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.5",
     "@types/node": "^24.19.2",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vue/eslint-config-typescript": "^14.9.0",
+    "@vue/test-utils": "^2.5.1",
     "electron": "~45.2.3",
+    "electron-builder": "^26.18.0",
+    "electron-store": "^12.0.0",
     "electron-vite": "^6.0.0",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.12.0",
+    "happy-dom": "^21.0.4",
+    "pinia": "^4.1.0",
     "prettier": "^3.9.10",
     "tailwindcss": "^4.3.5",
     "typescript": "~5.9.3",
     "vite": "^8.3.6",
     "vitest": "^5.1.0",
-    "vue-tsc": "^3.3.14"
+    "vue": "^3.5.45",
+    "vue-tsc": "^3.3.14",
+    "zod": "^4.6.7"
   }
 }

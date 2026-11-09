@@ -1,0 +1,1838 @@
+﻿{
+  "core": {
+    "items": [
+      {
+        "id": "divine",
+        "name": "Divine Orb",
+        "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lNb2RWYWx1ZXMiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/2986e220b3/CurrencyModValues.png",
+        "category": "Currency",
+        "detailsId": "divine-orb"
+      },
+      {
+        "id": "exalted",
+        "name": "Exalted Orb",
+        "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lBZGRNb2RUb1JhcmUiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/ad7c366789/CurrencyAddModToRare.png",
+        "category": "Currency",
+        "detailsId": "exalted-orb"
+      },
+      {
+        "id": "chaos",
+        "name": "Chaos Orb",
+        "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lSZXJvbGxSYXJlIiwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/c0ca392a78/CurrencyRerollRare.png",
+        "category": "Currency",
+        "detailsId": "chaos-orb"
+      }
+    ],
+    "rates": {
+      "exalted": 628.2,
+      "chaos": 9.48
+    },
+    "primary": "divine",
+    "secondary": "chaos"
+  },
+  "lines": [
+    {
+      "id": 728,
+      "itemId": "Temporalis Runemastered Silk Robe",
+      "detailsId": "temporalis-runemastered-silk-robe",
+      "name": "Temporalis",
+      "baseType": "Runemastered Silk Robe",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1BpbGdyaW1zSW1hZ2UiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/69db95b9aa/PilgrimsImage.png",
+      "flavourText": "The final element the tale-women\r\nmastered was Time itself.",
+      "levelRequired": 64,
+      "category": "Body Armour",
+      "primaryValue": 6940,
+      "listingCount": 5,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -0.14,
+        "data": [0, 1.59, 2.16, -1.06, 3.61, null, -0.14]
+      },
+      "explicitModifiers": [
+        {
+          "text": "+(100-150) to maximum [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_energy_shield"]
+        },
+        {
+          "text": "+(10-20)% to all [ElementalDamage|Elemental] [Resistances]",
+          "optional": false,
+          "statIds": ["base_resist_all_elements_%"]
+        },
+        {
+          "text": "(5-30)% of Damage taken [Recoup|Recouped] as Life",
+          "optional": false,
+          "statIds": ["damage_taken_goes_to_life_over_4_seconds_%"]
+        },
+        {
+          "text": "(5-30)% of Damage taken [Recoup|Recouped] as Mana",
+          "optional": false,
+          "statIds": ["damage_taken_goes_to_mana_%"]
+        },
+        {
+          "text": "Skills have -(2-1.9) seconds to Cooldown",
+          "optional": false,
+          "statIds": ["unique_cooldown_modifier_ms"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[EnergyShield|Energy Shield]: (127-248)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (110-170)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 64",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 61",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 232,
+      "itemId": "Temporalis Silk Robe",
+      "detailsId": "temporalis-silk-robe",
+      "name": "Temporalis",
+      "baseType": "Silk Robe",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1BpbGdyaW1zSW1hZ2UiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/69db95b9aa/PilgrimsImage.png",
+      "flavourText": "The final element the tale-women\r\nmastered was Time itself.",
+      "levelRequired": 64,
+      "category": "Body Armour",
+      "primaryValue": 6594,
+      "listingCount": 15,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -5.19,
+        "data": [0, -6.58, -5.67, -3.53, -1.79, null, -5.19]
+      },
+      "explicitModifiers": [
+        {
+          "text": "+(100-150) to maximum [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_energy_shield"]
+        },
+        {
+          "text": "+(10-20)% to all [ElementalDamage|Elemental] [Resistances]",
+          "optional": false,
+          "statIds": ["base_resist_all_elements_%"]
+        },
+        {
+          "text": "(5-30)% of Damage taken [Recoup|Recouped] as Life",
+          "optional": false,
+          "statIds": ["damage_taken_goes_to_life_over_4_seconds_%"]
+        },
+        {
+          "text": "(5-30)% of Damage taken [Recoup|Recouped] as Mana",
+          "optional": false,
+          "statIds": ["damage_taken_goes_to_mana_%"]
+        },
+        {
+          "text": "Skills have -(2-1) seconds to Cooldown",
+          "optional": false,
+          "statIds": ["unique_cooldown_modifier_ms"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[EnergyShield|Energy Shield]: (164-300)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 64",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 37",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 731,
+      "itemId": "Skin of the Loyal Runeforged Garment",
+      "detailsId": "skin-of-the-loyal-runeforged-garment",
+      "name": "Skin of the Loyal",
+      "baseType": "Runeforged Garment",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1NraW5PZlRoZUxveWFsIiwidyI6MiwiaCI6Mywic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/710deb59df/SkinOfTheLoyal.png",
+      "flavourText": "We happily give our limbs.\r\nA net woven to keep safe the bones of the Lords.",
+      "levelRequired": 30,
+      "category": "Body Armour",
+      "primaryValue": 100,
+      "listingCount": 2,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 284.6,
+        "data": [0, 53.85, 73.08, 73.08, 284.6, null, 284.6]
+      },
+      "explicitModifiers": [
+        {
+          "text": "+(5-40)% to all [ElementalDamage|Elemental] [Resistances]",
+          "optional": false,
+          "statIds": ["base_resist_all_elements_%"]
+        },
+        {
+          "text": "[AilmentThreshold|Elemental Ailment Threshold] is increased by [UncappedResist|Uncapped] [Resistances|Chaos Resistance]",
+          "optional": false,
+          "statIds": ["ailment_threshold_increased_by_uncapped_chaos_resistance"]
+        },
+        {
+          "text": "[Armour] is increased by [UncappedResist|Uncapped] [Resistances|Fire Resistance]",
+          "optional": false,
+          "statIds": ["armour_increased_by_uncapped_fire_resistance"]
+        },
+        {
+          "text": "[EnergyShield|Energy Shield] is increased by [UncappedResist|Uncapped] [Resistances|Cold Resistance]",
+          "optional": false,
+          "statIds": ["energy_shield_increased_by_uncapped_cold_resistance"]
+        },
+        {
+          "text": "[Evasion] Rating is increased by [UncappedResist|Uncapped] [Resistances|Lightning Resistance]",
+          "optional": false,
+          "statIds": ["evasion_rating_increased_by_uncapped_lightning_resistance"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: 30",
+          "optional": true
+        },
+        {
+          "text": "[Ward|Runic Ward]: (100-140)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: 30",
+          "optional": true
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: 10",
+          "optional": true
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: (15-50)",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": 598,
+      "itemId": "Morior Invictus Runemastered Grand Regalia",
+      "detailsId": "morior-invictus-runemastered-grand-regalia",
+      "name": "Morior Invictus",
+      "baseType": "Runemastered Grand Regalia",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL01vcmlvckludmljdHVzX00iLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/6674aa4ff6/MoriorInvictus_M.png",
+      "flavourText": "The Unblinking Eye did not cower and wail.\r\nThey stood against the end.",
+      "levelRequired": 65,
+      "category": "Body Armour",
+      "primaryValue": 39.5,
+      "listingCount": 6,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 186.2,
+        "data": [0, 30.43, -34.78, -65.94, 75.36, null, 186.2]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(302-400)% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]",
+          "optional": false
+        },
+        {
+          "text": "+(45-60) to maximum Life per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(5-7) to all [Attributes] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(10-13)% to [Resistances|Chaos Resistance] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "(8.1-11.9) Life Regeneration per second per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "Hits against you have (15-20)% reduced [CriticalDamageBonus|Critical Damage Bonus] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(50-60) to maximum Mana per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "(9-12)% increased Global [Armour], [Evasion] and [EnergyShield|Energy Shield] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(70-88) to [StunThreshold|Stun Threshold] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(10-14) to [Spirit|Spirit] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(8-10)% to all [Resistances|Elemental Resistances] per Socket filled",
+          "optional": true
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (583-917)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (531-849)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (161-262)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (86-103)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 41",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 41",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 41",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 192,
+      "itemId": "Death Articulated Ornate Gauntlets",
+      "detailsId": "death-articulated-ornate-gauntlets",
+      "name": "Death Articulated",
+      "baseType": "Ornate Gauntlets",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvVW5pcXVlcy9EZWF0aEFydGljdWxhdGVkIiwidyI6MiwiaCI6Miwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/98e9511278/DeathArticulated.png",
+      "flavourText": "\"The mind at the center of the swarm... K\u0027Tash does\r\nthe thinking... but it has only one thought... hate.\"\r\n- Rantings of a Templar prisoner, page ninety-four",
+      "levelRequired": 65,
+      "category": "Gloves",
+      "primaryValue": 29.2,
+      "listingCount": 33,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 16.8,
+        "data": [0, 0, -2, -4, 0, null, 16.8]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(100-150)% increased [Armour|Armour] and [Evasion|Evasion]",
+          "optional": false,
+          "statIds": ["local_armour_and_evasion_+%"]
+        },
+        {
+          "text": "(5-10)% increased [Attack] Speed",
+          "optional": false,
+          "statIds": ["attack_speed_+%"]
+        },
+        {
+          "text": "+(17-23)% to [Resistances|Chaos Resistance]",
+          "optional": false,
+          "statIds": ["base_chaos_damage_resistance_%"]
+        },
+        {
+          "text": "[LifeLoss|Lose] 5% of maximum Life per second",
+          "optional": false,
+          "statIds": ["life_degeneration_%_per_minute_not_in_grace"]
+        },
+        {
+          "text": "Regenerate 5 [Rage] per second",
+          "optional": false,
+          "statIds": ["base_rage_regeneration_per_minute"]
+        },
+        {
+          "text": "No Inherent loss of [Rage]",
+          "optional": false,
+          "statIds": ["no_inherent_rage_loss"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (178-225)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (162-205)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 25",
+          "optional": true
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 44",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 44",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 572,
+      "itemId": "Tabula Rasa Runeforged Garment",
+      "detailsId": "tabula-rasa-runeforged-garment",
+      "name": "Tabula Rasa",
+      "baseType": "Runeforged Garment",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1RhYnVsYVJhc2EiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/8b21a046ec/TabulaRasa.png",
+      "levelRequired": 0,
+      "category": "Body Armour",
+      "primaryValue": 16.2,
+      "listingCount": 24,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -37.69,
+        "data": [0, -40.77, -40.77, -36.15, -39.23, null, -37.69]
+      },
+      "propertyModifiers": [
+        {
+          "text": "[Ward|Runic Ward]: 100",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 716,
+      "itemId": "Silks of Veneration Runemastered Enlightened Robe",
+      "detailsId": "silks-of-veneration-runemastered-enlightened-robe",
+      "name": "Silks of Veneration",
+      "baseType": "Runemastered Enlightened Robe",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1NpbGtzT2ZWZW5lcmF0aW9uIiwidyI6MiwiaCI6Mywic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/3c2151ad54/SilksOfVeneration.png",
+      "flavourText": "Hallowed Dordalus was cast into the pit as a heretic,\r\nbut his piety was so great, he would not burn.\r\nHe rose again, lauded, his faith forever changed...\r\nbut not the way the Templar believed.",
+      "levelRequired": 75,
+      "category": "Body Armour",
+      "primaryValue": 14.1,
+      "listingCount": 28,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -6,
+        "data": [0, -12, -16, 0, 0, null, -6]
+      },
+      "implicitModifiers": [
+        {
+          "text": "(40-50)% increased Mana Regeneration Rate",
+          "optional": false,
+          "statIds": ["mana_regeneration_rate_+%"]
+        }
+      ],
+      "explicitModifiers": [
+        {
+          "text": "(150-200)% increased [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_energy_shield_+%"]
+        },
+        {
+          "text": "+(30-50) to [Spirit|Spirit]",
+          "optional": false,
+          "statIds": ["base_spirit_from_equipment"]
+        },
+        {
+          "text": "+(20-30) to [Intelligence|Intelligence]",
+          "optional": false,
+          "statIds": ["additional_intelligence"]
+        },
+        {
+          "text": "(30-50)% increased [ESRechargeRate|Energy Shield Recharge Rate]",
+          "optional": false,
+          "statIds": ["energy_shield_recharge_rate_+%"]
+        },
+        {
+          "text": "Current [EnergyShield|Energy Shield] also grants [ElementalDamage|Elemental Damage] reduction",
+          "optional": false,
+          "statIds": ["current_energy_shield_%_as_elemental_damage_reduction"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[EnergyShield|Energy Shield]: (310-419)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (86-136)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 75",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 121",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 688,
+      "itemId": "Sine Aequo Runemastered Grand Manchettes",
+      "detailsId": "sine-aequo-runemastered-grand-manchettes",
+      "name": "Sine Aequo",
+      "baseType": "Runemastered Grand Manchettes",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvVW5pcXVlcy9TaW5lQWVxdW8iLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/e243b1f810/SineAequo.png",
+      "flavourText": "The greatest warrior of his era fought with honour.",
+      "levelRequired": 65,
+      "category": "Gloves",
+      "primaryValue": 13.8,
+      "listingCount": 5,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 159.9,
+        "data": [0, 197.6, 197.6, 197.6, 159.9, null, 159.9]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(10-15)% increased [SkillSpeed|Skill Speed]",
+          "optional": false,
+          "statIds": ["skill_speed_+%"]
+        },
+        {
+          "text": "(153-200)% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_armour_and_evasion_and_energy_shield_+%"]
+        },
+        {
+          "text": "[Immobilised|Immobilise] enemies at 50% buildup instead of 100%",
+          "optional": false,
+          "statIds": ["crowd_control_effects_are_triggered_at_%_poise_threshold_instead"]
+        },
+        {
+          "text": "(30-50)% increased Damage against [Immobilised] Enemies",
+          "optional": false,
+          "statIds": ["damage_+%_vs_immobilised_enemies"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (76-95)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (68-86)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (20-25)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 70",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 32",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 32",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 32",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 577,
+      "itemId": "Alpha\u0027s Howl Runemastered Armoured Cap",
+      "detailsId": "alphas-howl-runemastered-armoured-cap",
+      "name": "Alpha\u0027s Howl",
+      "baseType": "Runemastered Armoured Cap",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL1VuaXF1ZXMvQWxwaGFzSG93bCIsInciOjIsImgiOjIsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/172ece8af4/AlphasHowl.png",
+      "flavourText": "Nature respects the strong\r\nAnd paints the snow red\r\nWith the blood of the weak",
+      "levelRequired": 65,
+      "category": "Helmet",
+      "primaryValue": 13,
+      "listingCount": 101,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -13.33,
+        "data": [0, -40, -2, -6.67, -13.33, null, -13.33]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(80-100)% increased [Evasion|Evasion] Rating",
+          "optional": false,
+          "statIds": ["local_evasion_rating_+%"]
+        },
+        {
+          "text": "+100 to [Spirit|Spirit]",
+          "optional": false,
+          "statIds": ["base_spirit_from_equipment"]
+        },
+        {
+          "text": "+(50-75)% to [Resistances|Cold Resistance]",
+          "optional": false,
+          "statIds": ["base_cold_damage_resistance_%"]
+        },
+        {
+          "text": "[Presence] Radius is doubled",
+          "optional": false,
+          "statIds": ["unique_double_presence_radius"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Evasion|Evasion Rating]: (320-386)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (113-138)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 36",
+          "optional": true
+        },
+        {
+          "text": "[Dexterity|Dex]: (54-91)",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 36",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": 725,
+      "itemId": "Solus Ipse Runemastered Grand Visage",
+      "detailsId": "solus-ipse-runemastered-grand-visage",
+      "name": "Solus Ipse",
+      "baseType": "Runemastered Grand Visage",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL1VuaXF1ZXMvU29sdXNJcHNlIiwidyI6MiwiaCI6Miwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/38fbfb8aa5/SolusIpse.png",
+      "flavourText": "One warrior alone survived to face the Arbiter.",
+      "levelRequired": 65,
+      "category": "Helmet",
+      "primaryValue": 13,
+      "listingCount": 4,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -80,
+        "data": [0, -6.92, -6.92, -61.54, -61.54, null, -80]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(157-200)% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_armour_and_evasion_and_energy_shield_+%"]
+        },
+        {
+          "text": "+(62-100) to maximum Mana",
+          "optional": false,
+          "statIds": ["base_maximum_mana"]
+        },
+        {
+          "text": "25% increased [LightRadius|Light Radius]",
+          "optional": false,
+          "statIds": ["light_radius_+%"]
+        },
+        {
+          "text": "Equipment and Skill Gems have 25% increased [Attributes|Attribute] Requirements",
+          "optional": false,
+          "statIds": ["global_item_attribute_requirements_+%"]
+        },
+        {
+          "text": "You can Socket 2 additional copies of each Lineage [SupportGem|Support Gem], in different Skills",
+          "optional": false,
+          "statIds": ["lineage_support_gem_limit_+"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (198-231)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (183-213)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (57-66)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 99",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 36",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 36",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 36",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 715,
+      "itemId": "Ab Aeterno Runemastered Grand Cuisses",
+      "detailsId": "ab-aeterno-runemastered-grand-cuisses",
+      "name": "Ab Aeterno",
+      "baseType": "Runemastered Grand Cuisses",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9VbmlxdWVzL0FiQWV0ZXJubyIsInciOjIsImgiOjIsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/516b4991b9/AbAeterno.png",
+      "flavourText": "His enemy was for endurance forged. His own waned.",
+      "levelRequired": 65,
+      "category": "Boots",
+      "primaryValue": 10,
+      "listingCount": 1,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 0,
+        "data": [0, 0, 0, 0, 0, null, 0]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(22-30)% increased Movement Speed",
+          "optional": false,
+          "statIds": ["base_movement_velocity_+%"]
+        },
+        {
+          "text": "(213-237)% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_armour_and_evasion_and_energy_shield_+%"]
+        },
+        {
+          "text": "Dodge Roll avoids all [Hit|Hits]",
+          "optional": false,
+          "statIds": ["dodge_roll_can_avoid_all_damage"]
+        },
+        {
+          "text": "Gain [Overencumbered|Overencumbrance] for 4 seconds when you Dodge Roll",
+          "optional": false,
+          "statIds": ["overencumbrance_on_dodge_roll"]
+        },
+        {
+          "text": "Your speed is [Unaffected] by [Slow|Slows] while Sprinting",
+          "optional": false,
+          "statIds": ["slows_have_no_potency_on_you_while_sprinting"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (141-152)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (128-138)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (38-41)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 106",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 34",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 34",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 34",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 590,
+      "itemId": "Pragmatism Runemastered Explorer Armour",
+      "detailsId": "pragmatism-runemastered-explorer-armour",
+      "name": "Pragmatism",
+      "baseType": "Runemastered Explorer Armour",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1ByYWdtYXRpc20iLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/98ee5561a7/Pragmatism.png",
+      "flavourText": "In an endless war against darkness,\r\none must be ever vigilant.",
+      "levelRequired": 55,
+      "category": "Body Armour",
+      "primaryValue": 9.2,
+      "listingCount": 3,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 0,
+        "data": [0, 0, 0, 0, 0, null, 0]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(201-296)% increased [Armour|Armour] and [Evasion|Evasion]",
+          "optional": false,
+          "statIds": ["local_armour_and_evasion_+%"]
+        },
+        {
+          "text": "+(11-20)% to all [ElementalDamage|Elemental] [Resistances]",
+          "optional": false,
+          "statIds": ["base_resist_all_elements_%"]
+        },
+        {
+          "text": "-17% to [Resistances|Chaos Resistance]",
+          "optional": false,
+          "statIds": ["base_chaos_damage_resistance_%"]
+        },
+        {
+          "text": "[Charm|Charms] use no Charges",
+          "optional": false,
+          "statIds": ["charms_use_no_charges"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (599-853)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (542-773)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 56",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 55",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 49",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 49",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 709,
+      "itemId": "Rathpith Globe Runemastered Plumed Focus",
+      "detailsId": "rathpith-globe-runemastered-plumed-focus",
+      "name": "Rathpith Globe",
+      "baseType": "Runemastered Plumed Focus",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9Gb2NpL1VuaXF1ZXMvUmF0aHBpdGhHbG9iZSIsInciOjIsImgiOjMsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/51e4da7cb9/RathpithGlobe.png",
+      "flavourText": "The Vaal emptied their slaves of beating hearts,\r\nand left a mountain of twitching dead.",
+      "levelRequired": 75,
+      "category": "[Focus]",
+      "primaryValue": 7,
+      "listingCount": 13,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -60.67,
+        "data": [0, -15.73, -43.82, -57.3, -65.17, null, -60.67]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(60-100)% increased [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_energy_shield_+%"]
+        },
+        {
+          "text": "+(60-100) to maximum Life",
+          "optional": false,
+          "statIds": ["base_maximum_life"]
+        },
+        {
+          "text": "Non-[Channelling] [Spell|Spells] cost an additional 6% of your maximum Life",
+          "optional": false,
+          "statIds": ["base_life_cost_+_with_non_channelling_spells_%_maximum_life"]
+        },
+        {
+          "text": "Non-[Channelling] [Spell|Spells] have 3% increased [Critical|Critical Hit Chance] per 100 maximum Life",
+          "optional": false,
+          "statIds": [
+            "spell_critical_strike_chance_+%_per_100_max_life_with_non_channelling_skills"
+          ]
+        },
+        {
+          "text": "Non-[Channelling] [Spell|Spells] deal 6% increased Damage per 100 maximum Life",
+          "optional": false,
+          "statIds": ["spell_damage_+%_per_100_max_life_with_non_channelling_skills"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[EnergyShield|Energy Shield]: (37-48)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 106",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 75",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 91",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 718,
+      "itemId": "Nightfall Runemastered Glacial Fortress",
+      "detailsId": "nightfall-runemastered-glacial-fortress",
+      "name": "Nightfall",
+      "baseType": "Runemastered Glacial Fortress",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9TaGllbGRzL1VuaXF1ZXMvVHVsU2hpZWxkIiwidyI6MiwiaCI6NCwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/7e5689a37a/TulShield.png",
+      "flavourText": "\"Upon plains of endless chill,\r\nThey Who Never Tire... dominate.\r\nThey Who Never Surrender... terrify.\r\n And They Who Lay Beneath... wait for Nightfall.\"\r\n- Tul, She That Silences",
+      "levelRequired": 78,
+      "category": "[Shield]",
+      "primaryValue": 6.2,
+      "listingCount": 7,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 24,
+        "data": [0, 0, 28, -12, 28, null, 24]
+      },
+      "explicitModifiers": [
+        {
+          "text": "+150 [Strength] Requirement",
+          "optional": false,
+          "statIds": ["local_strength_requirement_+"]
+        },
+        {
+          "text": "(10-20)% increased [Block] chance",
+          "optional": false,
+          "statIds": ["local_block_chance_+%"]
+        },
+        {
+          "text": "(350-449)% increased [Armour|Armour]",
+          "optional": false,
+          "statIds": ["local_physical_damage_reduction_rating_+%"]
+        },
+        {
+          "text": "+(30-40)% to [Resistances|Cold Resistance]",
+          "optional": false,
+          "statIds": ["base_cold_damage_resistance_%"]
+        },
+        {
+          "text": "(10-20)% of [Fire] damage taken as [Cold] damage",
+          "optional": false,
+          "statIds": ["fire_hit_and_dot_damage_%_taken_as_cold"]
+        },
+        {
+          "text": "(10-20)% of [Lightning] damage taken as [Cold] damage",
+          "optional": false,
+          "statIds": ["lightning_hit_and_dot_damage_%_taken_as_cold"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Block] chance: (28-33)%",
+          "optional": false
+        },
+        {
+          "text": "[Armour]: (914-1114)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 53",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 70",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 249",
+          "optional": false
+        }
+      ],
+      "grantedSkillModifiers": [
+        {
+          "text": "Level (18-20) Soaring Midnight",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 671,
+      "itemId": "Forgotten Warden Runemastered Primal Markings",
+      "detailsId": "forgotten-warden-runemastered-primal-markings",
+      "name": "Forgotten Warden",
+      "baseType": "Runemastered Primal Markings",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1RoZUFuY2llbnRPcmRlciIsInciOjIsImgiOjMsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/5b296b11b7/TheAncientOrder.png",
+      "flavourText": "A gift from the DraÃ­ocht, lost in Darkness.\r\nThe bronze hums. The cloth sighs.\r\nLiving pieces of her, yearning to exist.",
+      "levelRequired": 80,
+      "category": "Body Armour",
+      "primaryValue": 6.1,
+      "listingCount": 22,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -1.61,
+        "data": [0, -3.23, 14.52, 14.52, 14.52, null, -1.61]
+      },
+      "explicitModifiers": [
+        {
+          "text": "+(70-100) to [Deflect|Deflection Rating] per 50 missing [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["+_deflection_rating_per_50_missing_maximum_energy_shield"]
+        },
+        {
+          "text": "(201-300)% increased [Evasion] and [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_evasion_and_energy_shield_+%"]
+        },
+        {
+          "text": "+(20-30) to [Dexterity|Dexterity]",
+          "optional": false,
+          "statIds": ["additional_dexterity"]
+        },
+        {
+          "text": "[Companion|Companions] have (30-50)% increased maximum Life",
+          "optional": false,
+          "statIds": ["companion_maximum_life_+%"]
+        },
+        {
+          "text": "(10-15)% of Damage from [Deflect|Deflected] [Hit|Hits] is taken from Damageable [Companion]\u0027s Life before you",
+          "optional": false,
+          "statIds": ["companion_takes_%_damage_from_deflected_hits_before_you"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (30-35)",
+          "optional": true
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (671-987)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (205-304)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (107-150)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 80",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 67",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 67",
+          "optional": false
+        }
+      ],
+      "grantedSkillModifiers": [
+        {
+          "text": "Level (17-20) Spirit Vessel",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 637,
+      "itemId": "Hand of Wisdom and Action Runemastered Spiral Wraps",
+      "detailsId": "hand-of-wisdom-and-action-runemastered-spiral-wraps",
+      "name": "Hand of Wisdom and Action",
+      "baseType": "Runemastered Spiral Wraps",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvVW5pcXVlcy9IYW5kT2ZXaXNkb21BbmRBY3Rpb24iLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/4445974994/HandOfWisdomAndAction.png",
+      "flavourText": "She thinks and we act.\r\nShe acts and we think.\r\nFragments of the whole that washes clean the skies.",
+      "levelRequired": 55,
+      "category": "Gloves",
+      "primaryValue": 5.9,
+      "listingCount": 4,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 18,
+        "data": [0, 0, 0, 18, 18, null, 18]
+      },
+      "explicitModifiers": [
+        {
+          "text": "+(15-25) to [Dexterity|Dexterity]",
+          "optional": false,
+          "statIds": ["additional_dexterity"]
+        },
+        {
+          "text": "+(15-25) to [Intelligence|Intelligence]",
+          "optional": false,
+          "statIds": ["additional_intelligence"]
+        },
+        {
+          "text": "1% increased [Attack] Speed per 20 [Dexterity]",
+          "optional": false,
+          "statIds": ["attack_speed_+%_per_20_dex"]
+        },
+        {
+          "text": "Adds 1 to 10 Lightning Damage to [Attack|Attacks] per 20 [Intelligence]",
+          "optional": false,
+          "statIds": [
+            "minimum_added_lightning_damage_to_attacks_per_20_intelligence",
+            "maximum_added_lightning_damage_to_attacks_per_20_intelligence"
+          ]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Evasion|Evasion Rating]: (38-45)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (12-14)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 67",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 55",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 38",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 38",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 146,
+      "itemId": "Morior Invictus Grand Regalia",
+      "detailsId": "morior-invictus-grand-regalia",
+      "name": "Morior Invictus",
+      "baseType": "Grand Regalia",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL01vcmlvckludmljdHVzX00iLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/6674aa4ff6/MoriorInvictus_M.png",
+      "flavourText": "The Unblinking Eye did not cower and wail.\r\nThey stood against the end.",
+      "levelRequired": 65,
+      "category": "Body Armour",
+      "primaryValue": 4.6,
+      "listingCount": 3695,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 15,
+        "data": [0, 0, 0, 0, 0, null, 15]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(300-400)% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]",
+          "optional": false
+        },
+        {
+          "text": "+(5-7) to all [Attributes] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(45-60) to maximum Life per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "(8-12) Life Regeneration per second per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(50-60) to maximum Mana per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(10-13)% to [Resistances|Chaos Resistance] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(8-10)% to all [Resistances|Elemental Resistances] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(10-14) to [Spirit|Spirit] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "Hits against you have (15-20)% reduced [CriticalDamageBonus|Critical Damage Bonus] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "+(70-90) to [StunThreshold|Stun Threshold] per Socket filled",
+          "optional": true
+        },
+        {
+          "text": "(9-12)% increased Global [Armour], [Evasion] and [EnergyShield|Energy Shield] per Socket filled",
+          "optional": true
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (728-1107)",
+          "optional": false
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (660-1018)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (200-313)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 41",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 41",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 41",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 662,
+      "itemId": "Atziri\u0027s Step Runemastered Cinched Boots",
+      "detailsId": "atziris-step-runemastered-cinched-boots",
+      "name": "Atziri\u0027s Step",
+      "baseType": "Runemastered Cinched Boots",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9VbmlxdWVzL0F0emlyaXNTdGVwIiwidyI6MiwiaCI6Miwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/8aa2a21e43/AtzirisStep.png",
+      "flavourText": "\"Those who dance are considered insane\r\nby those who cannot hear the music.\"\r\n- Atziri, Queen of the Vaal",
+      "levelRequired": 65,
+      "category": "Boots",
+      "primaryValue": 4.5,
+      "listingCount": 16,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -10,
+        "data": [0, 0, 0, 0, 0, null, -10]
+      },
+      "explicitModifiers": [
+        {
+          "text": "30% increased Movement Speed",
+          "optional": false,
+          "statIds": ["base_movement_velocity_+%"]
+        },
+        {
+          "text": "(80-120)% increased [Evasion|Evasion] Rating",
+          "optional": false,
+          "statIds": ["local_evasion_rating_+%"]
+        },
+        {
+          "text": "+(70-100) to maximum Life",
+          "optional": false,
+          "statIds": ["base_maximum_life"]
+        },
+        {
+          "text": "Gain [Deflect|Deflection Rating] equal to (40-60)% of [Evasion|Evasion Rating]",
+          "optional": false,
+          "statIds": ["base_deflection_rating_%_of_evasion_rating"]
+        },
+        {
+          "text": "-(12-6)% to amount of [Hit|Damage] Prevented by [Deflect|Deflection]",
+          "optional": false,
+          "statIds": ["base_damage_%_deflected"]
+        },
+        {
+          "text": "Cannot be [LightStun|Light Stunned] by [Deflect|Deflected] [Hit|Hits]",
+          "optional": false,
+          "statIds": ["cannot_be_light_stunned_by_deflected_hits"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Evasion|Evasion Rating]: (320-420)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (74-99)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 86",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 690,
+      "itemId": "Redblade Banner Runemastered Heraldric Tower Shield",
+      "detailsId": "redblade-banner-runemastered-heraldric-tower-shield",
+      "name": "Redblade Banner",
+      "baseType": "Runemastered Heraldric Tower Shield",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9TaGllbGRzL1VuaXF1ZXMvUmVkYmxhZGVCYW5uZXIiLCJ3IjoyLCJoIjo0LCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/0be03f17e1/RedbladeBanner.png",
+      "flavourText": "Blood shed is blood shared.",
+      "levelRequired": 50,
+      "category": "[Shield]",
+      "primaryValue": 4,
+      "listingCount": 17,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 229.6,
+        "data": [0, 25.42, 171.9, 237.8, 262.6, null, 229.6]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(10-15)% increased [Block] chance",
+          "optional": false,
+          "statIds": ["local_block_chance_+%"]
+        },
+        {
+          "text": "(60-100)% increased [Armour|Armour]",
+          "optional": false,
+          "statIds": ["local_physical_damage_reduction_rating_+%"]
+        },
+        {
+          "text": "+(20-30) to [Strength|Strength]",
+          "optional": false,
+          "statIds": ["additional_strength"]
+        },
+        {
+          "text": "+(100-150) to [StunThreshold|Stun Threshold]",
+          "optional": false,
+          "statIds": ["stun_threshold_+"]
+        },
+        {
+          "text": "Enemies in your [Presence|Presence] count as having double [Power|Power]",
+          "optional": false,
+          "statIds": ["unique_redblade_banner_enemies_in_presence_monster_power_+%_final"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Block] chance: (28-37)%",
+          "optional": false
+        },
+        {
+          "text": "[Armour]: (154-192)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (42-67)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 50",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 71",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 217,
+      "itemId": "Rathpith Globe Sacred Focus",
+      "detailsId": "rathpith-globe-sacred-focus",
+      "name": "Rathpith Globe",
+      "baseType": "Sacred Focus",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9Gb2NpL1VuaXF1ZXMvUmF0aHBpdGhHbG9iZSIsInciOjIsImgiOjMsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/51e4da7cb9/RathpithGlobe.png",
+      "flavourText": "The Vaal emptied their slaves of beating hearts,\r\nand left a mountain of twitching dead.",
+      "levelRequired": 75,
+      "category": "[Focus]",
+      "primaryValue": 3.98,
+      "listingCount": 1769,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -41.72,
+        "data": [0, -42.58, -47.74, -49.27, -21.39, null, -41.72]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(60-100)% increased [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_energy_shield_+%"]
+        },
+        {
+          "text": "+(60-100) to maximum Life",
+          "optional": false,
+          "statIds": ["base_maximum_life"]
+        },
+        {
+          "text": "Non-[Channelling] [Spell|Spells] cost an additional 6% of your maximum Life",
+          "optional": false,
+          "statIds": ["base_life_cost_+_with_non_channelling_spells_%_maximum_life"]
+        },
+        {
+          "text": "Non-[Channelling] [Spell|Spells] have 3% increased [Critical|Critical Hit Chance] per 100 maximum Life",
+          "optional": false,
+          "statIds": [
+            "spell_critical_strike_chance_+%_per_100_max_life_with_non_channelling_skills"
+          ]
+        },
+        {
+          "text": "Non-[Channelling] [Spell|Spells] deal 6% increased Damage per 100 maximum Life",
+          "optional": false,
+          "statIds": ["spell_damage_+%_per_100_max_life_with_non_channelling_skills"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[EnergyShield|Energy Shield]: (130-167)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 75",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 107",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 603,
+      "itemId": "Prism Guardian Runemastered Intricate Crest Shield",
+      "detailsId": "prism-guardian-runemastered-intricate-crest-shield",
+      "name": "Prism Guardian",
+      "baseType": "Runemastered Intricate Crest Shield",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9TaGllbGRzL1VuaXF1ZXMvUHJpc21HdWFyZGlhbiIsInciOjIsImgiOjMsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/285ec94b35/PrismGuardian.png",
+      "flavourText": "When blood is paid, the weak think twice.",
+      "levelRequired": 65,
+      "category": "[Shield]",
+      "primaryValue": 3.5,
+      "listingCount": 16,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": -5.41,
+        "data": [0, -27.03, -35.14, -18.92, -18.92, null, -5.41]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(150-200)% increased [Armour|Armour] and [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_armour_and_energy_shield_+%"]
+        },
+        {
+          "text": "+50 to [Spirit|Spirit]",
+          "optional": false,
+          "statIds": ["base_spirit_from_equipment"]
+        },
+        {
+          "text": "+(20-30) to [Dexterity|Dexterity]",
+          "optional": false,
+          "statIds": ["additional_dexterity"]
+        },
+        {
+          "text": "+(10-20)% to all [ElementalDamage|Elemental] [Resistances]",
+          "optional": false,
+          "statIds": ["base_resist_all_elements_%"]
+        },
+        {
+          "text": "1% increased [Spirit] [Reservation] [Efficiency] of [Buff] Skills per 100 Maximum Life",
+          "optional": false,
+          "statIds": ["buff_skills_spirit_reservation_efficiency_+%_per_100_maximum_life"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Block] chance: (25-28)%",
+          "optional": false
+        },
+        {
+          "text": "[Armour]: (195-250)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (55-70)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 62",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: 50",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 50",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 594,
+      "itemId": "Essentia Sanguis Runemastered Furtive Wraps",
+      "detailsId": "essentia-sanguis-runemastered-furtive-wraps",
+      "name": "Essentia Sanguis",
+      "baseType": "Runemastered Furtive Wraps",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvVW5pcXVlcy9Fc3NlbnRpYVNhbmd1aXMiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/b52adc9de8/EssentiaSanguis.png",
+      "flavourText": "The darkest clouds clashed and coupled,\r\ngiving birth to four lightning children of hate.",
+      "levelRequired": 55,
+      "category": "Gloves",
+      "primaryValue": 3.4,
+      "listingCount": 8,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 487.2,
+        "data": [0, 7.7, 72.7, 31.4, 219, null, 487.2]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(50-70)% increased [Evasion] and [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_evasion_and_energy_shield_+%"]
+        },
+        {
+          "text": "Adds 1 to (30-50) [Lightning] damage to [Attack|Attacks]",
+          "optional": false,
+          "statIds": [
+            "attack_minimum_added_lightning_damage",
+            "attack_maximum_added_lightning_damage"
+          ]
+        },
+        {
+          "text": "+(15-25) to [Intelligence|Intelligence]",
+          "optional": false,
+          "statIds": ["additional_intelligence"]
+        },
+        {
+          "text": "+(25-35)% to [Resistances|Lightning Resistance]",
+          "optional": false,
+          "statIds": ["base_lightning_damage_resistance_%"]
+        },
+        {
+          "text": "[LifeLeech|Life Leech] is [StatConversion|Converted] to [EnergyShieldLeech|Energy Shield Leech]",
+          "optional": false,
+          "statIds": ["convert_all_life_leech_to_energy_shield_leech"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Evasion|Evasion Rating]: (84-105)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (26-32)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 24",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 55",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 38",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 38",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 633,
+      "itemId": "Queen of the Forest Runemastered Smuggler Coat",
+      "detailsId": "queen-of-the-forest-runemastered-smuggler-coat",
+      "name": "Queen of the Forest",
+      "baseType": "Runemastered Smuggler Coat",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1F1ZWVuT2ZUaGVGb3Jlc3QiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/b55d425217/QueenOfTheForest.png",
+      "flavourText": "Shedding away her regal past,\r\nshe forged a new destiny.\r\nSacrificing the ephemeral joys of man,\r\nshe embraced the eternal grasp of nature.\r\nSeizing her one true wish,\r\nshe found peace at last.",
+      "levelRequired": 65,
+      "category": "Body Armour",
+      "primaryValue": 3.24,
+      "listingCount": 27,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 62.2,
+        "data": [0, 0, 0, 2.94, 4.38, null, 62.2]
+      },
+      "explicitModifiers": [
+        {
+          "text": "(250-300)% increased [Evasion|Evasion] Rating",
+          "optional": false,
+          "statIds": ["local_evasion_rating_+%"]
+        },
+        {
+          "text": "-(15-10)% to [Resistances|Fire Resistance]",
+          "optional": false,
+          "statIds": ["base_fire_damage_resistance_%"]
+        },
+        {
+          "text": "+(25-30)% to [Resistances|Cold Resistance]",
+          "optional": false,
+          "statIds": ["base_cold_damage_resistance_%"]
+        },
+        {
+          "text": "+(10-15)% to [Resistances|Lightning Resistance]",
+          "optional": false,
+          "statIds": ["base_lightning_damage_resistance_%"]
+        },
+        {
+          "text": "Increases Movement Speed by 25%, plus 1% per 600 [Evasion] Rating, up to [MaximumTotal|a maximum of 75]%\nOther Modifiers to Movement Speed except for Sprinting do not apply",
+          "optional": false,
+          "statIds": ["movement_speed_is_only_base_+1%_per_x_evasion_rating"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (35-41)",
+          "optional": true
+        },
+        {
+          "text": "[Evasion|Evasion Rating]: (1425-1893)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: 86",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (11-13)",
+          "optional": true
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Dexterity|Dex]: 103",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 98,
+      "itemId": "Sandstorm Visage Chain Tiara",
+      "detailsId": "sandstorm-visage-chain-tiara",
+      "name": "Sandstorm Visage",
+      "baseType": "Chain Tiara",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL1VuaXF1ZXMvU2FuZHN0b3JtVmlzYWdlIiwidyI6MiwiaCI6Miwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/a4393c873a/SandstormVisage.png",
+      "flavourText": "A fell wind brings death.",
+      "levelRequired": 52,
+      "category": "Helmet",
+      "primaryValue": 3,
+      "listingCount": 21,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 50,
+        "data": [0, 50, 50, 50, 50, null, 50]
+      },
+      "explicitModifiers": [
+        {
+          "text": "+(81-120) to maximum [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_energy_shield"]
+        },
+        {
+          "text": "+(20-30) to [Dexterity|Dexterity]",
+          "optional": false,
+          "statIds": ["additional_dexterity"]
+        },
+        {
+          "text": "Enemies in your [Presence|Presence] are [Blind|Blinded]",
+          "optional": false,
+          "statIds": ["enemies_in_presence_are_blinded"]
+        },
+        {
+          "text": "Every second, inflicts [CriticalWeakness|Critical Weakness] on enemies in your [Presence] for (15-20) seconds",
+          "optional": false,
+          "statIds": ["enemies_in_presence_gain_critical_weakness_every_second_for_seconds"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[EnergyShield|Energy Shield]: (128-187)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: (52-60)",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: 38",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "id": 575,
+      "itemId": "Decree of Flight Runemastered Ancient Leggings",
+      "detailsId": "decree-of-flight-runemastered-ancient-leggings",
+      "name": "Decree of Flight",
+      "baseType": "Runemastered Ancient Leggings",
+      "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9VbmlxdWVzL0JvdW5kbGVzc0F1dGhvcml0eSIsInciOjIsImgiOjIsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/e7a5b69683/BoundlessAuthority.png",
+      "flavourText": "\"Soar. Be swift. Let none trespass here, from\r\nabove or below, lest your purpose be forfeit.\"",
+      "levelRequired": 65,
+      "category": "Boots",
+      "primaryValue": 3,
+      "listingCount": 43,
+      "corrupted": false,
+      "sparkLine": {
+        "totalChange": 15.38,
+        "data": [0, 15.38, 15.38, 15.38, 15.38, null, 15.38]
+      },
+      "explicitModifiers": [
+        {
+          "text": "30% increased Movement Speed",
+          "optional": false,
+          "statIds": ["base_movement_velocity_+%"]
+        },
+        {
+          "text": "(150-200)% increased [Armour|Armour] and [EnergyShield|Energy Shield]",
+          "optional": false,
+          "statIds": ["local_armour_and_energy_shield_+%"]
+        },
+        {
+          "text": "(20-30)% faster Dodge Roll",
+          "optional": false,
+          "statIds": ["dodge_roll_speed_+%"]
+        },
+        {
+          "text": "Gain [Guard] equal to (10-20)% of missing [EnergyShield|Energy Shield] for 4 seconds when you Dodge Roll",
+          "optional": false,
+          "statIds": [
+            "gain_guard_equal_to_%_of_your_missing_energy_shield_for_4_seconds_on_dodge_roll"
+          ]
+        },
+        {
+          "text": "Maximum amount of [Guard] is based on maximum [EnergyShield|Energy Shield] instead",
+          "optional": false,
+          "statIds": ["maximum_guard_is_based_on_energy_shield"]
+        },
+        {
+          "text": "Divine Flight",
+          "optional": false,
+          "statIds": ["enable_unfettered_authority_roll_variation"]
+        }
+      ],
+      "propertyModifiers": [
+        {
+          "text": "[Armour]: (268-339)",
+          "optional": false
+        },
+        {
+          "text": "[EnergyShield|Energy Shield]: (75-95)",
+          "optional": false
+        },
+        {
+          "text": "[Ward|Runic Ward]: (53-78)",
+          "optional": false
+        }
+      ],
+      "requirementModifiers": [
+        {
+          "text": "Level: 65",
+          "optional": false
+        },
+        {
+          "text": "[Strength|Str]: (33-56)",
+          "optional": false
+        },
+        {
+          "text": "[Intelligence|Int]: (56-78)",
+          "optional": false
+        }
+      ]
+    }
+  ]
+}

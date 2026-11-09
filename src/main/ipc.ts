@@ -1,35 +1,40 @@
-import { app, ipcMain, type IpcMainInvokeEvent } from 'electron'
+import { ipcMain, type IpcMainInvokeEvent, type WebContents } from 'electron'
 import {
   isInvokeChannel,
+  type EventChannel,
+  type EventMap,
   type InvokeArgs,
   type InvokeChannel,
   type InvokeResult,
 } from '../shared/ipc'
-import { GGG_NOTICE, APP_NAME } from '../shared/notices'
-import { USER_AGENT } from './net/http'
 
-type Handler<C extends InvokeChannel> = (
-  event: IpcMainInvokeEvent,
+export type Handler<C extends InvokeChannel> = (
   ...args: InvokeArgs<C>
 ) => InvokeResult<C> | Promise<InvokeResult<C>>
 
-function handle<C extends InvokeChannel>(
-  channel: C,
+export type Handlers = { [C in InvokeChannel]: Handler<C> }
+
+/** Registers every invoke handler. Calls from frames outside the app are rejected. */
+export function registerIpc(
+  handlers: Handlers,
   isTrustedSender: (event: IpcMainInvokeEvent) => boolean,
-  handler: Handler<C>,
 ): void {
-  if (!isInvokeChannel(channel)) throw new Error(`IPC channel not allow-listed: ${channel}`)
-  ipcMain.handle(channel, (event, ...args) => {
-    if (!isTrustedSender(event)) throw new Error(`Untrusted IPC sender for ${channel}`)
-    return handler(event, ...(args as InvokeArgs<C>))
-  })
+  for (const channel of Object.keys(handlers) as InvokeChannel[]) {
+    if (!isInvokeChannel(channel)) throw new Error(`IPC channel not allow-listed: ${channel}`)
+    const handler = handlers[channel] as (...args: unknown[]) => unknown
+    ipcMain.handle(channel, (event, ...args) => {
+      if (!isTrustedSender(event)) throw new Error(`Untrusted IPC sender for ${channel}`)
+      return handler(...args)
+    })
+  }
 }
 
-export function registerIpc(isTrustedSender: (event: IpcMainInvokeEvent) => boolean): void {
-  handle('app:get-info', isTrustedSender, () => ({
-    name: APP_NAME,
-    version: app.getVersion(),
-    userAgent: USER_AGENT,
-    gggNotice: GGG_NOTICE,
-  }))
+export function send<C extends EventChannel>(
+  targets: Iterable<WebContents | undefined>,
+  channel: C,
+  payload: EventMap[C],
+): void {
+  for (const wc of targets) {
+    if (wc && !wc.isDestroyed()) wc.send(channel, payload)
+  }
 }
