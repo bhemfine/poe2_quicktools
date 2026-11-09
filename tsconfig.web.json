@@ -15,5 +15,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["src/renderer/**/*", "src/preload/*.d.ts", "src/shared/**/*"]
+  "include": [
+    "src/renderer/**/*",
+    "src/preload/*.d.ts",
+    "src/shared/**/*",
+    "tests/component/**/*.ts"
+  ]
 }

@@ -18,6 +18,8 @@ let nextId = 1
 export const useOverlayStore = defineStore('overlay', () => {
   const card = ref<CardState | null>(null)
   const converterOpen = ref(false)
+  /** poe.ninja page of the item on the open card, for the "Open on poe.ninja" hotkey. */
+  const ninjaUrl = ref<string | null>(null)
   const notice = ref<NoticeEvent | null>(null)
   const state = ref<OverlayState>({
     attached: false,
@@ -40,6 +42,7 @@ export const useOverlayStore = defineStore('overlay', () => {
   function dismiss(): void {
     card.value = null
     converterOpen.value = false
+    ninjaUrl.value = null
   }
 
   function togglePin(): void {
@@ -58,5 +61,5 @@ export const useOverlayStore = defineStore('overlay', () => {
     (open) => void api.invoke('overlay:set-card-open', open),
   )
 
-  return { card, converterOpen, notice, state, showItem, dismiss, togglePin, showNotice }
+  return { card, converterOpen, ninjaUrl, notice, state, showItem, dismiss, togglePin, showNotice }
 })

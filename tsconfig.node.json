@@ -22,5 +22,6 @@
     "src/preload/**/*",
     "src/shared/**/*",
     "tests/**/*.ts"
-  ]
+  ],
+  "exclude": ["tests/component/**"]
 }

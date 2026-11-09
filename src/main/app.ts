@@ -122,7 +122,8 @@ export class QuickToolsApp {
     }
     return new DataService(
       http,
-      new DiskCache(join(userData, 'cache')),
+      // Not "cache": on Windows that is the same folder as Chromium's own "Cache".
+      new DiskCache(join(userData, 'data-cache')),
       storage,
       this.logger,
       () => this.settings.get().league,
