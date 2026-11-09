@@ -56,6 +56,8 @@ export interface InvokeMap {
   'settings:get': { args: []; result: Settings }
   'settings:update': { args: [patch: SettingsPatch]; result: Settings }
   'hotkeys:get-status': { args: []; result: HotkeyStatus }
+  'hotkeys:is-available': { args: [combo: string]; result: boolean }
+  'app:open-logs': { args: []; result: void }
   'overlay:set-mouse-capture': { args: [capture: boolean]; result: void }
   'overlay:activate': { args: []; result: void }
   'overlay:focus-game': { args: []; result: void }
@@ -106,6 +108,8 @@ export const INVOKE_CHANNELS = [
   'settings:get',
   'settings:update',
   'hotkeys:get-status',
+  'hotkeys:is-available',
+  'app:open-logs',
   'overlay:set-mouse-capture',
   'overlay:activate',
   'overlay:focus-game',

@@ -12,7 +12,17 @@ PoE 2 QuickTools includes code adapted from the projects below. Each ported file
 
 | EE2 source | QuickTools file |
 |---|---|
-| _none yet (porting starts in M1)_ | |
+| `main/src/shortcuts/HostClipboard.ts` | `src/main/clipboard/HostClipboard.ts` |
+| `main/src/shortcuts/Shortcuts.ts` (copy keystroke) | `src/main/input/copy-keystroke.ts` |
+| `main/src/shortcuts/Shortcuts.ts` (focus-gated registration) | `src/main/input/HotkeyManager.ts` |
+| `main/src/windowing/OverlayWindow.ts`, `GameWindow.ts`, `OverlayVisibility.ts` | `src/main/overlay/OverlayWindow.ts` |
+| `renderer/src/parser/advanced-mod-desc.ts` | `src/shared/parser/mod-header.ts` |
+| `renderer/src/parser/Parser.ts` (section layout, mod grouping) | `src/shared/parser/parse.ts` |
+| `renderer/src/web/price-check/trade/RateLimiter.ts` (queueing approach) | `src/shared/ratelimit/limiter.ts` |
+| `renderer/src/web/price-check/filters/create-item-filters.ts`, `create-stat-filters.ts` (ideas) | `src/shared/query/model.ts` |
+| `renderer/specs/Parser/items.ts` (test items) | `tests/fixtures/clipboard/seed/ee2-*.txt` |
+
+Not reused: EE2's UI widgets, its `api.exiledexchange2.dev` proxy, the remote logger, i18n.
 
 ### License
 

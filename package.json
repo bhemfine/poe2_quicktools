@@ -21,7 +21,6 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "check:live": "node scripts/check-live.mjs",
-    "extract:repoe": "node scripts/extract-repoe.mjs",
     "dist": "npm run build && electron-builder --win nsis portable --publish never",
     "release": "npm run build && electron-builder --win nsis portable --publish always"
   },

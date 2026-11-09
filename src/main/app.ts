@@ -27,6 +27,7 @@ import { ElectronHttpClient, USER_AGENT } from './net/http'
 import { OverlayWindow } from './overlay/OverlayWindow'
 import { SettingsStore } from './settings/store'
 import { createTray, notify } from './tray'
+import { checkForUpdates } from './updater'
 
 const GAME_NOT_FOUND_AFTER_MS = 15_000
 
@@ -97,6 +98,7 @@ export class QuickToolsApp {
     })
 
     setTimeout(() => void this.checkGameFound(), GAME_NOT_FOUND_AFTER_MS)
+    if (s.checkForUpdates) checkForUpdates(this.logger)
   }
 
   stop(): void {
@@ -311,6 +313,10 @@ export class QuickToolsApp {
       'settings:update': (patch) => this.settings.update(patch),
       'settings:open-window': () => this.openSettingsWindow(),
       'hotkeys:get-status': () => this.hotkeys.getStatus(),
+      'hotkeys:is-available': (combo) => this.hotkeys.isAvailable(combo),
+      'app:open-logs': async () => {
+        await shell.openPath(join(app.getPath('userData'), 'logs'))
+      },
       'overlay:set-mouse-capture': (capture) => this.overlay.setMouseCapture(capture),
       'overlay:activate': () => this.overlay.activate(),
       'overlay:focus-game': () => this.overlay.focusGame(),

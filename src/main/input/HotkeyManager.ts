@@ -54,6 +54,19 @@ export class HotkeyManager extends EventEmitter<{
     return { ...this.status }
   }
 
+  /**
+   * True if `combo` can be registered right now (not taken by another program). Combos QuickTools
+   * already holds count as available.
+   */
+  isAvailable(combo: string): boolean {
+    const accel = toAccelerator(combo)
+    if (!accel) return false
+    if ([...this.registered.values()].includes(accel)) return true
+    const ok = globalShortcut.register(accel, () => {})
+    if (ok) globalShortcut.unregister(accel)
+    return ok
+  }
+
   private wanted(action: HotkeyAction): boolean {
     if (!this.cond.gameActive || !this.bindings[action]) return false
     const condition = CONDITIONAL_ACTIONS[action]
