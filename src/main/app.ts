@@ -53,6 +53,8 @@ export class QuickToolsApp {
     const s = this.settings.get()
     this.logger.info('app', `${APP_NAME} ${app.getVersion()} starting (${process.platform})`)
     this.clipboard.restore = s.restoreClipboard
+    // Currency icons load in the windows from GGG's CDN; they carry the same User-Agent (PLAN §1.4).
+    app.userAgentFallback = USER_AGENT
 
     const http = this.createHttpClient()
     // Not "cache": on Windows that is the same folder as Chromium's own "Cache".

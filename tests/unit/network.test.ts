@@ -244,3 +244,14 @@ describe('price index', () => {
     expect(idx.rate('divine', 'exalted')).toBeCloseTo(1 / idx.divineValueOf('exalted')!)
   })
 })
+
+describe('currency icons', () => {
+  it('maps every trade currency id to a name and a GGG CDN icon', async () => {
+    const { buildCurrencyInfo } = await import('../../src/shared/currency-info')
+    const info = buildCurrencyInfo(apiFixture('trade-static.json'))
+    for (const id of ['divine', 'exalted', 'chaos', 'vaal']) {
+      expect(info.get(id)?.icon).toMatch(/^https:\/\/web\.poecdn\.com\/gen\/image\/.+\.png$/)
+    }
+    expect(info.get('divine')?.name).toBe('Divine Orb')
+  })
+})

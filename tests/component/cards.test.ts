@@ -126,7 +126,9 @@ describe('price check cards render from fixtures', () => {
     expect(text).toContain('Pack Size')
     expect(text).toContain('42 listed')
     expect(text).toContain('seller0')
-    expect(text).toMatch(/div/)
+    // Listing prices show currency icons; the comparison column picks a readable currency.
+    expect(w.find('tbody img[alt="Ex"]').attributes('src')).toMatch(/^https:\/\/web\.poecdn\.com\//)
+    expect(w.find('thead img').exists()).toBe(true)
     expect(text).toContain('Searches: 1/5 per 10 s')
     const [, query] = invoke.mock.calls.find((c) => c[0] === 'trade:search')!
     expect((query as { query: { type: string } }).query.type).toBe('Waystone (Tier 14)')
@@ -188,7 +190,8 @@ describe('converter HUD', () => {
     const w = mount(ConverterHud)
     await flushPromises()
     expect(w.text()).toContain('Currency converter')
-    expect(w.text()).toMatch(/= [\d.k]+ Exalted Orb/)
+    expect(w.text()).toMatch(/= [\d.k]+\s*Exalted Orb/)
+    expect(w.find('img[alt="Ex"]').exists()).toBe(true)
     expect(w.text()).toContain('poe.ninja average')
     expect(w.findAll('li').length).toBe(2)
   })

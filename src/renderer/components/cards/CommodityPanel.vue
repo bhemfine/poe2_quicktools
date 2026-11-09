@@ -18,7 +18,7 @@ const lowVolume = computed(
 )
 
 function pct(n: number | undefined): string {
-  if (n === undefined) return 'â€“'
+  if (n === undefined) return '–'
   return `${n > 0 ? '+' : ''}${n.toFixed(1)}%`
 }
 </script>
@@ -47,7 +47,7 @@ function pct(n: number | undefined): string {
     <div class="text-xs" :class="lowVolume ? 'text-amber-300' : 'text-neutral-400'">
       <template v-if="price.volume !== undefined">
         Traded volume: {{ formatAmount(price.volume) }} Div<span v-if="lowVolume">
-          â€” low volume, price may be unreliable</span
+          — low volume, price may be unreliable</span
         >
       </template>
       <template v-else-if="price.listingCount !== undefined"
@@ -56,7 +56,7 @@ function pct(n: number | undefined): string {
     </div>
     <div class="text-[11px] text-neutral-500">
       poe.ninja average<span v-if="economy.ninjaUpdated">, updated {{ economy.ninjaUpdated }}</span>
-      Â· <a :href="price.url" target="_blank" class="text-sky-400 underline">Open on poe.ninja</a>
+      · <a :href="price.url" target="_blank" class="text-sky-400 underline">Open on poe.ninja</a>
     </div>
   </div>
 </template>

@@ -4,7 +4,8 @@ import { normalizeCombo } from './hotkeys/keys'
 
 export const SETTINGS_VERSION = 1
 
-export const CURRENCIES = ['divine', 'exalted', 'chaos', 'vaal'] as const
+/** Default display order (Settings → Display can reorder). */
+export const CURRENCIES = ['exalted', 'chaos', 'divine', 'vaal'] as const
 export type CurrencyId = (typeof CURRENCIES)[number]
 
 const hotkeysSchema = z

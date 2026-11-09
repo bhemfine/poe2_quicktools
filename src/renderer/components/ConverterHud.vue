@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { formatAmount } from '../../shared/pricing/ninja'
 import { useEconomyStore } from '../stores/economy'
 import { useSettingsStore } from '../stores/settings'
+import CurrencyIcon from './CurrencyIcon.vue'
 
 defineEmits<{ close: [] }>()
 const economy = useEconomyStore()
@@ -83,18 +84,26 @@ function drop(i: number): void {
           class="w-20 rounded bg-neutral-800 px-1"
           aria-label="Amount"
         />
-        <select v-model="from" class="flex-1 rounded bg-neutral-800" aria-label="From currency">
+        <select
+          v-model="from"
+          class="min-w-0 flex-1 rounded bg-neutral-800"
+          aria-label="From currency"
+        >
           <option v-for="c in currencies" :key="c.id" :value="c.id">{{ c.name }}</option>
         </select>
         <button type="button" class="rounded bg-neutral-700 px-1" title="Swap" @click="swap">
           ⇄
         </button>
-        <select v-model="to" class="flex-1 rounded bg-neutral-800" aria-label="To currency">
+        <select v-model="to" class="min-w-0 flex-1 rounded bg-neutral-800" aria-label="To currency">
           <option v-for="c in currencies" :key="c.id" :value="c.id">{{ c.name }}</option>
         </select>
       </div>
-      <div class="text-lg text-amber-200">
-        = {{ result !== undefined ? formatAmount(result) : '?' }}
+      <div class="flex items-center gap-1.5 text-lg text-amber-200 tabular-nums">
+        <span class="inline-flex items-center gap-1 text-base text-neutral-300">
+          {{ formatAmount(amount || 0) }} <CurrencyIcon :id="from" :size="20" />
+        </span>
+        = <b>{{ result !== undefined ? formatAmount(result) : '?' }}</b>
+        <CurrencyIcon :id="to" :size="26" />
         <span class="text-sm text-neutral-400">{{ nameOf(to) }}</span>
       </div>
       <div class="flex items-center text-xs">
@@ -113,8 +122,14 @@ function drop(i: number): void {
           @dragover.prevent
           @drop="drop(i)"
         >
-          <button type="button" class="flex-1 text-left" @click="usePair(p)">
-            1 {{ nameOf(p.from) }} = <b>{{ pairRate(p.from, p.to) }}</b> {{ nameOf(p.to) }}
+          <button
+            type="button"
+            class="inline-flex flex-1 items-center gap-1 text-left tabular-nums"
+            :title="`1 ${nameOf(p.from)} = ${pairRate(p.from, p.to)} ${nameOf(p.to)}`"
+            @click="usePair(p)"
+          >
+            1 <CurrencyIcon :id="p.from" :size="16" /> = <b>{{ pairRate(p.from, p.to) }}</b>
+            <CurrencyIcon :id="p.to" :size="16" />
           </button>
           <button
             type="button"

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
+import { buildCurrencyInfo, type CurrencyInfo } from '../../shared/currency-info'
 import type { DataStatus } from '../../shared/ipc'
 import type { LeagueInfo } from '../../shared/league'
 import { PriceIndex } from '../../shared/pricing/ninja'
@@ -47,6 +48,10 @@ export const useEconomyStore = defineStore('economy', () => {
     rateLimits.value = r
   }
 
+  const currencyInfo = computed<Map<string, CurrencyInfo>>(() =>
+    trade.value ? buildCurrencyInfo(trade.value.static) : new Map(),
+  )
+
   const ninjaUpdated = computed(() =>
     status.value.ninjaUpdatedAt
       ? new Date(status.value.ninjaUpdatedAt).toLocaleTimeString([], {
@@ -56,5 +61,15 @@ export const useEconomyStore = defineStore('economy', () => {
       : null,
   )
 
-  return { trade, matcher, prices, league, status, rateLimits, ninjaUpdated, init }
+  return {
+    trade,
+    matcher,
+    prices,
+    league,
+    status,
+    rateLimits,
+    currencyInfo,
+    ninjaUpdated,
+    init,
+  }
 })
