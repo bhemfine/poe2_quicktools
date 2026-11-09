@@ -1,4 +1,4 @@
-﻿{
+{
   "core": {
     "items": [
       {
@@ -333,7 +333,7 @@
       "name": "Death Articulated",
       "baseType": "Ornate Gauntlets",
       "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvVW5pcXVlcy9EZWF0aEFydGljdWxhdGVkIiwidyI6MiwiaCI6Miwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/98e9511278/DeathArticulated.png",
-      "flavourText": "\"The mind at the center of the swarm... K\u0027Tash does\r\nthe thinking... but it has only one thought... hate.\"\r\n- Rantings of a Templar prisoner, page ninety-four",
+      "flavourText": "\"The mind at the center of the swarm... K'Tash does\r\nthe thinking... but it has only one thought... hate.\"\r\n- Rantings of a Templar prisoner, page ninety-four",
       "levelRequired": 65,
       "category": "Gloves",
       "primaryValue": 29.2,
@@ -577,9 +577,9 @@
     },
     {
       "id": 577,
-      "itemId": "Alpha\u0027s Howl Runemastered Armoured Cap",
+      "itemId": "Alpha's Howl Runemastered Armoured Cap",
       "detailsId": "alphas-howl-runemastered-armoured-cap",
-      "name": "Alpha\u0027s Howl",
+      "name": "Alpha's Howl",
       "baseType": "Runemastered Armoured Cap",
       "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL1VuaXF1ZXMvQWxwaGFzSG93bCIsInciOjIsImgiOjIsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/172ece8af4/AlphasHowl.png",
       "flavourText": "Nature respects the strong\r\nAnd paints the snow red\r\nWith the blood of the weak",
@@ -1059,7 +1059,7 @@
           "statIds": ["companion_maximum_life_+%"]
         },
         {
-          "text": "(10-15)% of Damage from [Deflect|Deflected] [Hit|Hits] is taken from Damageable [Companion]\u0027s Life before you",
+          "text": "(10-15)% of Damage from [Deflect|Deflected] [Hit|Hits] is taken from Damageable [Companion]'s Life before you",
           "optional": false,
           "statIds": ["companion_takes_%_damage_from_deflected_hits_before_you"]
         }
@@ -1272,9 +1272,9 @@
     },
     {
       "id": 662,
-      "itemId": "Atziri\u0027s Step Runemastered Cinched Boots",
+      "itemId": "Atziri's Step Runemastered Cinched Boots",
       "detailsId": "atziris-step-runemastered-cinched-boots",
-      "name": "Atziri\u0027s Step",
+      "name": "Atziri's Step",
       "baseType": "Runemastered Cinched Boots",
       "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9VbmlxdWVzL0F0emlyaXNTdGVwIiwidyI6MiwiaCI6Miwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/8aa2a21e43/AtzirisStep.png",
       "flavourText": "\"Those who dance are considered insane\r\nby those who cannot hear the music.\"\r\n- Atziri, Queen of the Vaal",

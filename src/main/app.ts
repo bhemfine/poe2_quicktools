@@ -1,7 +1,17 @@
+import { readFileSync, writeFileSync } from 'node:fs'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { app, BrowserWindow, clipboard, shell, type IpcMainInvokeEvent, type Tray } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  clipboard,
+  session,
+  shell,
+  type IpcMainInvokeEvent,
+  type Tray,
+} from 'electron'
+import type { LimiterStorage } from '../shared/ratelimit/limiter'
 import type { HotkeyAction } from '../shared/hotkeys/actions'
 import { isAllowedExternalUrl, type EventChannel, type EventMap } from '../shared/ipc'
 import { isExclusiveFullscreen, parseGameDisplayConfig } from '../shared/game-config'
@@ -11,7 +21,9 @@ import { pressCopyItemText } from './input/copy-keystroke'
 import { HotkeyManager } from './input/HotkeyManager'
 import { registerIpc, send, type Handlers } from './ipc'
 import { Logger } from './logging/logger'
-import { USER_AGENT } from './net/http'
+import { DataService } from './net/data-service'
+import { DiskCache } from './net/disk-cache'
+import { ElectronHttpClient, USER_AGENT } from './net/http'
 import { OverlayWindow } from './overlay/OverlayWindow'
 import { SettingsStore } from './settings/store'
 import { createTray, notify } from './tray'
@@ -27,6 +39,7 @@ export class QuickToolsApp {
   private clipboard = new HostClipboard()
   private tray?: Tray
   private lastItemText = ''
+  private data!: DataService
 
   private readonly rendererDevUrl = process.env['ELECTRON_RENDERER_URL']
   private readonly rendererFile = join(__dirname, '../renderer/index.html')
@@ -35,6 +48,14 @@ export class QuickToolsApp {
     const s = this.settings.get()
     this.logger.info('app', `${APP_NAME} ${app.getVersion()} starting (${process.platform})`)
     this.clipboard.restore = s.restoreClipboard
+
+    this.data = this.createDataService()
+    this.data.on('status', (st) => this.broadcast('data-status', st))
+    this.data.on('trade', (d) => this.broadcast('trade-data', d))
+    this.data.on('ninja', (n) => this.broadcast('ninja-data', n))
+    this.data.on('league', (l) => this.broadcast('league', l))
+    this.data.on('ratelimit', (r) => this.broadcast('ratelimit', r))
+    void this.data.start()
 
     this.hotkeys = new HotkeyManager(s.hotkeys, this.logger)
     this.hotkeys.setConditions({ devTools: s.devTools })
@@ -64,6 +85,7 @@ export class QuickToolsApp {
         this.overlay.toggleKey = next.hotkeys['toggle-interactive']
       }
       if (next.devTools !== prev.devTools) this.hotkeys.setConditions({ devTools: next.devTools })
+      if (next.league !== prev.league) this.data.onSavedLeagueChanged()
       this.broadcast('settings-changed', next)
     })
 
@@ -79,6 +101,32 @@ export class QuickToolsApp {
 
   stop(): void {
     this.hotkeys?.unregisterAll()
+    this.data?.stop()
+  }
+
+  private createDataService(): DataService {
+    const net = session.fromPartition('persist:poe2qt-net')
+    net.setUserAgent(USER_AGENT)
+    const http = new ElectronHttpClient((url, init) => net.fetch(url, init))
+    const userData = app.getPath('userData')
+    const lockFile = join(userData, 'ratelimit-lockouts.json')
+    const storage: LimiterStorage = {
+      load: () => {
+        try {
+          return JSON.parse(readFileSync(lockFile, 'utf8')) as Record<string, number>
+        } catch {
+          return {}
+        }
+      },
+      save: (d) => writeFileSync(lockFile, JSON.stringify(d)),
+    }
+    return new DataService(
+      http,
+      new DiskCache(join(userData, 'cache')),
+      storage,
+      this.logger,
+      () => this.settings.get().league,
+    )
   }
 
   focusExisting(): void {
@@ -272,6 +320,14 @@ export class QuickToolsApp {
         if (isAllowedExternalUrl(url)) await shell.openExternal(url)
       },
       'diagnostics:copy': () => this.copyDiagnostics(),
+      'data:get-trade': () => this.data.getTrade(),
+      'data:get-ninja': () => this.data.getNinja(),
+      'data:get-status': () => this.data.getStatus(),
+      'data:refresh': () => this.data.refresh(),
+      'league:get': () => this.data.getLeague(),
+      'trade:search': (query, checkId) => this.data.search(query, checkId),
+      'trade:fetch': (ids, queryId, checkId) => this.data.fetch(ids, queryId, checkId),
+      'ratelimit:get': () => this.data.rateLimits(),
     }
   }
 }

@@ -1,0 +1,30 @@
+{
+  "_comment": "poe.ninja PoE 2 types (case-sensitive, verified 9 Nov 2026). `slug` is the URL path segment on poe.ninja; only unique-armours was verified, the rest follow the same pattern.",
+  "exchange": [
+    { "type": "Currency", "slug": "currency" },
+    { "type": "Fragments", "slug": "fragments" },
+    { "type": "Essences", "slug": "essences" },
+    { "type": "Runes", "slug": "runes" },
+    { "type": "UncutGems", "slug": "uncut-gems" },
+    { "type": "SoulCores", "slug": "soul-cores" },
+    { "type": "Ritual", "slug": "ritual" },
+    { "type": "Breach", "slug": "breach" },
+    { "type": "Delirium", "slug": "delirium" },
+    { "type": "Abyss", "slug": "abyss" },
+    { "type": "Expedition", "slug": "expedition" },
+    { "type": "Idols", "slug": "idols" },
+    { "type": "LineageSupportGems", "slug": "lineage-support-gems" },
+    { "type": "Verisium", "slug": "verisium" },
+    { "type": "PrecursorTablets", "slug": "precursor-tablets" }
+  ],
+  "uniques": [
+    { "type": "UniqueArmours", "slug": "unique-armours" },
+    { "type": "UniqueWeapons", "slug": "unique-weapons" },
+    { "type": "UniqueAccessories", "slug": "unique-accessories" },
+    { "type": "UniqueFlasks", "slug": "unique-flasks" },
+    { "type": "UniqueJewels", "slug": "unique-jewels" },
+    { "type": "UniqueCharms", "slug": "unique-charms" },
+    { "type": "UniqueTablets", "slug": "unique-tablets" },
+    { "type": "UniqueSanctumRelics", "slug": "unique-relics" }
+  ]
+}

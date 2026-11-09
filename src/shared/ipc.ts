@@ -2,9 +2,23 @@
  * Typed IPC contract between preload and main. A channel not listed in `INVOKE_CHANNELS` or
  * `EVENT_CHANNELS` is rejected by the preload bridge and never reaches main or the renderer.
  */
+import type { ApiResult } from './api-result'
 import type { Point } from './geometry'
 import type { HotkeyAction } from './hotkeys/actions'
+import type { LeagueInfo } from './league'
+import type { NinjaSnapshot } from './pricing/ninja'
+import type { PolicySnapshot } from './ratelimit/limiter'
+import type { TradeFetchResult, TradeSearchResult } from './schemas'
 import type { Settings, SettingsPatch } from './settings'
+import type { TradeData } from './trade-data'
+
+export interface DataStatus {
+  trade: 'loading' | 'ready' | 'error'
+  tradeError?: string
+  ninja: 'idle' | 'loading' | 'ready' | 'error'
+  ninjaUpdatedAt?: number
+  ninjaErrors: Record<string, string>
+}
 
 export interface AppInfo {
   name: string
@@ -51,9 +65,28 @@ export interface InvokeMap {
   'clipboard:write': { args: [text: string]; result: void }
   'shell:open-external': { args: [url: string]; result: void }
   'diagnostics:copy': { args: []; result: void }
+  'data:get-trade': { args: []; result: TradeData | null }
+  'data:get-ninja': { args: []; result: NinjaSnapshot | null }
+  'data:get-status': { args: []; result: DataStatus }
+  'data:refresh': { args: []; result: void }
+  'league:get': { args: []; result: LeagueInfo | null }
+  'trade:search': {
+    args: [query: unknown, checkId: string]
+    result: ApiResult<TradeSearchResult>
+  }
+  'trade:fetch': {
+    args: [ids: string[], queryId: string, checkId: string]
+    result: ApiResult<TradeFetchResult>
+  }
+  'ratelimit:get': { args: []; result: PolicySnapshot[] }
 }
 
 export interface EventMap {
+  'data-status': DataStatus
+  'trade-data': TradeData
+  'ninja-data': NinjaSnapshot
+  league: LeagueInfo
+  ratelimit: PolicySnapshot[]
   'item-text': ItemTextEvent
   'item-text-timeout': { pressedAt: number }
   'overlay-state': OverlayState
@@ -82,9 +115,22 @@ export const INVOKE_CHANNELS = [
   'clipboard:write',
   'shell:open-external',
   'diagnostics:copy',
+  'data:get-trade',
+  'data:get-ninja',
+  'data:get-status',
+  'data:refresh',
+  'league:get',
+  'trade:search',
+  'trade:fetch',
+  'ratelimit:get',
 ] as const satisfies readonly InvokeChannel[]
 
 export const EVENT_CHANNELS = [
+  'data-status',
+  'trade-data',
+  'ninja-data',
+  'league',
+  'ratelimit',
   'item-text',
   'item-text-timeout',
   'overlay-state',

@@ -1,0 +1,5 @@
+{
+  "_comment": "Seed limits only (live headers, 9 Nov 2026, unauthenticated). The limiter always adopts the latest X-Rate-Limit-* headers. Format hits:period_s:restrict_s.",
+  "trade-search-request-limit": "5:10:60,15:60:300,30:300:1800,600:21600:3600",
+  "trade-fetch-request-limit": "12:4:10,16:12:300,50:300:300,1000:21600:1800"
+}
