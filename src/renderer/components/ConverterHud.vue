@@ -76,10 +76,11 @@ function drop(i: number): void {
     <p v-if="!economy.prices" class="text-xs text-amber-300">
       {{ economy.ninjaProblem ?? 'Loading poe.ninja prices…' }}
     </p>
-    <p v-else-if="economy.ninjaProblem" class="text-xs text-amber-300">
-      Showing saved prices from {{ economy.ninjaUpdated }}. {{ economy.ninjaProblem }}
-    </p>
     <template v-else>
+      <!-- Saved prices still convert fine, so a warning never hides the converter. -->
+      <p v-if="economy.ninjaProblem" class="text-xs text-amber-300">
+        Showing saved prices from {{ economy.ninjaUpdated }}. {{ economy.ninjaProblem }}
+      </p>
       <div class="flex items-center gap-1">
         <input
           v-model.number="amount"

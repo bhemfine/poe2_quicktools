@@ -413,21 +413,9 @@ const ninjaErrors = computed(() => Object.entries(economy.status.ninjaErrors))
         />
         %
       </label>
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          :checked="s.priceCheck.onlineOnly"
-          @change="
-            settingsStore.update({
-              priceCheck: {
-                ...s.priceCheck,
-                onlineOnly: ($event.target as HTMLInputElement).checked,
-              },
-            })
-          "
-        />
-        Only show sellers who are online
-      </label>
+      <p class="text-sm text-neutral-400">
+        Trade searches show Instant Buyout listings only, so there is no need to whisper sellers.
+      </p>
     </section>
 
     <section class="space-y-2">

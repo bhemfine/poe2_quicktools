@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { parseItem } from '../../src/shared/parser/parse'
 import { effectivenessBreakdown, toListings } from '../../src/shared/pricing/listings'
-import { buildQuery, tradeSiteUrl } from '../../src/shared/query/build'
+import { buildQuery, INSTANT_BUYOUT, tradeSiteUrl } from '../../src/shared/query/build'
 import {
   buildModel,
   categoryFor,
@@ -20,7 +20,7 @@ import { apiFixture, seed } from '../helpers'
 const filters = apiFixture<TradeFilters>('trade-filters.json')
 const items = apiFixture<TradeItems>('trade-items.json')
 const matcher = new StatMatcher(apiFixture<{ result: TradeStatGroup[] }>('trade-stats.json').result)
-const ctx: ModelContext = { filters, items, minRollPercent: 10, onlineOnly: true, jackpotMods: [] }
+const ctx: ModelContext = { filters, items, minRollPercent: 10, jackpotMods: [] }
 
 function model(file: string, c: Partial<ModelContext> = {}) {
   const item = parseItem(seed(file))
@@ -163,11 +163,13 @@ describe('gear query', () => {
     expect(q.query.filters.type_filters.filters.category).toBeUndefined()
   })
 
-  it('online-only toggles listing status', () => {
-    expect(buildQuery(model('ee2-rare-ring.txt')).query.status.option).toBe('online')
-    expect(buildQuery(model('ee2-rare-ring.txt', { onlineOnly: false })).query.status.option).toBe(
-      'any',
-    )
+  it('searches Instant Buyout listings only', () => {
+    expect(INSTANT_BUYOUT).toBe('securable')
+    // The status option must be one the trade site offers, labelled "Instant Buyout".
+    const status = filters.result[0].filters.find((f) => f.id === 'status')!
+    expect(status.option!.options.find((o) => o.id === INSTANT_BUYOUT)!.text).toBe('Instant Buyout')
+    expect(buildQuery(model('ee2-rare-ring.txt')).query.status.option).toBe(INSTANT_BUYOUT)
+    expect(buildQuery(model('ee2-unique-focus.txt')).query.status.option).toBe(INSTANT_BUYOUT)
   })
 })
 
@@ -216,8 +218,8 @@ describe('listings and helpers', () => {
       prices as never,
     )
     expect(rows.map((r) => r.id)).toEqual(['b', 'a', 'c'])
-    expect(rows[0]).toMatchObject({ divine: 0.5, online: false })
-    expect(rows[1]).toMatchObject({ online: true, whisper: '@A hi' })
+    expect(rows[0]).toMatchObject({ divine: 0.5, account: 'B' })
+    expect(rows[1]).toEqual({ id: 'a', amount: 2, currency: 'divine', divine: 2, account: 'A' })
     expect(rows[2].divine).toBeUndefined()
   })
 

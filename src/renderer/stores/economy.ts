@@ -63,11 +63,15 @@ export const useEconomyStore = defineStore('economy', () => {
     return `${d.toLocaleDateString([], { day: 'numeric', month: 'short' })} ${time}`
   })
 
-  /** Why poe.ninja prices can't update right now, in plain words; null when they can. */
+  /**
+   * Why poe.ninja prices can't update right now, in plain words; null when they can.
+   * One empty or failed group (e.g. a type poe.ninja doesn't list this league) is not a problem:
+   * only a refresh that brought nothing new counts.
+   */
   const ninjaProblem = computed(() => {
+    if (status.value.ninja !== 'error') return null
     const first = Object.values(status.value.ninjaErrors)[0]
-    if (status.value.ninja !== 'error' && !first) return null
-    return networkHint(first) ?? (first ? `poe.ninja: ${first}` : null)
+    return networkHint(first) ?? (first ? `poe.ninja: ${first}` : "poe.ninja can't be reached.")
   })
 
   return {

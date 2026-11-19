@@ -137,9 +137,7 @@ const MOD_BADGE: Record<string, string> = {
     </div>
 
     <div class="flex items-center gap-2 pt-1">
-      <label class="flex items-center gap-1 text-neutral-300">
-        <input v-model="model.onlineOnly" type="checkbox" /> Online only
-      </label>
+      <span class="text-neutral-400">Instant Buyout listings only</span>
       <button
         type="button"
         class="ml-auto rounded bg-sky-700 px-2 py-0.5 text-white hover:bg-sky-600"

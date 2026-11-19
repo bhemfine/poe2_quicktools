@@ -47,7 +47,6 @@ function rebuild(): void {
     filters: economy.trade.filters,
     items: economy.trade.items,
     minRollPercent: s.priceCheck.minRollPercent,
-    onlineOnly: s.priceCheck.onlineOnly,
     jackpotMods: s.jackpotMods,
   })
 }

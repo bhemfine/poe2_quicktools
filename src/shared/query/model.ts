@@ -53,7 +53,6 @@ export interface PriceCheckModel {
   rarity?: string
   props: PropFilter[]
   stats: StatFilter[]
-  onlineOnly: boolean
   /** Lines the matcher could not map (shown as "N lines not recognised"). */
   unmatched: string[]
 }
@@ -62,7 +61,6 @@ export interface ModelContext {
   filters: TradeFilters
   items: TradeItems
   minRollPercent: number
-  onlineOnly: boolean
   jackpotMods: readonly string[]
 }
 
@@ -106,7 +104,6 @@ export function buildModel(
     useBaseType: false,
     props: [],
     stats: [],
-    onlineOnly: ctx.onlineOnly,
     unmatched: matched.filter((m) => !m.match && !m.consumed).map((m) => m.line.text),
   }
   const pct = ctx.minRollPercent

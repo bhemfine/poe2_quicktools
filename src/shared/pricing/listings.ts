@@ -7,9 +7,7 @@ export interface Listing {
   currency?: string
   /** Price converted to Divine via poe.ninja; undefined when the currency is unknown. */
   divine?: number
-  online: boolean
   account: string
-  whisper?: string
   indexed?: string
 }
 
@@ -24,9 +22,7 @@ export function toListings(res: TradeFetchResult, prices: PriceIndex | null): Li
       amount: p?.amount,
       currency: p?.currency,
       divine: p && prices ? prices.toDivine(p.amount, p.currency) : undefined,
-      online: !!r.listing.account.online,
       account: r.listing.account.name,
-      whisper: r.listing.whisper,
       indexed: r.listing.indexed,
     })
   }

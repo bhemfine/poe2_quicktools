@@ -66,9 +66,8 @@ export const settingsSchema = z.object({
     .object({
       /** Default min for a numeric filter = value minus this percent of the value. */
       minRollPercent: z.number().min(0).max(100).catch(10),
-      onlineOnly: z.boolean().catch(true),
     })
-    .catch({ minRollPercent: 10, onlineOnly: true }),
+    .catch({ minRollPercent: 10 }),
   favouritePairs: z.array(pairSchema).catch([
     { from: 'divine', to: 'exalted' },
     { from: 'exalted', to: 'chaos' },

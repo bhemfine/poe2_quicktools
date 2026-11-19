@@ -124,7 +124,7 @@ describe('price check cards render from fixtures', () => {
     const text = w.text()
     expect(text).toContain('Waystone Tier')
     expect(text).toContain('Pack Size')
-    expect(text).toContain('42 listed')
+    expect(text).toContain('42 Instant Buyout')
     expect(text).toContain('seller0')
     // Listing prices show currency icons; the comparison column picks a readable currency.
     expect(w.find('tbody img[alt="Ex"]').attributes('src')).toMatch(/^https:\/\/web\.poecdn\.com\//)
@@ -143,14 +143,18 @@ describe('price check cards render from fixtures', () => {
     expect((query as { query: { type: string } }).query.type).toBe('Delirium Tablet')
   })
 
-  it('rare: per-mod toggles, add stat, whisper copied to clipboard', async () => {
+  it('rare: per-mod toggles, add stat, Instant Buyout listings without whispers', async () => {
     const w = mount(PriceCheckCard, { props: { id: 4, text: rare } })
     await flushPromises()
     expect(w.text()).toContain('+161 to maximum Life')
     expect(w.find('input[placeholder^="+ Add stat"]').exists()).toBe(true)
-    const whisper = w.findAll('button').find((b) => b.text() === 'Whisper')!
-    await whisper.trigger('click')
-    expect(invoke).toHaveBeenCalledWith('clipboard:write', '@seller0 hi')
+    expect(w.text()).toContain('42 Instant Buyout')
+    expect(w.text()).not.toContain('Online only')
+    expect(w.findAll('button').some((b) => b.text() === 'Whisper')).toBe(false)
+    const [, query] = invoke.mock.calls.find((c) => c[0] === 'trade:search')!
+    expect((query as { query: { status: { option: string } } }).query.status.option).toBe(
+      'securable',
+    )
   })
 
   it('unique: ninja price first, live listings on demand', async () => {
@@ -194,5 +198,27 @@ describe('converter HUD', () => {
     expect(w.find('img[alt="Ex"]').exists()).toBe(true)
     expect(w.text()).toContain('poe.ninja average')
     expect(w.findAll('li').length).toBe(2)
+  })
+
+  it('converter: one empty poe.ninja group does not hide it; a failed refresh only adds a note', async () => {
+    const economy = useEconomyStore()
+    // poe.ninja has no Precursor Tablets this league, but the refresh worked.
+    economy.status = {
+      trade: 'ready',
+      ninja: 'ready',
+      ninjaUpdatedAt: Date.now(),
+      ninjaErrors: { PrecursorTablets: 'poe.ninja PrecursorTablets: no lines' },
+    }
+    const ok = mount(ConverterHud)
+    await flushPromises()
+    expect(economy.ninjaProblem).toBeNull()
+    expect(ok.find('select[aria-label="From currency"]').exists()).toBe(true)
+    expect(ok.text()).not.toContain('PrecursorTablets')
+
+    economy.status = { ...economy.status, ninja: 'error', ninjaErrors: { all: 'timeout' } }
+    const offline = mount(ConverterHud)
+    await flushPromises()
+    expect(offline.text()).toContain('Showing saved prices')
+    expect(offline.find('select[aria-label="From currency"]').exists()).toBe(true)
   })
 })

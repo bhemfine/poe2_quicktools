@@ -4,7 +4,6 @@ import { formatAmount } from '../../../shared/pricing/ninja'
 import type { Listing } from '../../../shared/pricing/listings'
 import type { CurrencyId } from '../../../shared/settings'
 import type { SearchState } from '../../composables/useTradeSearch'
-import { api } from '../../bridge'
 import { useEconomyStore } from '../../stores/economy'
 import { useSettingsStore } from '../../stores/settings'
 import CurrencyIcon from '../CurrencyIcon.vue'
@@ -12,7 +11,6 @@ import CurrencyIcon from '../CurrencyIcon.vue'
 const props = defineProps<{ state: SearchState }>()
 const economy = useEconomyStore()
 const settingsStore = useSettingsStore()
-const copied = ref<string | null>(null)
 const now = ref(Date.now())
 const timer = setInterval(() => (now.value = Date.now()), 1000)
 onBeforeUnmount(() => clearInterval(timer))
@@ -43,13 +41,6 @@ function compareAmount(l: Listing): string | null {
   if (l.divine === undefined || !economy.prices || l.currency === compare.value) return null
   return formatAmount(economy.prices.fromDivine(l.divine, compare.value))
 }
-
-async function copyWhisper(id: string, whisper?: string): Promise<void> {
-  if (!whisper) return
-  // Whispers only go to the clipboard; QuickTools never sends chat (PLAN §1.4).
-  await api.invoke('clipboard:write', whisper)
-  copied.value = id
-}
 </script>
 
 <template>
@@ -60,13 +51,13 @@ async function copyWhisper(id: string, whisper?: string): Promise<void> {
     </div>
     <template v-else-if="state.total !== null">
       <div class="text-neutral-400">
-        {{ state.total }} listed<span v-if="state.listings.length"> · cheapest first</span>
+        {{ state.total }} Instant Buyout<span v-if="state.listings.length"> · cheapest first</span>
         <a
           v-if="state.tradeUrl"
           :href="state.tradeUrl"
           target="_blank"
           class="ml-1 text-sky-400 underline"
-          >Open on trade site</a
+          >Buy on trade site</a
         >
       </div>
       <table v-if="state.listings.length" class="w-full tabular-nums">
@@ -79,7 +70,6 @@ async function copyWhisper(id: string, whisper?: string): Promise<void> {
               </span>
             </th>
             <th class="font-normal">Seller</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -101,19 +91,7 @@ async function copyWhisper(id: string, whisper?: string): Promise<void> {
                 <CurrencyIcon :id="compare" :size="14" />
               </span>
             </td>
-            <td class="w-full truncate" :class="l.online ? 'text-green-400' : 'text-neutral-500'">
-              {{ l.online ? '●' : '○' }} {{ l.account }}
-            </td>
-            <td>
-              <button
-                v-if="l.whisper"
-                type="button"
-                class="rounded bg-neutral-700 px-1 hover:bg-neutral-600"
-                @click="copyWhisper(l.id, l.whisper)"
-              >
-                {{ copied === l.id ? 'Copied' : 'Whisper' }}
-              </button>
-            </td>
+            <td class="w-full truncate text-neutral-300">{{ l.account }}</td>
           </tr>
         </tbody>
       </table>

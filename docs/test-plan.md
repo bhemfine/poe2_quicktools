@@ -105,8 +105,8 @@ With Developer tools on, hover each item from 0.5 and press **Price check** then
 | 4.8 | Flag a tablet mod as jackpot (Settings → Jackpot tablet mods), re-check a tablet with it. | Row highlighted with ★ and forced on. | |
 | 4.9 | **Rare** armour. | Explicit mods ticked with min rolls, implicits/runes off, category search (not base). Tick "Search by base type" → results narrow to the base. | |
 | 4.10 | Rare: **+ Add stat** "total elemental resistance", set a min, Search. | Pseudo stat added and used. | |
-| 4.11 | Listings. | Up to 10 rows: price, Div value, ● online / ○ offline, account. **Whisper** copies the message (paste in chat manually — QuickTools never sends it). | |
-| 4.12 | "Open on trade site" link. | Opens the same search on pathofexile.com/trade2. | |
+| 4.11 | Listings. | Header says "N Instant Buyout". Up to 10 rows: price, compare value, seller. No Whisper button; only Instant Buyout listings appear. | |
+| 4.12 | "Buy on trade site" link. | Opens the same search (Instant Buyout filter set) on pathofexile.com/trade2. | |
 | 4.13 | **Ctrl + Alt + D** on a currency/unique card. | Opens that item on poe.ninja. | |
 | 4.14 | **F4** converter. | Converts between any two currencies; ⇄ swaps; "+ Add this pair" adds a favourite; drag to reorder; ✕ removes; persists after restart; label "poe.ninja average, updated HH:MM". | |
 | 4.15 | Gem or quest item. | Fallback card "This item type is not priced in v1" with raw text and "Copy item text for a bug report". | |
@@ -125,7 +125,7 @@ With Developer tools on, hover each item from 0.5 and press **Price check** then
 | 5.7 | Record a combo another program owns. (M5 #5) | "In use by another program" error on that row. | |
 | 5.8 | Reset one row; Reset all. (M5 #6) | Defaults restored. | |
 | 5.9 | Change a hotkey, switch to the game, use it; restart; use it again. (M5 #7) | Works immediately without restart, and after restart. | |
-| 5.10 | Other settings: advanced-descriptions key, UI scale 75/100/150%, currency order, min-roll %, online only. | Each takes effect on the next card; all persist across restarts. | |
+| 5.10 | Other settings: advanced-descriptions key, UI scale 75/100/150%, currency order, min-roll %. | Each takes effect on the next card; all persist across restarts. | |
 | 5.11 | About section in Settings. | Version, User-Agent `PoE2QuickTools/0.1.0 (contact: Bhemfinechua@gmail.com)`, GGG notice, third-party notices (EE2 MIT text + file table). GGG notice also at the top of Settings. | |
 | 5.12 | Tray → Copy diagnostics, paste somewhere. | Version, overlay state, hotkey status, settings, recent log. | |
 
@@ -134,7 +134,7 @@ With Developer tools on, hover each item from 0.5 and press **Price check** then
 | ID | Check | Expected | Pass? |
 |---|---|---|---|
 | 6.1 | One hotkey press → at most one synthetic action. | Only the Ctrl+Alt+C copy; nothing typed into chat, no clicks. | |
-| 6.2 | Whispers. | Only copied to clipboard; never sent. | |
+| 6.2 | Whispers. | QuickTools offers no whispers at all (Instant Buyout listings only). | |
 | 6.3 | User-Agent. | In a proxy (e.g. Fiddler) or from the log/diagnostics: every request to pathofexile.com and poe.ninja carries `PoE2QuickTools/<version> (contact: Bhemfinechua@gmail.com)`. | |
 | 6.4 | No 429 in any log after sections 3–4. | `findstr 429 %APPDATA%\PoE2QuickTools\logs\*.log` finds nothing. | |
 | 6.5 | No timers/screen triggers. | Nothing happens in game unless you press a hotkey (background refreshes — poe.ninja, trade data re-check, game lists, update check — are network only). | |

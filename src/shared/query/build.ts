@@ -14,11 +14,17 @@ export interface TradeQuery {
   sort: { price: 'asc' }
 }
 
+/**
+ * Trade site status "Instant Buyout": listings bought straight from the seller's merchant,
+ * no whisper or trade with the seller. In-person listings are never searched.
+ */
+export const INSTANT_BUYOUT = 'securable'
+
 /** Builds the POST body for `/api/trade2/search/poe2/{league}` from the edited model. */
 export function buildQuery(model: PriceCheckModel): TradeQuery {
   const q: TradeQuery = {
     query: {
-      status: { option: model.onlineOnly ? 'online' : 'any' },
+      status: { option: INSTANT_BUYOUT },
       stats: [],
       filters: {},
     },
