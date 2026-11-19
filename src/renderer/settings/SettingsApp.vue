@@ -50,6 +50,7 @@ const POSITION_LABEL: Record<CheatSheetPosition, string> = {
   'top-right': 'Top right',
   'bottom-left': 'Bottom left',
   'bottom-right': 'Bottom right',
+  custom: 'Where I dragged it',
 }
 
 const timeOf = (ms?: number) =>
@@ -356,7 +357,9 @@ const ninjaErrors = computed(() => Object.entries(economy.status.ninjaErrors))
         </select>
         <span class="text-xs text-neutral-400"
           >Toggle in game with
-          {{ displayCombo(s.hotkeys['toggle-cheatsheet']) || 'its hotkey (unbound)' }}.</span
+          {{ displayCombo(s.hotkeys['toggle-cheatsheet']) || 'its hotkey (unbound)' }}. To drag it
+          anywhere, press
+          {{ displayCombo(s.hotkeys['toggle-interactive']) || 'the mouse-mode key' }} in game.</span
         >
       </div>
       <div>

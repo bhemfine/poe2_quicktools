@@ -16,6 +16,8 @@ export const CHEAT_SHEET_POSITIONS = [
   'top-right',
   'bottom-left',
   'bottom-right',
+  /** Wherever the player dragged it (cheatSheetOffset). */
+  'custom',
 ] as const
 export type CheatSheetPosition = (typeof CHEAT_SHEET_POSITIONS)[number]
 
@@ -51,6 +53,11 @@ export const settingsSchema = z.object({
   /** In-game hotkey cheat sheet (toggled with its own hotkey). */
   cheatSheet: z.boolean().catch(true),
   cheatSheetPosition: z.enum(CHEAT_SHEET_POSITIONS).catch('left'),
+  /** Top-left corner of a dragged key list, as a share of the game window (0–1). */
+  cheatSheetOffset: z
+    .object({ x: z.number().min(0).max(1), y: z.number().min(0).max(1) })
+    .nullable()
+    .catch(null),
   currencyOrder: z
     .array(z.enum(CURRENCIES))
     .length(4)

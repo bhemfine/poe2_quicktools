@@ -192,7 +192,12 @@ export class QuickToolsApp {
         break
       case 'toggle-interactive':
         // With nothing on screen, mouse mode would silently swallow clicks meant for the game.
-        if (!this.overlay.getState().interactive && !this.windowOpen) {
+        // The key list counts: mouse mode is how it gets dragged.
+        if (
+          !this.overlay.getState().interactive &&
+          !this.windowOpen &&
+          !this.settings.get().cheatSheet
+        ) {
           this.broadcast('notice', {
             level: 'info',
             message:

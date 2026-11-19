@@ -93,7 +93,8 @@ onBeforeUnmount(() => {
         !store.card &&
         !store.converterOpen
       "
-      :style="{ zoom: scale / 100 }"
+      :draggable="store.state.interactive"
+      :scale="scale"
     />
     <FloatingCard v-if="store.card" :key="store.card.id" :anchor="store.card.anchor" :scale="scale">
       <div>
@@ -131,7 +132,8 @@ onBeforeUnmount(() => {
       v-if="store.state.interactive"
       class="qt-card pointer-events-none fixed bottom-28 left-1/2 -translate-x-1/2 px-3 py-1.5 text-sm text-sky-200"
     >
-      Mouse mode: click the price window. Press
+      Mouse mode:
+      {{ store.card ? 'click the price window' : 'drag the key list where you want it' }}. Press
       <b>{{ mouseModeKey || 'Esc' }}</b> or <b>Esc</b> to go back to the game.
     </div>
 
