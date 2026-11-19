@@ -58,6 +58,7 @@ export class NinjaApi {
     }
     const q = (type: string) => `league=${encodeURIComponent(league)}&type=${type}`
 
+    let fresh = 0
     let first = true
     for (const { type } of ninjaTypes.exchange) {
       if (!first) await this.sleep(STAGGER_MS)
@@ -72,6 +73,7 @@ export class NinjaApi {
         if (!data.lines.length)
           throw new EmptyResultError(`poe.ninja ${type}: no lines (invalid type or league)`)
         snap.exchange[type] = data
+        fresh++
       } catch (e) {
         snap.errors[type] = errorMessage(e)
         if (previous?.league === league && previous.exchange[type])
@@ -90,12 +92,15 @@ export class NinjaApi {
         if (!data.lines.length)
           throw new EmptyResultError(`poe.ninja ${type}: no lines (invalid type or league)`)
         snap.uniques[type] = data
+        fresh++
       } catch (e) {
         snap.errors[type] = errorMessage(e)
         if (previous?.league === league && previous.uniques[type])
           snap.uniques[type] = previous.uniques[type]
       }
     }
+    // Nothing new arrived: these are the previous prices, so they keep the previous date.
+    if (!fresh && previous?.league === league) snap.fetchedAt = previous.fetchedAt
     return snap
   }
 }

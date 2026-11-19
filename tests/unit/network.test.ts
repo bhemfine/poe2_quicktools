@@ -265,3 +265,27 @@ describe('network error hints', () => {
     expect(networkHint(undefined)).toBeNull()
   })
 })
+
+describe('poe.ninja price dates', () => {
+  it('keeps the old date when every download fails (offline or blocked)', async () => {
+    const { NinjaApi } = await import('../../src/main/net/ninja/ninja-api')
+    const http: HttpClient = {
+      request: async () => {
+        throw new Error('net::ERR_NETWORK_ACCESS_DENIED')
+      },
+    }
+    const old = Date.UTC(2026, 10, 9, 17, 12)
+    const previous: NinjaSnapshot = {
+      league: 'Forbidden Rites',
+      leagueSlug: 'forbiddenrites',
+      fetchedAt: old,
+      exchange: { Currency: apiFixture<NinjaExchange>('ninja-exchange-currency.json') },
+      uniques: {},
+      errors: {},
+    }
+    const snap = await new NinjaApi(http, async () => {}).loadAll('Forbidden Rites', previous)
+    expect(snap.fetchedAt).toBe(old)
+    expect(snap.exchange.Currency).toBe(previous.exchange.Currency)
+    expect(snap.errors.Currency).toMatch(/ACCESS_DENIED/)
+  })
+})

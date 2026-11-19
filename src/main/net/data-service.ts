@@ -238,14 +238,17 @@ export class DataService extends EventEmitter<DataEvents> {
         const snap = await this.ninjaApi.loadAll(league, this.ninja)
         const failed = Object.keys(snap.errors)
         if (failed.length) this.logger.warn('ninja', `failed types: ${JSON.stringify(snap.errors)}`)
+        // Only new downloads count: when every type failed, the snapshot is just the old prices
+        // again and must keep its old date (NinjaApi leaves fetchedAt alone in that case).
         const anyData = Object.keys(snap.exchange).length + Object.keys(snap.uniques).length > 0
-        if (anyData) {
+        const fresh = anyData && snap.fetchedAt !== this.ninja?.fetchedAt
+        if (fresh) {
           this.setNinja(snap)
           this.cache.set('ninja-snapshot', snap)
         }
         this.setStatus({
-          ninja: anyData ? 'ready' : 'error',
-          ninjaUpdatedAt: anyData ? snap.fetchedAt : this.status.ninjaUpdatedAt,
+          ninja: fresh ? 'ready' : 'error',
+          ninjaUpdatedAt: fresh ? snap.fetchedAt : this.status.ninjaUpdatedAt,
           ninjaErrors: snap.errors,
         })
       } catch (e) {
