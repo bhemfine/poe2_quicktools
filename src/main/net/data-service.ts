@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:events'
 import type { ApiError, ApiResult } from '../../shared/api-result'
 import { PatchHealth, type CheckReport } from '../../shared/health'
 import type { DataStatus } from '../../shared/ipc'
+import { networkHint } from '../../shared/network-hint'
 import { resolveLeague, type LeagueInfo } from '../../shared/league'
 import type { NinjaSnapshot } from '../../shared/pricing/ninja'
 import type { NinjaTypes } from '../../shared/remote-config'
@@ -22,7 +23,6 @@ import { InvalidLeagueError, TradeApi } from './trade/trade-api'
 
 const NINJA_REFRESH_MS = 15 * 60 * 1000
 const TRADE_RETRY_MS = 2 * 60 * 1000
-const NINJA_CACHE_MAX_AGE = 6 * 60 * 60 * 1000
 // Patch detection: GGG's trade data is re-checked in the background so new or reworded mods are
 // picked up within minutes of a patch instead of after the 24 h cache expires.
 const TRADE_RECHECK_MS = 3 * 60 * 60 * 1000
@@ -72,7 +72,8 @@ export class DataService extends EventEmitter<DataEvents> {
   }
 
   async start(): Promise<void> {
-    const cachedNinja = this.cache.get<NinjaSnapshot>('ninja-snapshot', NINJA_CACHE_MAX_AGE)
+    // Any age: old prices (shown with their date) beat none when poe.ninja can't be reached.
+    const cachedNinja = this.cache.getStale<NinjaSnapshot>('ninja-snapshot')
     if (cachedNinja) this.setNinja(cachedNinja.data)
     await this.loadTrade(false)
     if (Date.now() - this.tradeApi.dataFetchedAt > TRADE_STARTUP_RECHECK_AGE) {
@@ -283,7 +284,7 @@ export class DataService extends EventEmitter<DataEvents> {
     }
     if (e instanceof HttpError) return { kind: 'http', message: e.message }
     this.logger.error('trade', 'request failed', e)
-    return { kind: 'network', message: errorMessage(e) }
+    return { kind: 'network', message: networkHint(errorMessage(e)) ?? errorMessage(e) }
   }
 }
 

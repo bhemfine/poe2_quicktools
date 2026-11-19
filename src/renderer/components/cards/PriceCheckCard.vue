@@ -142,7 +142,11 @@ const fallbackMessage = computed(() => {
     <template v-if="item.kind === 'commodity'">
       <CommodityPanel v-if="commodity" :item="item" :price="commodity" />
       <p v-else class="text-xs text-neutral-400">
-        {{ economy.prices ? 'Not found on poe.ninja.' : 'Loading poe.ninja prices…' }}
+        {{
+          economy.prices
+            ? 'Not found on poe.ninja.'
+            : (economy.ninjaProblem ?? 'Loading poe.ninja prices…')
+        }}
       </p>
     </template>
 
@@ -163,7 +167,7 @@ const fallbackMessage = computed(() => {
         </div>
       </div>
       <p v-else class="text-xs text-neutral-400">
-        {{ economy.prices ? 'No poe.ninja price.' : 'Loading prices…' }}
+        {{ economy.prices ? 'No poe.ninja price.' : (economy.ninjaProblem ?? 'Loading prices…') }}
       </p>
       <TabletInfo v-if="item.itemClass === 'Tablet'" :item="item" />
       <button

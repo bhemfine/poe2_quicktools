@@ -73,7 +73,12 @@ function drop(i: number): void {
         ✕
       </button>
     </div>
-    <p v-if="!economy.prices" class="text-xs text-neutral-400">Loading poe.ninja prices…</p>
+    <p v-if="!economy.prices" class="text-xs text-amber-300">
+      {{ economy.ninjaProblem ?? 'Loading poe.ninja prices…' }}
+    </p>
+    <p v-else-if="economy.ninjaProblem" class="text-xs text-amber-300">
+      Showing saved prices from {{ economy.ninjaUpdated }}. {{ economy.ninjaProblem }}
+    </p>
     <template v-else>
       <div class="flex items-center gap-1">
         <input

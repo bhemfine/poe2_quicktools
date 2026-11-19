@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref, shallowRef } from 'vue'
 import { buildCurrencyInfo, type CurrencyInfo } from '../../shared/currency-info'
 import type { DataStatus } from '../../shared/ipc'
+import { networkHint } from '../../shared/network-hint'
 import type { LeagueInfo } from '../../shared/league'
 import { PriceIndex } from '../../shared/pricing/ninja'
 import type { PolicySnapshot } from '../../shared/ratelimit/limiter'
@@ -52,14 +53,22 @@ export const useEconomyStore = defineStore('economy', () => {
     trade.value ? buildCurrencyInfo(trade.value.static) : new Map(),
   )
 
-  const ninjaUpdated = computed(() =>
-    status.value.ninjaUpdatedAt
-      ? new Date(status.value.ninjaUpdatedAt).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-      : null,
-  )
+  /** "14:05", or "18 Nov 14:05" when the prices are from an earlier day (saved copy, offline). */
+  const ninjaUpdated = computed(() => {
+    const at = status.value.ninjaUpdatedAt
+    if (!at) return null
+    const d = new Date(at)
+    const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    if (d.toDateString() === new Date().toDateString()) return time
+    return `${d.toLocaleDateString([], { day: 'numeric', month: 'short' })} ${time}`
+  })
+
+  /** Why poe.ninja prices can't update right now, in plain words; null when they can. */
+  const ninjaProblem = computed(() => {
+    const first = Object.values(status.value.ninjaErrors)[0]
+    if (status.value.ninja !== 'error' && !first) return null
+    return networkHint(first) ?? (first ? `poe.ninja: ${first}` : null)
+  })
 
   return {
     trade,
@@ -70,6 +79,7 @@ export const useEconomyStore = defineStore('economy', () => {
     rateLimits,
     currencyInfo,
     ninjaUpdated,
+    ninjaProblem,
     init,
   }
 })

@@ -255,3 +255,13 @@ describe('currency icons', () => {
     expect(info.get('divine')?.name).toBe('Divine Orb')
   })
 })
+
+describe('network error hints', () => {
+  it('explains a firewall block and an offline PC in plain words', async () => {
+    const { networkHint } = await import('../../src/shared/network-hint')
+    expect(networkHint('net::ERR_NETWORK_ACCESS_DENIED')).toMatch(/blocked from the internet/)
+    expect(networkHint('net::ERR_INTERNET_DISCONNECTED')).toBe('No internet connection.')
+    expect(networkHint('Trade search failed: HTTP 503')).toBeNull()
+    expect(networkHint(undefined)).toBeNull()
+  })
+})

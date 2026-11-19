@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { displayCombo } from '../../shared/hotkeys/keys'
 import { api } from '../bridge'
 import CheatSheet from '../components/CheatSheet.vue'
 import ConverterHud from '../components/ConverterHud.vue'
@@ -18,6 +19,24 @@ const unsubscribe: Array<() => void> = []
 const scale = computed(() => settingsStore.settings.uiScale)
 
 useMouseCapture()
+
+const mouseModeKey = computed(() =>
+  displayCombo(settingsStore.settings.hotkeys['toggle-interactive'] ?? ''),
+)
+
+/** Opens the open price window's item on poe.ninja, or says why there is nothing to open. */
+function openNinja(): void {
+  if (store.ninjaUrl) {
+    void api.invoke('shell:open-external', store.ninjaUrl)
+    return
+  }
+  const message = !store.card
+    ? 'Price-check a currency item or unique first, then press this to open its poe.ninja page.'
+    : !economy.prices
+      ? (economy.ninjaProblem ?? 'poe.ninja prices are still loading.')
+      : 'poe.ninja only lists currency and uniques, so this item has no page there.'
+  store.showNotice({ level: 'info', message }, 6000)
+}
 
 /** Focusing a text input gives the overlay real keyboard focus; Esc or clicking the game hands it back. */
 function onFocusIn(e: FocusEvent): void {
@@ -52,9 +71,7 @@ onMounted(async () => {
     api.on('hotkey', ({ action }) => {
       if (action === 'dismiss') store.dismiss()
       else if (action === 'converter-hud') store.converterOpen = !store.converterOpen
-      else if (action === 'open-ninja' && store.ninjaUrl) {
-        void api.invoke('shell:open-external', store.ninjaUrl)
-      }
+      else if (action === 'open-ninja') openNinja()
     }),
   )
   window.addEventListener('focusin', onFocusIn)
@@ -108,6 +125,14 @@ onBeforeUnmount(() => {
       class="qt-card fixed top-4 left-4 p-3"
     >
       <LeaguePicker />
+    </div>
+
+    <div
+      v-if="store.state.interactive"
+      class="qt-card pointer-events-none fixed bottom-28 left-1/2 -translate-x-1/2 px-3 py-1.5 text-sm text-sky-200"
+    >
+      Mouse mode: click the price window. Press
+      <b>{{ mouseModeKey || 'Esc' }}</b> or <b>Esc</b> to go back to the game.
     </div>
 
     <div

@@ -12,6 +12,7 @@ import {
   type Tray,
 } from 'electron'
 import { toCheckReport } from '../shared/health'
+import { displayCombo } from '../shared/hotkeys/keys'
 import type { LimiterStorage } from '../shared/ratelimit/limiter'
 import type { HotkeyAction } from '../shared/hotkeys/actions'
 import { isAllowedExternalUrl, type EventChannel, type EventMap } from '../shared/ipc'
@@ -42,6 +43,8 @@ export class QuickToolsApp {
   private clipboard = new HostClipboard()
   private tray?: Tray
   private lastItemText = ''
+  /** A price window or the converter is on screen (reported by the overlay). */
+  private windowOpen = false
   private data!: DataService
   private remoteConfig!: RemoteConfigService
   private updater!: Updater
@@ -182,19 +185,37 @@ export class QuickToolsApp {
   // ---------------------------------------------------------------- hotkeys
 
   private onHotkey(action: HotkeyAction, combo: string): void {
+    this.logger.debug('hotkeys', `${action} (${combo})`)
     switch (action) {
       case 'price-check':
         this.priceCheck(combo)
         break
       case 'toggle-interactive':
+        // With nothing on screen, mouse mode would silently swallow clicks meant for the game.
+        if (!this.overlay.getState().interactive && !this.windowOpen) {
+          this.broadcast('notice', {
+            level: 'info',
+            message:
+              'Nothing to click yet. Price-check an item first, then press this to use its window.',
+          })
+          break
+        }
         this.overlay.toggleInteractive()
         break
       case 'save-item-text':
         void this.saveItemFixture()
         break
-      case 'toggle-cheatsheet':
-        this.settings.update({ cheatSheet: !this.settings.get().cheatSheet })
+      case 'toggle-cheatsheet': {
+        const show = !this.settings.get().cheatSheet
+        this.settings.update({ cheatSheet: show })
+        this.broadcast('notice', {
+          level: 'info',
+          message: show
+            ? 'Key list shown.'
+            : `Key list hidden. Press ${displayCombo(combo)} to show it again.`,
+        })
         break
+      }
       default:
         this.broadcast('hotkey', { action })
     }
@@ -369,7 +390,10 @@ export class QuickToolsApp {
       'overlay:activate': () => this.overlay.activate(),
       'overlay:focus-game': () => this.overlay.focusGame(),
       'overlay:get-state': () => this.overlay.getState(),
-      'overlay:set-card-open': (open) => this.hotkeys.setConditions({ cardOpen: open }),
+      'overlay:set-card-open': (open) => {
+        this.windowOpen = open
+        this.hotkeys.setConditions({ cardOpen: open })
+      },
       'clipboard:write': (text) => clipboard.writeText(text),
       'shell:open-external': async (url) => {
         if (isAllowedExternalUrl(url)) await shell.openExternal(url)
