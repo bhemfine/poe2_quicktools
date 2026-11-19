@@ -36,12 +36,12 @@ describe('settings migration', () => {
       schemaVersion: 1,
       uiScale: 500,
       league: 'Runes of Aldur',
-      hotkeys: { 'pin-card': 'not a key', 'open-ninja': '' },
+      hotkeys: { 'converter-hud': 'not a key', 'open-ninja': '' },
       currencyOrder: ['chaos', 'vaal', 'divine', 'exalted'],
     })
     expect(s.uiScale).toBe(100)
     expect(s.league).toBe('Runes of Aldur')
-    expect(s.hotkeys['pin-card']).toBe(DEFAULT_HOTKEYS['pin-card'])
+    expect(s.hotkeys['converter-hud']).toBe(DEFAULT_HOTKEYS['converter-hud'])
     expect(s.hotkeys['open-ninja']).toBe('')
     expect(s.currencyOrder).toEqual(['chaos', 'vaal', 'divine', 'exalted'])
   })

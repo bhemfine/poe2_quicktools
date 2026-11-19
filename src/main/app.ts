@@ -192,6 +192,9 @@ export class QuickToolsApp {
       case 'save-item-text':
         void this.saveItemFixture()
         break
+      case 'toggle-cheatsheet':
+        this.settings.update({ cheatSheet: !this.settings.get().cheatSheet })
+        break
       default:
         this.broadcast('hotkey', { action })
     }

@@ -54,7 +54,7 @@ Record results in `docs/test-matrix.md`. For each row: the card appears beside t
 | d | Win 10/11 | 200% (or max, e.g. 4K) | Windowed Fullscreen |
 | e | any | two monitors, mixed DPI (100% + 150%), game on secondary | both modes |
 | f | any | secondary monitor left of / above primary (negative coordinates) | both modes |
-| g | any | drag the game window across monitors while a card is pinned | Windowed |
+| g | any | drag the game window across monitors while a price window is open | Windowed |
 | h | any | change Windows scaling while QuickTools runs | Windowed Fullscreen |
 
 Also try each edge: price-check items at the far right, bottom, top-left of the game window — the card flips/clamps and never goes off the game window.

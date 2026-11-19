@@ -14,7 +14,7 @@ const available = { value: true }
 const HotkeyRecorder = (await import('../../src/renderer/components/settings/HotkeyRecorder.vue'))
   .default
 
-function mountRecorder(action: keyof typeof DEFAULT_HOTKEYS = 'pin-card') {
+function mountRecorder(action: keyof typeof DEFAULT_HOTKEYS = 'open-ninja') {
   return mount(HotkeyRecorder, {
     props: {
       action,

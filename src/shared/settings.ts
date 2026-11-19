@@ -8,6 +8,17 @@ export const SETTINGS_VERSION = 1
 export const CURRENCIES = ['exalted', 'chaos', 'divine', 'vaal'] as const
 export type CurrencyId = (typeof CURRENCIES)[number]
 
+/** Where the cheat sheet sits on screen; "left"/"right" are vertically centred. */
+export const CHEAT_SHEET_POSITIONS = [
+  'left',
+  'right',
+  'top-left',
+  'top-right',
+  'bottom-left',
+  'bottom-right',
+] as const
+export type CheatSheetPosition = (typeof CHEAT_SHEET_POSITIONS)[number]
+
 const hotkeysSchema = z
   .record(z.string(), z.string())
   .catch({})
@@ -37,8 +48,9 @@ export const settingsSchema = z.object({
   restoreClipboard: z.boolean().catch(true),
   league: z.string().nullable().catch(null),
   uiScale: z.number().min(75).max(150).catch(100),
-  /** New cards start pinned: they stay open until Esc, Close or the next price check. */
-  pinCards: z.boolean().catch(true),
+  /** In-game hotkey cheat sheet (toggled with its own hotkey). */
+  cheatSheet: z.boolean().catch(true),
+  cheatSheetPosition: z.enum(CHEAT_SHEET_POSITIONS).catch('left'),
   currencyOrder: z
     .array(z.enum(CURRENCIES))
     .length(4)

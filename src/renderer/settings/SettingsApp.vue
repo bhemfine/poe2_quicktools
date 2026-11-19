@@ -7,7 +7,11 @@ import type { HotkeyStatus, UpdateStatus } from '../../shared/ipc'
 import { GGG_NOTICE } from '../../shared/notices'
 import { CURRENCY_LABEL } from '../../shared/pricing/ninja'
 import { BUNDLED_CONFIG, type RemoteConfig } from '../../shared/remote-config'
-import type { CurrencyId } from '../../shared/settings'
+import {
+  CHEAT_SHEET_POSITIONS,
+  type CheatSheetPosition,
+  type CurrencyId,
+} from '../../shared/settings'
 import { api } from '../bridge'
 import AboutPanel from '../components/AboutPanel.vue'
 import LeaguePicker from '../components/LeaguePicker.vue'
@@ -38,6 +42,15 @@ onMounted(async () => {
     api.invoke('update:get-status'),
   ])
 })
+
+const POSITION_LABEL: Record<CheatSheetPosition, string> = {
+  left: 'Left edge',
+  right: 'Right edge',
+  'top-left': 'Top left',
+  'top-right': 'Top right',
+  'bottom-left': 'Bottom left',
+  'bottom-right': 'Bottom right',
+}
 
 const timeOf = (ms?: number) =>
   ms ? new Date(ms).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : ''
@@ -314,14 +327,38 @@ const ninjaErrors = computed(() => Object.entries(economy.status.ninjaErrors))
         />
         {{ s.uiScale }}%
       </label>
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          :checked="s.pinCards"
-          @change="settingsStore.update({ pinCards: ($event.target as HTMLInputElement).checked })"
-        />
-        Keep price cards open until I close them (otherwise they close when the mouse moves away)
-      </label>
+      <div class="flex flex-wrap items-center gap-2">
+        <label class="flex items-center gap-2">
+          <input
+            id="cheat-sheet"
+            type="checkbox"
+            :checked="s.cheatSheet"
+            @change="
+              settingsStore.update({ cheatSheet: ($event.target as HTMLInputElement).checked })
+            "
+          />
+          Show the hotkey cheat sheet in game
+        </label>
+        <select
+          id="cheat-sheet-position"
+          class="rounded bg-neutral-800 px-1"
+          aria-label="Cheat sheet position"
+          :value="s.cheatSheetPosition"
+          @change="
+            settingsStore.update({
+              cheatSheetPosition: ($event.target as HTMLSelectElement).value as CheatSheetPosition,
+            })
+          "
+        >
+          <option v-for="p in CHEAT_SHEET_POSITIONS" :key="p" :value="p">
+            {{ POSITION_LABEL[p] }}
+          </option>
+        </select>
+        <span class="text-xs text-neutral-400"
+          >Toggle in game with
+          {{ displayCombo(s.hotkeys['toggle-cheatsheet']) || 'its hotkey (unbound)' }}.</span
+        >
+      </div>
       <div>
         Currency order
         <ol class="mt-1 flex gap-2">

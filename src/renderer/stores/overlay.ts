@@ -10,7 +10,6 @@ export interface CardState {
   anchor: Point
   pressedAt: number
   shownAt: number
-  pinned: boolean
 }
 
 let nextId = 1
@@ -28,14 +27,13 @@ export const useOverlayStore = defineStore('overlay', () => {
     hasAccess: true,
   })
 
-  function showItem(e: ItemTextEvent, pinned = false): void {
+  function showItem(e: ItemTextEvent): void {
     card.value = {
       id: nextId++,
       text: e.text,
       anchor: e.cursor,
       pressedAt: e.pressedAt,
       shownAt: performance.timeOrigin + performance.now(),
-      pinned,
     }
   }
 
@@ -43,10 +41,6 @@ export const useOverlayStore = defineStore('overlay', () => {
     card.value = null
     converterOpen.value = false
     ninjaUrl.value = null
-  }
-
-  function togglePin(): void {
-    if (card.value) card.value.pinned = !card.value.pinned
   }
 
   function showNotice(n: NoticeEvent, ms = 4000): void {
@@ -61,5 +55,5 @@ export const useOverlayStore = defineStore('overlay', () => {
     (open) => void api.invoke('overlay:set-card-open', open),
   )
 
-  return { card, converterOpen, ninjaUrl, notice, state, showItem, dismiss, togglePin, showNotice }
+  return { card, converterOpen, ninjaUrl, notice, state, showItem, dismiss, showNotice }
 })

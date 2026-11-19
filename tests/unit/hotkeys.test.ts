@@ -55,20 +55,20 @@ describe('combo parsing', () => {
 
 describe('conflict detection', () => {
   it('errors on duplicates inside the app', () => {
-    const issues = validateHotkey('pin-card', 'Ctrl + D', DEFAULT_HOTKEYS, opts)
+    const issues = validateHotkey('open-ninja', 'Ctrl + D', DEFAULT_HOTKEYS, opts)
     expect(issues).toContainEqual(expect.objectContaining({ level: 'error', code: 'duplicate' }))
   })
 
   it('warns on PoE 2 default binds and names the action', () => {
-    const issues = validateHotkey('pin-card', 'Ctrl + Q', DEFAULT_HOTKEYS, opts)
+    const issues = validateHotkey('open-ninja', 'Ctrl + Q', DEFAULT_HOTKEYS, opts)
     const bind = issues.find((i) => i.code === 'game-bind')
     expect(bind?.level).toBe('warning')
     expect(bind?.message).toContain('Secondary skill slot Q')
   })
 
   it('only flags WASD keys in WASD mode', () => {
-    expect(validateHotkey('pin-card', 'Alt + A', DEFAULT_HOTKEYS, opts)).toEqual([])
-    const bare = validateHotkey('pin-card', 'A', DEFAULT_HOTKEYS, { ...opts, wasdMode: true })
+    expect(validateHotkey('open-ninja', 'Alt + A', DEFAULT_HOTKEYS, opts)).toEqual([])
+    const bare = validateHotkey('open-ninja', 'A', DEFAULT_HOTKEYS, { ...opts, wasdMode: true })
     expect(bare.map((i) => i.code)).toEqual(['game-bind', 'bare-key'])
   })
 
@@ -86,7 +86,7 @@ describe('conflict detection', () => {
       ...opts,
       gameBinds: [...opts.gameBinds, { combo: 'Ctrl + Y', action: 'My rebind' }],
     }
-    expect(validateHotkey('pin-card', 'Ctrl + Y', DEFAULT_HOTKEYS, custom)[0].message).toContain(
+    expect(validateHotkey('open-ninja', 'Ctrl + Y', DEFAULT_HOTKEYS, custom)[0].message).toContain(
       'My rebind',
     )
   })

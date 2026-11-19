@@ -5,8 +5,8 @@ export const HOTKEY_ACTIONS = [
   'price-check',
   'converter-hud',
   'toggle-interactive',
-  'pin-card',
   'open-ninja',
+  'toggle-cheatsheet',
   'dismiss',
   'save-item-text',
 ] as const
@@ -15,12 +15,12 @@ export type HotkeyAction = (typeof HOTKEY_ACTIONS)[number]
 export type HotkeyBindings = Record<HotkeyAction, string>
 
 export const HOTKEY_LABELS: Record<HotkeyAction, string> = {
-  'price-check': 'Price check (also waystones and tablets)',
-  'converter-hud': 'Currency converter',
-  'toggle-interactive': 'Toggle interactive mode',
-  'pin-card': 'Pin / unpin card',
-  'open-ninja': 'Open item on poe.ninja',
-  dismiss: 'Dismiss card (only while a card is open)',
+  'price-check': 'Price check (hover an item, then press)',
+  'converter-hud': 'Open / close the currency converter',
+  'toggle-interactive': 'Click the price window (press again to go back to the game)',
+  'open-ninja': 'Open the priced item on poe.ninja',
+  'toggle-cheatsheet': 'Show / hide the on-screen key list',
+  dismiss: 'Close the price window or converter',
   'save-item-text': 'Save last item text as test fixture (dev tools)',
 }
 

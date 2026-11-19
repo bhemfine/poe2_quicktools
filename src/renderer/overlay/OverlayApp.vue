@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { api } from '../bridge'
+import CheatSheet from '../components/CheatSheet.vue'
 import ConverterHud from '../components/ConverterHud.vue'
 import FloatingCard from '../components/FloatingCard.vue'
 import LeaguePicker from '../components/LeaguePicker.vue'
@@ -10,9 +11,6 @@ import { useEconomyStore } from '../stores/economy'
 import { useOverlayStore } from '../stores/overlay'
 import { useSettingsStore } from '../stores/settings'
 
-/** Quick-peek cards close when the cursor moves this far (DIP) from where the hotkey was pressed. */
-const DISMISS_DISTANCE = 160
-
 const store = useOverlayStore()
 const economy = useEconomyStore()
 const settingsStore = useSettingsStore()
@@ -20,14 +18,6 @@ const unsubscribe: Array<() => void> = []
 const scale = computed(() => settingsStore.settings.uiScale)
 
 useMouseCapture()
-
-function onMouseMove(e: MouseEvent): void {
-  const card = store.card
-  if (!card || card.pinned || store.state.interactive) return
-  if ((e.target as Element | null)?.closest?.('[data-capture]')) return
-  const dist = Math.hypot(e.clientX - card.anchor.x, e.clientY - card.anchor.y)
-  if (dist > DISMISS_DISTANCE * (scale.value / 100)) store.dismiss()
-}
 
 /** Focusing a text input gives the overlay real keyboard focus; Esc or clicking the game hands it back. */
 function onFocusIn(e: FocusEvent): void {
@@ -44,7 +34,8 @@ onMounted(async () => {
   await Promise.all([settingsStore.init(), economy.init()])
   store.state = await api.invoke('overlay:get-state')
   unsubscribe.push(
-    api.on('item-text', (e) => store.showItem(e, settingsStore.settings.pinCards)),
+    // The price window stays open until Esc, Close or the next price check.
+    api.on('item-text', (e) => store.showItem(e)),
     api.on('item-text-timeout', () =>
       store.showNotice({
         level: 'warn',
@@ -60,36 +51,40 @@ onMounted(async () => {
     api.on('notice', (n) => store.showNotice(n)),
     api.on('hotkey', ({ action }) => {
       if (action === 'dismiss') store.dismiss()
-      else if (action === 'pin-card') store.togglePin()
       else if (action === 'converter-hud') store.converterOpen = !store.converterOpen
       else if (action === 'open-ninja' && store.ninjaUrl) {
         void api.invoke('shell:open-external', store.ninjaUrl)
       }
     }),
   )
-  window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('focusin', onFocusIn)
 })
 
 onBeforeUnmount(() => {
   unsubscribe.forEach((u) => u())
-  window.removeEventListener('mousemove', onMouseMove)
   window.removeEventListener('focusin', onFocusIn)
 })
 </script>
 
 <template>
   <div class="h-screen w-screen select-none">
+    <!-- Hidden while a card or the converter is open so it never covers them. -->
+    <CheatSheet
+      v-if="
+        settingsStore.settings.cheatSheet &&
+        store.state.attached &&
+        !store.card &&
+        !store.converterOpen
+      "
+      :style="{ zoom: scale / 100 }"
+    />
     <FloatingCard v-if="store.card" :key="store.card.id" :anchor="store.card.anchor" :scale="scale">
       <div>
         <PriceCheckCard :id="store.card.id" :text="store.card.text" />
         <div
           class="mt-1 flex items-center gap-3 px-1 text-xs text-neutral-300 [text-shadow:0_0_3px_#000]"
         >
-          <button type="button" class="underline" @click="store.togglePin()">
-            {{ store.card.pinned ? 'Unpin' : 'Pin' }}
-          </button>
-          <button type="button" class="underline" @click="store.dismiss()">Close</button>
+          <button type="button" class="underline" @click="store.dismiss()">Close (Esc)</button>
           <button
             type="button"
             class="ml-auto underline"
